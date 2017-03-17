@@ -2,9 +2,11 @@
   "name": "lol-item-set-builder",
   "version": "1.0.0",
   "description": "Item Set Builder for League of Legends",
-  "main": "index.js",
+  "main": "main.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "webpack --progress --profile --colors --display-error-details --display-cached",
+    "watch": "webpack --watch --progress --profile --colors --display-error-details --display-cached",
+    "electron": "electron build/app.bundle.js"
   },
   "repository": {
     "type": "git",
@@ -19,7 +21,9 @@
   "devDependencies": {
     "angular2": "^2.0.0-beta.21",
     "electron": "^1.6.2",
-    "typescript": "^2.2.1"
+    "ts-loader": "^2.0.2",
+    "typescript": "^2.2.1",
+    "webpack": "^2.2.1"
   },
   "dependencies": {
     "es6-shim": "^0.35.3",
