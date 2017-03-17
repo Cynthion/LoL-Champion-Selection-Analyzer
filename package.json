@@ -1,0 +1,19 @@
+{
+  "name": "lol-item-set-builder",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Biocodr/ItemSetBuilder.git"
+  },
+  "author": "Christian Lüthold",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Biocodr/ItemSetBuilder/issues"
+  },
+  "homepage": "https://github.com/Biocodr/ItemSetBuilder#readme"
+}
