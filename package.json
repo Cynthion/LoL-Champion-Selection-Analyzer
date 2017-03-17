@@ -1,7 +1,7 @@
 {
   "name": "lol-item-set-builder",
   "version": "1.0.0",
-  "description": "",
+  "description": "Item Set Builder for League of Legends",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -15,5 +15,16 @@
   "bugs": {
     "url": "https://github.com/Biocodr/ItemSetBuilder/issues"
   },
-  "homepage": "https://github.com/Biocodr/ItemSetBuilder#readme"
+  "homepage": "https://github.com/Biocodr/ItemSetBuilder#readme",
+  "devDependencies": {
+    "angular2": "^2.0.0-beta.21",
+    "electron": "^1.6.2",
+    "typescript": "^2.2.1"
+  },
+  "dependencies": {
+    "es6-shim": "^0.35.3",
+    "reflect-metadata": "^0.1.2",
+    "rxjs": "5.0.0-beta.6",
+    "zone.js": "^0.6.12"
+  }
 }
