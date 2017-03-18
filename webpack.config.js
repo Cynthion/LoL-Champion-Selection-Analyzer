@@ -7,6 +7,7 @@ var CopyWebpackPlugin = require('copy-webpack-plugin');
 const config = {
     devtool: 'source-map',
 
+    // TODO bundle and move to /build output
     entry: {
         'polyfills': './src/polyfills.ts',
         'vendor': './src/vendor.ts',
