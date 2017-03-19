@@ -1,7 +1,7 @@
 {
-  "name": "lol-item-set-builder",
+  "name": "electron-with-angular2",
   "version": "1.0.0",
-  "description": "Item Set Builder for League of Legends",
+  "description": "Electron with Angular 2",
   "main": "",
   "scripts": {
     "watch": "npm run watch:dev",
