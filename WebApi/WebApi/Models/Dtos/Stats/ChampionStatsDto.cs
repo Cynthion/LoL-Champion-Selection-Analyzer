@@ -1,4 +1,4 @@
-﻿namespace WebApi.Models.Dtos
+﻿namespace WebApi.Models.Dtos.Stats
 {
     public class ChampionStatsDto
     {

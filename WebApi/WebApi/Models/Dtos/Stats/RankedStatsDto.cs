@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace WebApi.Models.Dtos
+namespace WebApi.Models.Dtos.Stats
 {
     public class RankedStatsDto
     {

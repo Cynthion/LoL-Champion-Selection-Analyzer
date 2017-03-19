@@ -3,6 +3,7 @@
 ## Setup / Environment
 [ ] Add Testing Framework
 [ ] Add Continuous Integration Builds
+[ ] NLog logging
 
 ## Production
 [ ] About Information, including Riot ToC (https://developer.riotgames.com/terms-and-conditions.html)

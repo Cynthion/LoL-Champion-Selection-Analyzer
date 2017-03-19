@@ -5,6 +5,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using WebApi.Models;
+using WebApi.Services;
+using WebApi.Services.Interfaces;
 
 namespace WebApi
 {
@@ -33,6 +35,12 @@ namespace WebApi
 
             // Repositories
             services.AddSingleton<ITodoRepository, TodoRepository>();
+
+            // Services
+            services.AddSingleton<IWebService, WebService>();
+
+            services.AddSingleton<IRegionSelector, RegionSelector>();
+            services.AddSingleton(RiotApiKey.CreateFromFile());
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

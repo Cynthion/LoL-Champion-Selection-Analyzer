@@ -15,5 +15,6 @@ namespace WebApi
     /// </summary>
     public class RateLimitEnforcer
     {
+        // TODO implement as singleton (used by app, builds, integration tests)
     }
 }

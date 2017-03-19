@@ -16,6 +16,8 @@ namespace WebApi.UnitTests
 
             // assert
             Assert.AreEqual(false, apiKey.IsProduction);
+            Assert.IsNotNull(apiKey.ApiKey);
+            Assert.AreNotEqual(string.Empty, apiKey.ApiKey);
         }
     }
 }
