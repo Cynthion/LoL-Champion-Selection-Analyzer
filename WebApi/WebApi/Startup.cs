@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using WebApi.Models;
+using WebApi.Data;
 using WebApi.Services;
 using WebApi.Services.Interfaces;
 
@@ -12,6 +12,7 @@ namespace WebApi
 {
     public class Startup
     {
+        // TODO use multiple environments https://docs.microsoft.com/en-us/aspnet/core/fundamentals/environments
         public Startup(IHostingEnvironment env)
         {
             var builder = new ConfigurationBuilder()
@@ -31,10 +32,10 @@ namespace WebApi
             services.AddMvc(); // TODO remove, since MVC is not used
 
             // Database contexts
-            services.AddDbContext<TodoContext>(opt => opt.UseInMemoryDatabase());
+            services.AddDbContext<StatsContext>(opt => opt.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
             // Repositories
-            services.AddSingleton<ITodoRepository, TodoRepository>();
+            //services.AddSingleton<ITodoRepository, TodoRepository>();
 
             // Services
             services.AddSingleton<IWebService, WebService>();

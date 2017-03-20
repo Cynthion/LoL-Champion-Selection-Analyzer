@@ -8,8 +8,6 @@ namespace WebApi.Services
 {
     public class WebService : IWebService
     {
-        private const string baseUrl = "";
-
         private readonly RiotApiKey _riotApiKey;
         private readonly IRegionSelector _regionSelector;
 
@@ -22,7 +20,7 @@ namespace WebApi.Services
         public Task<string> GetRequestAsync(string url)
         {
             url = AddRiotApiKey(url);
-            var bsaeUrl = $"https://{_regionSelector.GetRegion().ToLower()}.api.pvp.net/{url}";     
+            var baseUrl = $"https://{_regionSelector.GetRegion().ToLower()}.api.pvp.net/{url}";     
             
             var client = new HttpClient();
 

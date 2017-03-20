@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using WebApi.Models.Dtos.Summoner;
@@ -19,7 +18,6 @@ namespace WebApi.Services
 
         public async Task<IDictionary<string, SummonerDto>> GetSummonersByNameAsync(Region region, IEnumerable<string> summonerNames)
         {
-            var dictionary = new Dictionary<string, SummonerDto>();
             var url = $"api/lol/{region}/v1.4/summoner/by-name/{string.Join(", ", summonerNames)}";
 
             var response = await _webService.GetRequestAsync(url);
