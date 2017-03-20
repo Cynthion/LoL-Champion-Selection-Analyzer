@@ -24,7 +24,6 @@ namespace WebApi.Services
             url = AddRiotApiKey(url);
             var bsaeUrl = $"https://{_regionSelector.GetRegion().ToLower()}.api.pvp.net/{url}";     
             
-
             var client = new HttpClient();
 
             client.DefaultRequestHeaders.Accept.Clear();
