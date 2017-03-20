@@ -20,8 +20,9 @@ namespace WebApi.Services
             _regionSelector = regionSelector;
         }
 
-        public async Task<IEnumerable<Pair<SummonerDto>>> GetSummonersByNameAsync(IEnumerable<string> summonerNames)
+        public async Task<IDictionary<string, SummonerDto>> GetSummonersByNameAsync(IEnumerable<string> summonerNames)
         {
+            var dictionary = new Dictionary<string, SummonerDto>();
             var url = string.Format(
                 "https://{0}.api.pvp.net/api/lol/EUW/v1.4/summoner/by-name/{1}",
                 _regionSelector.GetRegion().ToLower(),
@@ -31,11 +32,7 @@ namespace WebApi.Services
 
             Console.WriteLine($"{ nameof(SummonerService) } retrieved: { response }");
 
-            if (JToken.Parse(response) is JArray)
-            {
-                return JsonConvert.DeserializeObject<Pair<SummonerDto>[]>(response);
-            }
-            return new [] { JsonConvert.DeserializeObject<Pair<SummonerDto>>(response) };
+            return JsonConvert.DeserializeObject<Dictionary<string, SummonerDto>>(response);
         }
     }
 }
