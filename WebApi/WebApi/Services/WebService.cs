@@ -8,18 +8,22 @@ namespace WebApi.Services
 {
     public class WebService : IWebService
     {
-        private readonly RiotApiKey _riotApiKey;
+        private const string baseUrl = "";
 
-        public WebService(RiotApiKey riotApiKey)
+        private readonly RiotApiKey _riotApiKey;
+        private readonly IRegionSelector _regionSelector;
+
+        public WebService(IRegionSelector regionSelector, RiotApiKey riotApiKey)
         {
             _riotApiKey = riotApiKey;
+            _regionSelector = regionSelector;
         }
 
         public Task<string> GetRequestAsync(string url)
         {
             url = AddRiotApiKey(url);
+            var bsaeUrl = $"https://{_regionSelector.GetRegion().ToLower()}.api.pvp.net/{url}";     
             
-            Console.WriteLine($"Calling { url }");
 
             var client = new HttpClient();
 
@@ -28,7 +32,11 @@ namespace WebApi.Services
 
             client.DefaultRequestHeaders.Add("User-Agent", "Champion Selection Analyzer");
 
-            return client.GetStringAsync(url);
+            Console.WriteLine($"Calling { baseUrl }");
+            var response = client.GetStringAsync(baseUrl);
+
+            Console.WriteLine($"{ nameof(WebService) } retrieved: { response }");
+            return response;
         }
 
         private string AddRiotApiKey(string url)

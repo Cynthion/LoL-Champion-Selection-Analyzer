@@ -38,6 +38,8 @@ namespace WebApi
 
             // Services
             services.AddSingleton<IWebService, WebService>();
+            services.AddSingleton<ISummonerService, SummonerService>();
+            services.AddSingleton<IStatsService, StatsService>();
 
             services.AddSingleton<IRegionSelector, RegionSelector>();
             services.AddSingleton(RiotApiKey.CreateFromFile());
