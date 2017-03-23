@@ -3,6 +3,12 @@
 ## Setup / Environment
 [ ] Add Testing Framework
 [ ] Add Continuous Integration Builds
+[ ] NLog logging
+
+## Production
+[ ] About Information, including Riot ToC (https://developer.riotgames.com/terms-and-conditions.html)
+[ ] Request Production API Key https://developer.riotgames.com/api-keys.html
+[ ] Adapt Rate Limit Enforcement to Production Key
 
 ## Features
 

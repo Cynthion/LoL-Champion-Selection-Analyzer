@@ -1,0 +1,9 @@
+﻿Source:
+https://docs.microsoft.com/en-us/ef/core/miscellaneous/cli/dotnet#dotnet-ef-migrations-remove
+
+dotnet ef migrations add <NameOfMigrationScript> --context <NameOfDbContext>
+
+dotnet ef database update
+
+dotnet ef migrations remove --context <NameOfDbContext>
+
