@@ -1,6 +1,6 @@
 # League of Legends Champion Selection Analyzer
 
-This project is work in progress and does not have yet a release. Stay tuned!
+This project is work in progress and does not have a release yet. Stay tuned!
 
 ## Client
 
