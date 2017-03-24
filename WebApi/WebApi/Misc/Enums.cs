@@ -2,8 +2,8 @@
 {
     public enum Region
     {
-        EUW,
-        NA
+        Euw,
+        Na
     }
 
     public enum Season
@@ -15,5 +15,14 @@
         Season5,
         Season6,
         Season7
+    }
+
+    public enum LanePosition
+    {
+        Top,
+        Jgl,
+        Mid,
+        Bot,
+        Sup
     }
 }
