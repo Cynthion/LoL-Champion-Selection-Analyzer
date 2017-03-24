@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using WebApi.Misc;
 using WebApi.Models.Dtos.Stats;
 
-namespace WebApi.Services.Interfaces
+namespace WebApi.Services.RiotApi.Interfaces
 {
     public interface IStatsService
     {

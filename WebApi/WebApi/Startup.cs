@@ -7,6 +7,8 @@ using Microsoft.Extensions.Logging;
 using WebApi.Data;
 using WebApi.Services;
 using WebApi.Services.Interfaces;
+using WebApi.Services.RiotApi;
+using WebApi.Services.RiotApi.Interfaces;
 
 namespace WebApi
 {
@@ -38,12 +40,13 @@ namespace WebApi
             //services.AddSingleton<ITodoRepository, TodoRepository>();
 
             // Services
-            services.AddSingleton<IWebService, WebService>();
+            services.AddSingleton<IWebService, RiotWebService>();
             services.AddSingleton<ISummonerService, SummonerService>();
             services.AddSingleton<IStatsService, StatsService>();
 
             services.AddSingleton<IRegionSelector, RegionSelector>();
             services.AddSingleton(RiotApiKey.CreateFromFile());
+            services.AddSingleton<ISuggestionService, SuggestionService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

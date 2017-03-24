@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 
-namespace WebApi.Services.Interfaces
+namespace WebApi.Services.RiotApi.Interfaces
 {
     public interface IWebService
     {

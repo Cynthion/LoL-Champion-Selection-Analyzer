@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using WebApi.Misc;
+﻿using WebApi.Misc;
 
 namespace WebApi.Models.Dtos
 {

@@ -1,11 +1,11 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
-using WebApi.Models.Dtos.Summoner;
-using WebApi.Services.Interfaces;
 using WebApi.Misc;
+using WebApi.Models.Dtos.Summoner;
+using WebApi.Services.RiotApi.Interfaces;
 
-namespace WebApi.Services
+namespace WebApi.Services.RiotApi
 {
     public class SummonerService : ISummonerService
     {

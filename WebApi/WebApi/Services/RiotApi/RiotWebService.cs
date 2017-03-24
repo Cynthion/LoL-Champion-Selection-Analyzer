@@ -2,16 +2,16 @@
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
-using WebApi.Services.Interfaces;
+using WebApi.Services.RiotApi.Interfaces;
 
-namespace WebApi.Services
+namespace WebApi.Services.RiotApi
 {
-    public class WebService : IWebService
+    public class RiotWebService : IWebService
     {
         private readonly RiotApiKey _riotApiKey;
         private readonly IRegionSelector _regionSelector;
 
-        public WebService(IRegionSelector regionSelector, RiotApiKey riotApiKey)
+        public RiotWebService(IRegionSelector regionSelector, RiotApiKey riotApiKey)
         {
             _riotApiKey = riotApiKey;
             _regionSelector = regionSelector;
@@ -32,7 +32,7 @@ namespace WebApi.Services
             Console.WriteLine($"Calling { baseUrl }");
             var response = client.GetStringAsync(baseUrl);
 
-            Console.WriteLine($"{ nameof(WebService) } retrieved: { response }");
+            Console.WriteLine($"{ nameof(RiotWebService) } retrieved: { response }");
             return response;
         }
 

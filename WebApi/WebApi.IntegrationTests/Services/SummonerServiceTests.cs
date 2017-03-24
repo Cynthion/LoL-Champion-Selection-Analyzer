@@ -2,8 +2,9 @@
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using WebApi.Services;
-using WebApi.Services.Interfaces;
 using WebApi.Misc;
+using WebApi.Services.RiotApi;
+using WebApi.Services.RiotApi.Interfaces;
 
 namespace WebApi.IntegrationTests.Services
 {
@@ -31,7 +32,7 @@ namespace WebApi.IntegrationTests.Services
             var apiKey = RiotApiKey.CreateFromFile();
 
             var regionSelector = new RegionSelector();
-            var webService = new WebService(regionSelector, apiKey);
+            var webService = new RiotWebService(regionSelector, apiKey);
 
             return new SummonerService(webService);
         }

@@ -1,12 +1,12 @@
-﻿using Newtonsoft.Json;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
 using WebApi.Misc;
 using WebApi.Models.Dtos.Stats;
-using WebApi.Services.Interfaces;
+using WebApi.Services.RiotApi.Interfaces;
 
-namespace WebApi.Services
+namespace WebApi.Services.RiotApi
 {
     public class StatsService : IStatsService
     {
