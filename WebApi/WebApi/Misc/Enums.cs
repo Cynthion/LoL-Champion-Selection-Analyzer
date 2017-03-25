@@ -17,7 +17,7 @@
         Season7
     }
 
-    public enum LanePosition
+    public enum Lane
     {
         Top,
         Jgl,

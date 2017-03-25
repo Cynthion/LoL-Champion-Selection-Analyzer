@@ -5,6 +5,6 @@ namespace WebApi.Services.Interfaces
 {
     public interface ISuggestionService
     {
-        Suggestion GetSuggestion(TeamConstellation own, TeamConstellation enemy);
+        Suggestion GetSuggestion(TeamConstellation friendly, TeamConstellation enemy);
     }
 }
