@@ -28,9 +28,8 @@ namespace WebApi.Services
         /// <returns></returns>
         public Suggestion GetSuggestion(TeamConstellation friendlyTeam, TeamConstellation enemyTeam, IEnumerable<long> championBans)
         {
-            var suggestion = new Suggestion();
-
             // TODO parallelize
+            var suggestion = new Suggestion();
 
             var friendlyPicks = friendlyTeam.ChampionPlacements.Where(p => p.IsPicked).ToArray();
             var enemyPicks = enemyTeam.ChampionPlacements.Where(p => p.IsPicked).ToArray();
@@ -139,7 +138,7 @@ namespace WebApi.Services
             return suggestion;
         }
 
-        private static IEnumerable<ChampionPotential> FindBestChampions(IEnumerable<Matchup> allFriendsMatchupsWithLaneUnderSuggestion, IEnumerable<Matchup> allEnemiesMatchupsWithLaneUnderSuggestion)
+        private static IEnumerable<ChampionPotential> FindBestChampions(IList<Matchup> allFriendsMatchupsWithLaneUnderSuggestion, IList<Matchup> allEnemiesMatchupsWithLaneUnderSuggestion)
         {
             // assume all matchups exist -> TODO create all possible matchups
             var champions = allFriendsMatchupsWithLaneUnderSuggestion
@@ -149,22 +148,22 @@ namespace WebApi.Services
 
             var championPotentials = new List<ChampionPotential>();
 
-            foreach (var champion in champions)
+            foreach (var championId in champions.Select(c => c.ChampionId))
             {
-                var championPotential = new ChampionPotential(champion.ChampionId);
+                var championPotential = new ChampionPotential(championId)
+                {
+                    AvgSynergyWinRate = allFriendsMatchupsWithLaneUnderSuggestion
+                        .Where(m => championId == m.ChampionPlacement2.ChampionId)
+                        .Average(m => m.SynergyWinRate),
+                    AvgCounterWinRate = allEnemiesMatchupsWithLaneUnderSuggestion
+                        .Where(m => championId == m.ChampionPlacement2.ChampionId)
+                        .Average(m => m.CounterWinRate)
+                };
 
-                // TODO find best synergy
-                // TODO find best counter
+                championPotentials.Add(championPotential);
             }
 
             return championPotentials.OrderByDescending(p => p.Potential).Take(3);
         }
-
-        private static bool ChampionIsAvailable(Matchup matchup, IEnumerable<long> unavailableChampionIds)
-        {
-            return unavailableChampionIds.All(i => i != matchup.ChampionPlacement1.ChampionId);
-        }
-
-        
     }
 }
