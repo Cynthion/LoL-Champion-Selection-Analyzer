@@ -6,6 +6,9 @@
 
         public Lane Lane { get; set; }
 
+        /// <summary>
+        /// Indicates whether a champion is announced or picked.
+        /// </summary>
         public bool IsPicked => ChampionId != 0;
     }
 }

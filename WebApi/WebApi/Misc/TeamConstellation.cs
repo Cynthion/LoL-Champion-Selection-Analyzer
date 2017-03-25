@@ -15,22 +15,13 @@ namespace WebApi.Misc
 
         public ChampionPlacement Sup { get; set; }
 
-        /// <summary>
-        /// Returns the lanes that have already been announced or picked.
-        /// </summary>
-        /// <returns></returns>
-        public IEnumerable<ChampionPlacement> GetPickedPlacements()
+        public IEnumerable<ChampionPlacement> ChampionPlacements => new[]
         {
-            // TODO use yield return, use distinct
-            var picks = new List<ChampionPlacement>();
-
-            if (Top.IsPicked) picks.Add(Top);
-            if (Jgl.IsPicked) picks.Add(Jgl);
-            if (Mid.IsPicked) picks.Add(Mid);
-            if (Bot.IsPicked) picks.Add(Bot);
-            if (Sup.IsPicked) picks.Add(Sup);
-
-            return picks;
-        }
+            Top,
+            Jgl,
+            Mid,
+            Bot,
+            Sup
+        };
     }
 }
