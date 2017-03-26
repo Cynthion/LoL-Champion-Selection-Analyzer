@@ -1,9 +1,12 @@
-﻿namespace WebApi.Misc
+﻿using System.Diagnostics.CodeAnalysis;
+
+namespace WebApi.Misc
 {
+    [SuppressMessage("ReSharper", "InconsistentNaming")]
     public enum Region
     {
-        Euw,
-        Na
+        EUW,
+        NA
     }
 
     public enum Season
