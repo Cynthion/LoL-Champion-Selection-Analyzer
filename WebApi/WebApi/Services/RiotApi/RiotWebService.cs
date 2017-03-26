@@ -19,7 +19,7 @@ namespace WebApi.Services.RiotApi
 
         public Task<string> GetRequestAsync(string url)
         {
-            url = AddRiotApiKey(url);
+            url.AddUrlParameter($"api_key={_riotApiKey.ApiKey}");
             var baseUrl = $"https://{_regionSelector.GetRegion().ToLower()}.api.pvp.net/{url}";     
             
             var client = new HttpClient();
@@ -34,11 +34,6 @@ namespace WebApi.Services.RiotApi
 
             Console.WriteLine($"{ nameof(RiotWebService) } retrieved: { response }");
             return response;
-        }
-
-        private string AddRiotApiKey(string url)
-        {
-            return string.Format("{0}?api_key={1}", url, _riotApiKey.ApiKey);
         }
     }
 }

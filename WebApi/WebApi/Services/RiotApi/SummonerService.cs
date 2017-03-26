@@ -18,7 +18,7 @@ namespace WebApi.Services.RiotApi
 
         public async Task<IDictionary<string, SummonerDto>> GetSummonersByNameAsync(Region region, IEnumerable<string> summonerNames)
         {
-            var url = $"api/lol/{region}/v1.4/summoner/by-name/{string.Join(", ", summonerNames)}";
+            var url = $"api/lol/{region}/v1.4/summoner/by-name/{string.Join(",", summonerNames)}";
 
             var response = await _webService.GetRequestAsync(url);
 

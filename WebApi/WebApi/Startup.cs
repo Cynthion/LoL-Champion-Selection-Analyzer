@@ -43,6 +43,7 @@ namespace WebApi
             services.AddSingleton<IWebService, RiotWebService>();
             services.AddSingleton<ISummonerService, SummonerService>();
             services.AddSingleton<IStatsService, StatsService>();
+            services.AddSingleton<IMatchService, MatchService>();
 
             services.AddSingleton<IRegionSelector, RegionSelector>();
             services.AddSingleton(RiotApiKey.CreateFromFile());
