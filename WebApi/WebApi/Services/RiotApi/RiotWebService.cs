@@ -3,16 +3,17 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using WebApi.Misc;
+using WebApi.Misc.Interfaces;
 using WebApi.Services.RiotApi.Interfaces;
 
 namespace WebApi.Services.RiotApi
 {
     public class RiotWebService : IWebService
     {
-        private readonly RiotApiKey _riotApiKey;
+        private readonly IApiKey _riotApiKey;
         private readonly IRegionSelector _regionSelector;
 
-        public RiotWebService(IRegionSelector regionSelector, RiotApiKey riotApiKey)
+        public RiotWebService(IRegionSelector regionSelector, IApiKey riotApiKey)
         {
             _riotApiKey = riotApiKey;
             _regionSelector = regionSelector;

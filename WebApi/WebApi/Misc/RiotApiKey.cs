@@ -1,10 +1,11 @@
 ﻿using System;
 using System.IO;
 using Newtonsoft.Json;
+using WebApi.Misc.Interfaces;
 
 namespace WebApi.Misc
 {
-    public class RiotApiKey
+    public class RiotApiKey : IApiKey
     {
         public bool IsProduction { get; set; }
 

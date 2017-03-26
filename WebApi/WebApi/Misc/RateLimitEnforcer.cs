@@ -35,7 +35,7 @@ namespace WebApi.Misc
         private DateTime _firstRequestInLast10Min = DateTime.MinValue;
         private DateTime _retryAfter = DateTime.MinValue;
 
-        public RateLimitEnforcer(RiotApiKey apiKey)
+        public RateLimitEnforcer(IApiKey apiKey)
         {
             SetRateLimitsForApiKey(apiKey, out _limitPer10Sec, out _limitPer10Min);
         }
@@ -60,7 +60,7 @@ namespace WebApi.Misc
             _retryAfter = DateTime.Now + retryDelay;
         }
 
-        private static void SetRateLimitsForApiKey(RiotApiKey apiKey, out int limitPer10Sec, out int limitPer10Min)
+        private static void SetRateLimitsForApiKey(IApiKey apiKey, out int limitPer10Sec, out int limitPer10Min)
         {
             if (apiKey.IsProduction)
             {
