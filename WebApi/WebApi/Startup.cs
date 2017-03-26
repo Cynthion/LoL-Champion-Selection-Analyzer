@@ -5,6 +5,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using WebApi.Data;
+using WebApi.Misc;
+using WebApi.Misc.Interfaces;
 using WebApi.Services;
 using WebApi.Services.Interfaces;
 using WebApi.Services.RiotApi;
@@ -46,6 +48,7 @@ namespace WebApi
             services.AddSingleton<IMatchService, MatchService>();
             services.AddSingleton<ILeagueService, LeagueService>();
 
+            services.AddSingleton<IRateLimitEnforcer, RateLimitEnforcer>();
             services.AddSingleton<IRegionSelector, RegionSelector>();
             services.AddSingleton(RiotApiKey.CreateFromFile());
             services.AddSingleton<ISuggestionService, SuggestionService>();

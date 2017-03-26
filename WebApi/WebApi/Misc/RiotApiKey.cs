@@ -2,7 +2,7 @@
 using System.IO;
 using Newtonsoft.Json;
 
-namespace WebApi
+namespace WebApi.Misc
 {
     public class RiotApiKey
     {
