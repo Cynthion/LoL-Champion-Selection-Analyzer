@@ -44,6 +44,7 @@ namespace WebApi
             services.AddSingleton<ISummonerService, SummonerService>();
             services.AddSingleton<IStatsService, StatsService>();
             services.AddSingleton<IMatchService, MatchService>();
+            services.AddSingleton<ILeagueService, LeagueService>();
 
             services.AddSingleton<IRegionSelector, RegionSelector>();
             services.AddSingleton(RiotApiKey.CreateFromFile());

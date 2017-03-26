@@ -1,11 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace WebApi.Models.Dtos.Match
+﻿namespace WebApi.Models.Dtos.Match
 {
+    /// <summary>
+    /// Unnecessary properties not contained.
+    /// </summary>
     public class TeamDto
     {
+        public int TeamId { get; set; }
+
+        public bool Winner { get; set; }
+        
     }
 }
