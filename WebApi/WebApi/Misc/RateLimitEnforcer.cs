@@ -9,7 +9,6 @@ namespace WebApi.Misc
     // Rate Limiting: https://developer.riotgames.com/rate-limiting.html
     // API Keys: https://developer.riotgames.com/api-keys.html
 
-    // TODO allow region swap
     // Rate limits are enforced per region. 
     // For example, with the above rate limit, you could make 500 requests 
     // very 10 minutes to both NA and EUW endpoints simultaneously.

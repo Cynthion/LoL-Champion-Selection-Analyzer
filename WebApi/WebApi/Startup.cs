@@ -49,8 +49,7 @@ namespace WebApi
             services.AddSingleton<ILeagueService, LeagueService>();
 
             services.AddSingleton<IApiKey>(RiotApiKey.CreateFromFile());
-            services.AddSingleton<IRateLimitEnforcer, RateLimitEnforcer>();
-            services.AddSingleton<IRegionSelector, RegionSelector>();
+            //services.AddSingleton<IRegionSelector, RegionSelector>();
             services.AddSingleton<ISuggestionService, SuggestionService>();
         }
 
