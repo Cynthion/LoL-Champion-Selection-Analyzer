@@ -36,6 +36,19 @@ namespace WebApi.IntegrationTests.Services
             Assert.IsNotNull(matchList);
         }
 
+        [TestMethod]
+        public void GivenMatchId_WhenMatchIsRequested_ThenResponseIsSuccessful()
+        {
+            // arrange
+            const long matchId = 2852190087;
+
+            // act
+            var match = GetMatchService().GetMatchAsync(Region.EUW, matchId);
+
+            // assert
+            Assert.IsNotNull(match);
+        }
+
         private static IMatchService GetMatchService()
         {
             // TODO use DI
