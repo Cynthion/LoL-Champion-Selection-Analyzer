@@ -17,7 +17,7 @@ namespace WebApi.Controllers
         [HttpGet]
         public IActionResult GetSuggestions([FromBody] SuggestionRequestDto request)
         {
-            var suggestion = _suggestionService.GetSuggestion(request.Team1, request.Team2);
+            var suggestion = _suggestionService.GetSuggestion(request.Team1, request.Team2, request.ChampionBans);
 
             var response = new SuggestionResponseDto
             {

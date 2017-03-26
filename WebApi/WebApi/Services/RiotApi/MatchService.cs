@@ -23,12 +23,12 @@ namespace WebApi.Services.RiotApi
 
             if (rankedQueues.Any())
             {
-                url.AddUrlParameter($"rankedQueues={string.Join(",", rankedQueues)}");
+                url = url.AddUrlParameter($"rankedQueues={string.Join(",", rankedQueues)}");
             }
 
             if (seasons.Any())
             {
-                url.AddUrlParameter($"seasons={string.Join(",", seasons)}");
+                url = url.AddUrlParameter($"seasons={string.Join(",", seasons)}");
             }
 
             var response = await _webService.GetRequestAsync(url);

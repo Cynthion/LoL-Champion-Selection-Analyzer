@@ -2,9 +2,9 @@
 {
     internal static class Util
     {
-        internal static void AddUrlParameter(this string url, string parameter)
+        internal static string AddUrlParameter(this string url, string parameter)
         {
-            url = $"{url}{(url.Contains("?") ? "&" : "?")}{parameter}";
+            return $"{url}{(url.Contains("?") ? "&" : "?")}{parameter}";
         }
     }
 }

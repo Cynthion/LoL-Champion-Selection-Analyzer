@@ -19,7 +19,7 @@ namespace WebApi.Services.RiotApi
 
         public Task<string> GetRequestAsync(string url)
         {
-            url.AddUrlParameter($"api_key={_riotApiKey.ApiKey}");
+            url = url.AddUrlParameter($"api_key={_riotApiKey.ApiKey}");
             var baseUrl = $"https://{_regionSelector.GetRegion().ToLower()}.api.pvp.net/{url}";     
             
             var client = new HttpClient();
@@ -32,7 +32,7 @@ namespace WebApi.Services.RiotApi
             Console.WriteLine($"Calling { baseUrl }");
             var response = client.GetStringAsync(baseUrl);
 
-            Console.WriteLine($"{ nameof(RiotWebService) } retrieved: { response }");
+            Console.WriteLine($"{ nameof(RiotWebService) } retrieved: { response.Result }");
             return response;
         }
     }

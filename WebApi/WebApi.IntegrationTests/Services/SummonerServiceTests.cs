@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using WebApi.Services;
 using WebApi.Misc;
 using WebApi.Services.RiotApi;
 using WebApi.Services.RiotApi.Interfaces;
@@ -18,7 +17,7 @@ namespace WebApi.IntegrationTests.Services
             const string summonerName = "Drohkan";
 
             // act
-            var pairs = GetSummonerService().GetSummonersByNameAsync(Region.EUW, new[] {summonerName}).Result.ToArray();
+            var pairs = GetSummonerService().GetSummonersByNameAsync(Region.Euw, new[] {summonerName}).Result.ToArray();
             Console.WriteLine($"{ nameof(SummonerServiceTests) } retrieved: { string.Join(", ", pairs.Select(d => d.Value.ToString())) }");
 
             // assert
