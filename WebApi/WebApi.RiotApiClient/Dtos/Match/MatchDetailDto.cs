@@ -9,12 +9,12 @@ namespace WebApi.RiotApiClient.Dtos.Match
     {
         public long MatchId { get; set; }
 
-        public string Region { get; set; }
-
-        public IList<TeamDto> Teams { get; set; }
-
         public string Season { get; set; }
 
+        public string Region { get; set; }
+
         public string QueueType { get; set; }
+
+        public IList<TeamDto> Teams { get; set; }
     }
 }
