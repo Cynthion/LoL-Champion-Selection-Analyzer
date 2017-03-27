@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
@@ -21,6 +22,11 @@ namespace WebApi.Services.RiotApi
         private readonly IDictionary<Region, IRateLimitEnforcer> _rateLimitEnforcers;
 
         private readonly HttpClient _httpClient;
+
+        private const string XRateLimitTypeHeader = "X-Rate-Limit-Type";
+        private const string XAppRateLimitCountHeader = "X-App-Rate-Limit-Count";
+        private const string XMethodRateLimitCountHeader = "X-Method-Rate-Limit-Count";
+        private const string RetryAfterHeader = "Retry-After";
 
         public RiotWebService(IApiKey riotApiKey)
         {
@@ -46,7 +52,7 @@ namespace WebApi.Services.RiotApi
             {
                 if (!response.IsSuccessStatusCode)
                 {
-                    HandleRequestFailure(response.StatusCode);
+                    HandleRequestFailure(response, region);
                 }
                 using (var content = response.Content)
                 {
@@ -74,29 +80,61 @@ namespace WebApi.Services.RiotApi
             return _rateLimitEnforcers[region];
         }
 
-        private void HandleRequestFailure(HttpStatusCode statusCode)
+        private void HandleRequestFailure(HttpResponseMessage response, Region region)
         {
-            var code = (int) statusCode;
-            if (code == 429)
-            {
-                // TODO read headers, set RetryAfter delay to RateLimitEnforcer
-            }
+            var statusCode = response.StatusCode;
 
-            switch (statusCode)
+            if ((int)statusCode == 429)
             {
-                case HttpStatusCode.ServiceUnavailable:
-                    throw new ChampionSelectionAnalyzerException("503, Service unavailable", statusCode);
-                case HttpStatusCode.InternalServerError:
-                    throw new ChampionSelectionAnalyzerException("500, Internal server error", statusCode);
-                case HttpStatusCode.Unauthorized:
-                    throw new ChampionSelectionAnalyzerException("401, Unauthorized", statusCode);
-                case HttpStatusCode.BadRequest:
-                    throw new ChampionSelectionAnalyzerException("400, Bad request", statusCode);
-                case HttpStatusCode.NotFound:
-                    throw new ChampionSelectionAnalyzerException("404, Resource not found", statusCode);
-                case HttpStatusCode.Forbidden:
-                    throw new ChampionSelectionAnalyzerException("403, Forbidden", statusCode);
+                HandleRateLimit(response, region);
             }
+            else
+            {
+                switch (statusCode)
+                {
+                    case HttpStatusCode.ServiceUnavailable:
+                        throw new ChampionSelectionAnalyzerException("503, Service unavailable", statusCode);
+                    case HttpStatusCode.InternalServerError:
+                        throw new ChampionSelectionAnalyzerException("500, Internal server error", statusCode);
+                    case HttpStatusCode.Unauthorized:
+                        throw new ChampionSelectionAnalyzerException("401, Unauthorized", statusCode);
+                    case HttpStatusCode.BadRequest:
+                        throw new ChampionSelectionAnalyzerException("400, Bad request", statusCode);
+                    case HttpStatusCode.NotFound:
+                        throw new ChampionSelectionAnalyzerException("404, Resource not found", statusCode);
+                    case HttpStatusCode.Forbidden:
+                        throw new ChampionSelectionAnalyzerException("403, Forbidden", statusCode);
+                }
+            }
+        }
+
+        private void HandleRateLimit(HttpResponseMessage response, Region region)
+        {
+            Console.WriteLine("Rate limit detected:");
+
+            ReadHeader(XRateLimitTypeHeader, response.Headers, out IEnumerable<string> headerValues);
+            ReadHeader(XAppRateLimitCountHeader, response.Headers, out headerValues);
+            ReadHeader(XMethodRateLimitCountHeader, response.Headers, out headerValues);
+            ReadHeader(RetryAfterHeader, response.Headers, out headerValues);
+
+            if (headerValues.Any())
+            {
+                if (int.TryParse(headerValues.First(), out int retryAfterContent))
+                {
+                    var retryAfterDelay = TimeSpan.FromSeconds(retryAfterContent);
+                    GetRateLimitEnforcer(region).SetRetryAfter(retryAfterDelay);
+                }
+                else
+                {
+                    throw new ChampionSelectionAnalyzerException("Unsuccessful extraction of retry after delay.");
+                }
+            }
+        }
+
+        private static void ReadHeader(string headerName, HttpHeaders headers, out IEnumerable<string> headerValues)
+        {
+            headers.TryGetValues(headerName, out headerValues);
+            Console.WriteLine($"{headerName}: {headerValues}");
         }
     }
 }
