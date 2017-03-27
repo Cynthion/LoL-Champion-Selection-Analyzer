@@ -5,6 +5,7 @@ using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
+using NLog;
 using WebApi.Misc;
 using WebApi.Misc.Exceptions;
 using WebApi.Misc.Interfaces;
@@ -18,6 +19,8 @@ namespace WebApi.Services.RiotApi
 
     public class RiotWebService : IWebService
     {
+        private static readonly ILogger Logger = LogManager.GetCurrentClassLogger();
+
         private readonly IApiKey _riotApiKey;
         private readonly IDictionary<Region, IRateLimitEnforcer> _rateLimitEnforcers;
 
@@ -42,7 +45,7 @@ namespace WebApi.Services.RiotApi
 
             url = url.AddUrlParameter($"api_key={_riotApiKey.ApiKey}");
             var baseUrl = $"https://{region.ToString().ToLower()}.api.pvp.net/{url}";     
-            Console.WriteLine($"Calling {baseUrl}");
+            Logger.Debug($"Calling {baseUrl}");
 
             PrepareHttpClient();
 
@@ -60,7 +63,7 @@ namespace WebApi.Services.RiotApi
                 }
             }
 
-            Console.WriteLine($"{nameof(RiotWebService)} retrieved: {result}");
+            Logger.Trace($"{nameof(RiotWebService)} retrieved: {result}");
             return result;
         }
 
@@ -110,7 +113,7 @@ namespace WebApi.Services.RiotApi
 
         private void HandleRateLimit(HttpResponseMessage response, Region region)
         {
-            Console.WriteLine("Rate limit detected:");
+            Logger.Warn("Rate limit detected:");
 
             ReadHeader(XRateLimitTypeHeader, response.Headers, out IEnumerable<string> headerValues);
             ReadHeader(XAppRateLimitCountHeader, response.Headers, out headerValues);
@@ -134,7 +137,7 @@ namespace WebApi.Services.RiotApi
         private static void ReadHeader(string headerName, HttpHeaders headers, out IEnumerable<string> headerValues)
         {
             headers.TryGetValues(headerName, out headerValues);
-            Console.WriteLine($"{headerName}: {headerValues}");
+            Logger.Warn($"{headerName}: {headerValues}");
         }
     }
 }

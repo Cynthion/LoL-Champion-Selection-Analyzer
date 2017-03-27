@@ -1,9 +1,11 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using System;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using NLog;
 using WebApi.Data;
 using WebApi.Misc;
 using WebApi.Misc.Interfaces;
@@ -11,11 +13,14 @@ using WebApi.Services;
 using WebApi.Services.Interfaces;
 using WebApi.Services.RiotApi;
 using WebApi.Services.RiotApi.Interfaces;
+using ILogger = NLog.ILogger;
 
 namespace WebApi
 {
     public class Startup
     {
+        private static readonly ILogger Logger = LogManager.GetCurrentClassLogger();
+
         // TODO use multiple environments https://docs.microsoft.com/en-us/aspnet/core/fundamentals/environments
         public Startup(IHostingEnvironment env)
         {
@@ -48,7 +53,11 @@ namespace WebApi
             services.AddSingleton<IMatchService, MatchService>();
             services.AddSingleton<ILeagueService, LeagueService>();
 
-            services.AddSingleton<IApiKey>(RiotApiKey.CreateFromFile());
+            services.AddSingleton<IApiKey>(c => {
+                var apiKey = RiotApiKey.CreateFromFile();
+                Logger.Info($"Used API Key:\n{apiKey}");
+                return apiKey;
+            });
             //services.AddSingleton<IRegionSelector, RegionSelector>();
             services.AddSingleton<ISuggestionService, SuggestionService>();
         }

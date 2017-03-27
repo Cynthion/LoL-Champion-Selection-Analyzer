@@ -18,7 +18,6 @@ namespace WebApi.IntegrationTests.Services
 
             // act
             var pairs = GetSummonerService().GetSummonersByNameAsync(Region.EUW, new[] {summonerName}).Result.ToArray();
-            Console.WriteLine($"{ nameof(SummonerServiceTests) } retrieved: { string.Join(", ", pairs.Select(d => d.Value.ToString())) }");
 
             // assert
             Assert.AreEqual(1, pairs.Length);
@@ -30,8 +29,7 @@ namespace WebApi.IntegrationTests.Services
             // TODO use DI
             var apiKey = RiotApiKey.CreateFromFile();
 
-            var regionSelector = new RegionSelector();
-            var webService = new RiotWebService(regionSelector, apiKey);
+            var webService = new RiotWebService(apiKey);
 
             return new SummonerService(webService);
         }

@@ -42,8 +42,7 @@ namespace WebApi.IntegrationTests.Services
             // TODO use DI
             var apiKey = RiotApiKey.CreateFromFile();
 
-            var regionSelector = new RegionSelector();
-            var webService = new RiotWebService(regionSelector, apiKey);
+            var webService = new RiotWebService(apiKey);
 
             return new LeagueService(webService);
         }
