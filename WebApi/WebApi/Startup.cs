@@ -1,12 +1,10 @@
 ﻿using System;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using NLog;
-using WebApi.Data;
 using WebApi.RiotApiClient.Misc;
 using WebApi.RiotApiClient.Misc.Interfaces;
 using WebApi.RiotApiClient.Services;
@@ -41,7 +39,7 @@ namespace WebApi
             services.AddMvc(); // TODO remove, since MVC is not used
 
             // Database contexts
-            services.AddDbContext<StatsContext>(opt => opt.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+            //services.AddDbContext<[DbContext]>(opt => opt.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
             // Repositories
             //services.AddSingleton<ITodoRepository, TodoRepository>();
