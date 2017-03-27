@@ -26,6 +26,5 @@ namespace WebApi.Misc
                 return riotApiKey;
             }
         }
-
     }
 }
