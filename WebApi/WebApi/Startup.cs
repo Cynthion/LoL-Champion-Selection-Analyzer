@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -9,12 +7,12 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using NLog;
 using WebApi.Data;
-using WebApi.Misc;
-using WebApi.Misc.Interfaces;
+using WebApi.RiotApiClient.Misc;
+using WebApi.RiotApiClient.Misc.Interfaces;
+using WebApi.RiotApiClient.Services;
+using WebApi.RiotApiClient.Services.Interfaces;
 using WebApi.Services;
 using WebApi.Services.Interfaces;
-using WebApi.Services.RiotApi;
-using WebApi.Services.RiotApi.Interfaces;
 using ILogger = NLog.ILogger;
 
 namespace WebApi

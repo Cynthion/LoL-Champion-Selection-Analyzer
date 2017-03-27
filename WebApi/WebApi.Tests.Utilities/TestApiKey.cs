@@ -1,4 +1,4 @@
-﻿using WebApi.Misc.Interfaces;
+﻿using WebApi.RiotApiClient.Misc.Interfaces;
 
 namespace WebApi.Tests.Utilities
 {

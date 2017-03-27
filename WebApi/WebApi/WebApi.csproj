@@ -21,6 +21,9 @@
     <DotNetCliToolReference Include="Microsoft.EntityFrameworkCore.Tools.DotNet" Version="1.0.0" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\WebApi.RiotApiClient\WebApi.RiotApiClient.csproj" />
+  </ItemGroup>
+  <ItemGroup>
     <Content Update="riot-api-key.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
