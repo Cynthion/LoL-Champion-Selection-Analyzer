@@ -1,11 +1,10 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using WebApi.Misc;
 using WebApi.Services.RiotApi;
 using WebApi.Services.RiotApi.Interfaces;
 
-namespace WebApi.IntegrationTests.Services
+namespace WebApi.Tests.IntegrationTests.Services
 {
     [TestClass]
     public class SummonerServiceTests

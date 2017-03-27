@@ -1,7 +1,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using WebApi.Misc;
 
-namespace WebApi.UnitTests
+namespace WebApi.Tests.UnitTests
 {
     [TestClass]
     public class RiotApiKeyTests

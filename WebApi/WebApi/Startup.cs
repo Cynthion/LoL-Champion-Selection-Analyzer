@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -35,7 +37,7 @@ namespace WebApi
         public IConfigurationRoot Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
-        public void ConfigureServices(IServiceCollection services)
+        public void ConfigureServices(IServiceCollection services, IServiceProvider serviceProvider)
         {
             // Add framework services.
             services.AddMvc(); // TODO remove, since MVC is not used
@@ -46,6 +48,12 @@ namespace WebApi
             // Repositories
             //services.AddSingleton<ITodoRepository, TodoRepository>();
 
+            services.AddSingleton<IApiKey>(c => {
+                var apiKey = RiotApiKey.CreateFromFile();
+                Logger.Info($"Used API Key:\n{apiKey}");
+                return apiKey;
+            });
+            
             // Services
             services.AddSingleton<IWebService, RiotWebService>();
             services.AddSingleton<ISummonerService, SummonerService>();
@@ -53,11 +61,6 @@ namespace WebApi
             services.AddSingleton<IMatchService, MatchService>();
             services.AddSingleton<ILeagueService, LeagueService>();
 
-            services.AddSingleton<IApiKey>(c => {
-                var apiKey = RiotApiKey.CreateFromFile();
-                Logger.Info($"Used API Key:\n{apiKey}");
-                return apiKey;
-            });
             //services.AddSingleton<IRegionSelector, RegionSelector>();
             services.AddSingleton<ISuggestionService, SuggestionService>();
         }

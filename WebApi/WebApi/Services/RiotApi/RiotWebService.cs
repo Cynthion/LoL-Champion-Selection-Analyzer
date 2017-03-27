@@ -137,7 +137,7 @@ namespace WebApi.Services.RiotApi
         private static void ReadHeader(string headerName, HttpHeaders headers, out IEnumerable<string> headerValues)
         {
             headers.TryGetValues(headerName, out headerValues);
-            Logger.Warn($"{headerName}: {headerValues}");
+            Logger.Warn($"{headerName}: {string.Join("\n", headerValues)}");
         }
     }
 }

@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using WebApi.Misc;
 using WebApi.Services.RiotApi;
 using WebApi.Services.RiotApi.Interfaces;
 
-namespace WebApi.IntegrationTests.Services
+namespace WebApi.Tests.IntegrationTests.Services
 {
     [TestClass]
     public class LeagueServiceTests

@@ -1,7 +1,7 @@
 ﻿using System.Runtime.CompilerServices;
 using Microsoft.EntityFrameworkCore;
 
-namespace WebApi.UnitTests
+namespace WebApi.Tests.UnitTests
 {
     public class DatabaseHelper
     {

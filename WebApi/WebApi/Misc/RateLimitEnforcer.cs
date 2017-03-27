@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
+using NLog;
 using WebApi.Misc.Interfaces;
 
 namespace WebApi.Misc
@@ -19,6 +20,8 @@ namespace WebApi.Misc
 
     public class RateLimitEnforcer : IRateLimitEnforcer
     {
+        private static readonly ILogger Logger = LogManager.GetCurrentClassLogger();
+
         private static readonly TimeSpan TenSeconds = TimeSpan.FromSeconds(10);
         private static readonly TimeSpan TenMinutes = TimeSpan.FromMinutes(10);
 
@@ -57,6 +60,7 @@ namespace WebApi.Misc
         public void SetRetryAfter(TimeSpan retryDelay)
         {
             _retryAfter = DateTime.Now + retryDelay;
+            Logger.Warn($"Retry-After Delay activated: {retryDelay:g}");
         }
 
         private static void SetRateLimitsForApiKey(IApiKey apiKey, out int limitPer10Sec, out int limitPer10Min)

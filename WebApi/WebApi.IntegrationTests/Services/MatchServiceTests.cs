@@ -4,7 +4,7 @@ using WebApi.Misc;
 using WebApi.Services.RiotApi;
 using WebApi.Services.RiotApi.Interfaces;
 
-namespace WebApi.IntegrationTests.Services
+namespace WebApi.Tests.IntegrationTests.Services
 {
     [TestClass]
     public class MatchServiceTests

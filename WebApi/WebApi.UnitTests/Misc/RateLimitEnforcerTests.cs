@@ -4,8 +4,9 @@ using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using WebApi.Misc;
 using WebApi.Misc.Interfaces;
+using WebApi.Tests.Utilities;
 
-namespace WebApi.UnitTests.Misc
+namespace WebApi.Tests.UnitTests.Misc
 {
     // TODO add TestCategory and execute on CI environment, include tests for minute limits
 
@@ -110,13 +111,6 @@ namespace WebApi.UnitTests.Misc
             Assert.IsTrue(
                 actualDelay < TimeSpan.FromTicks((long) (expectedDelay.Ticks * ErrorFactor + MeasureTolerance.Ticks)), 
                 $"Too late! Expected: {expectedDelay}. Actual: {actualDelay}.");
-        }
-
-        private class TestApiKey : IApiKey
-        {
-            public bool IsProduction => false;
-
-            public string ApiKey => "TestApiKey";
         }
     }
 }

@@ -5,9 +5,11 @@ VisualStudioVersion = 15.0.26228.9
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApi", "WebApi\WebApi.csproj", "{FD0DAD5C-20B8-4EF6-AF39-192C6133A247}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApi.UnitTests", "WebApi.UnitTests\WebApi.UnitTests.csproj", "{C5F979F1-D629-4482-B606-AE3E705BD170}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApi.Tests.UnitTests", "WebApi.UnitTests\WebApi.Tests.UnitTests.csproj", "{C5F979F1-D629-4482-B606-AE3E705BD170}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApi.IntegrationTests", "WebApi.IntegrationTests\WebApi.IntegrationTests.csproj", "{13F18DCE-5D73-472B-AE1D-AA02482FBA13}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApi.Tests.IntegrationTests", "WebApi.IntegrationTests\WebApi.Tests.IntegrationTests.csproj", "{13F18DCE-5D73-472B-AE1D-AA02482FBA13}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApi.Tests.Utilities", "WebApi.Tests.Utilities\WebApi.Tests.Utilities.csproj", "{94AB8463-C005-4BD0-B6CC-9CBEC1F6F49B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +29,10 @@ Global
 		{13F18DCE-5D73-472B-AE1D-AA02482FBA13}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{13F18DCE-5D73-472B-AE1D-AA02482FBA13}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{13F18DCE-5D73-472B-AE1D-AA02482FBA13}.Release|Any CPU.Build.0 = Release|Any CPU
+		{94AB8463-C005-4BD0-B6CC-9CBEC1F6F49B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{94AB8463-C005-4BD0-B6CC-9CBEC1F6F49B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{94AB8463-C005-4BD0-B6CC-9CBEC1F6F49B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{94AB8463-C005-4BD0-B6CC-9CBEC1F6F49B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
