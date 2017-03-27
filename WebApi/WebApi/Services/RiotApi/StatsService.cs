@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using WebApi.Misc;
@@ -18,13 +17,16 @@ namespace WebApi.Services.RiotApi
         }
 
         // TODO by Season
-        public async Task<IEnumerable<RankedStatsDto>> GetRankedStatsBySummoner(Region region, string summonerId, Season season)
+        public async Task<IEnumerable<RankedStatsDto>> GetRankedStatsBySummoner(Region region, string summonerId, string season)
         {
             var url = $"api/lol/{region}/v1.3/stats/by-summoner/{summonerId}/ranked";
 
-            var response = await _webService.GetRequestAsync(url);
+            if (!string.IsNullOrEmpty(season))
+            {
+                url = url.AddUrlParameter($"season={season}");
+            }
 
-            Console.WriteLine($"{ nameof(StatsService) } retrieved: { response }");
+            var response = await _webService.GetRequestAsync(region, url);
 
             return JsonConvert.DeserializeObject<RankedStatsDto[]>(response);
         }

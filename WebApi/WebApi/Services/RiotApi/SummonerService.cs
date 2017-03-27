@@ -20,7 +20,7 @@ namespace WebApi.Services.RiotApi
         {
             var url = $"api/lol/{region}/v1.4/summoner/by-name/{string.Join(",", summonerNames)}";
 
-            var response = await _webService.GetRequestAsync(url);
+            var response = await _webService.GetRequestAsync(region, url);
 
             return JsonConvert.DeserializeObject<Dictionary<string, SummonerDto>>(response);
         }

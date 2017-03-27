@@ -31,7 +31,7 @@ namespace WebApi.Services.RiotApi
                 url = url.AddUrlParameter($"seasons={string.Join(",", seasons)}");
             }
 
-            var response = await _webService.GetRequestAsync(url);
+            var response = await _webService.GetRequestAsync(region, url);
 
             return JsonConvert.DeserializeObject<MatchListDto>(response);
         }
@@ -40,7 +40,7 @@ namespace WebApi.Services.RiotApi
         {
             var url = $"/api/lol/{region}/v2.2/match/{matchId}";
 
-            var response = await _webService.GetRequestAsync(url);
+            var response = await _webService.GetRequestAsync(region, url);
 
             return JsonConvert.DeserializeObject<MatchDetailDto>(response);
         }

@@ -7,6 +7,6 @@ namespace WebApi.Services.RiotApi.Interfaces
 {
     public interface IStatsService
     {
-        Task<IEnumerable<RankedStatsDto>> GetRankedStatsBySummoner(Region region, string summonerId, Season season);
+        Task<IEnumerable<RankedStatsDto>> GetRankedStatsBySummoner(Region region, string summonerId, string season);
     }
 }

@@ -19,7 +19,7 @@ namespace WebApi.Services.RiotApi
         {
             var url = $"api/lol/{region}/v2.5/league/master?type={queueType}";
 
-            var response = await _webService.GetRequestAsync(url);
+            var response = await _webService.GetRequestAsync(region, url);
 
             return JsonConvert.DeserializeObject<LeagueDto>(response);
         }
@@ -28,7 +28,7 @@ namespace WebApi.Services.RiotApi
         {
             var url = $"api/lol/{region}/v2.5/league/challenger?type={queueType}";
 
-            var response = await _webService.GetRequestAsync(url);
+            var response = await _webService.GetRequestAsync(region, url);
 
             return JsonConvert.DeserializeObject<LeagueDto>(response);
         }
