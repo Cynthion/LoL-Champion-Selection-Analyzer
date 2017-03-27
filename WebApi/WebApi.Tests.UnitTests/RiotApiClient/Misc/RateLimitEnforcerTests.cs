@@ -10,6 +10,7 @@ namespace WebApi.Tests.UnitTests.RiotApiClient.Misc
 {
     // TODO add TestCategory and execute on CI environment, include tests for minute limits
 
+    [Ignore]
     [TestClass]
     public class RateLimitEnforcerTests
     {
@@ -105,11 +106,11 @@ namespace WebApi.Tests.UnitTests.RiotApiClient.Misc
             var actualDelay = stopwatch.Elapsed;
 
             Assert.IsTrue(
-                expectedDelay < actualDelay.Add(MeasureTolerance), 
+                expectedDelay < actualDelay.Add(MeasureTolerance),
                 $"Too soon! Expected: {expectedDelay}. Actual: {actualDelay}.");
 
             Assert.IsTrue(
-                actualDelay < TimeSpan.FromTicks((long) (expectedDelay.Ticks * ErrorFactor + MeasureTolerance.Ticks)), 
+                actualDelay < TimeSpan.FromTicks((long)(expectedDelay.Ticks * ErrorFactor + MeasureTolerance.Ticks)),
                 $"Too late! Expected: {expectedDelay}. Actual: {actualDelay}.");
         }
     }
