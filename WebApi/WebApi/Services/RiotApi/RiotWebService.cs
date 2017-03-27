@@ -95,18 +95,20 @@ namespace WebApi.Services.RiotApi
             {
                 switch (statusCode)
                 {
-                    case HttpStatusCode.ServiceUnavailable:
-                        throw new ChampionSelectionAnalyzerException("503, Service unavailable", statusCode);
-                    case HttpStatusCode.InternalServerError:
-                        throw new ChampionSelectionAnalyzerException("500, Internal server error", statusCode);
+                    case HttpStatusCode.BadRequest:
+                        throw new ChampionSelectionAnalyzerException("400, Bad Request", statusCode);
                     case HttpStatusCode.Unauthorized:
                         throw new ChampionSelectionAnalyzerException("401, Unauthorized", statusCode);
-                    case HttpStatusCode.BadRequest:
-                        throw new ChampionSelectionAnalyzerException("400, Bad request", statusCode);
-                    case HttpStatusCode.NotFound:
-                        throw new ChampionSelectionAnalyzerException("404, Resource not found", statusCode);
                     case HttpStatusCode.Forbidden:
                         throw new ChampionSelectionAnalyzerException("403, Forbidden", statusCode);
+                    case HttpStatusCode.NotFound:
+                        throw new ChampionSelectionAnalyzerException("404, Not Found", statusCode);
+                    case HttpStatusCode.InternalServerError:
+                        throw new ChampionSelectionAnalyzerException("500, Internal Server Error", statusCode);
+                    case HttpStatusCode.ServiceUnavailable:
+                        throw new ChampionSelectionAnalyzerException("503, Service Unavailable", statusCode);
+                    default:
+                        throw new ChampionSelectionAnalyzerException("Unsuccessful HttpStatusCode", statusCode);
                 }
             }
         }
