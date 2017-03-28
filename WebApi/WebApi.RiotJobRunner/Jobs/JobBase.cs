@@ -1,30 +1,28 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
 
-namespace WebApi.RiotJobRunner
+namespace WebApi.RiotJobRunner.Jobs
 {
     internal abstract class JobBase : IJob
     {
         public bool IsAutoLoop { get; }
 
-        protected readonly CancellationToken CancellationToken;
-
-        protected JobBase(CancellationToken cancellationToken, bool isAutoLoop = true)
+        protected JobBase(bool isAutoLoop)
         {
-            cancellationToken.Register(OnCancelled);
-
-            CancellationToken = cancellationToken;
             IsAutoLoop = isAutoLoop;
         }
 
-        public async Task RunAsync()
+        public async Task RunAsync(CancellationToken cancellationToken)
         {
             OnStarted();
 
             do
             {
                 OnLoopStarted();
-                await DoWorkAsync(CancellationToken);
+
+                cancellationToken.Register(OnCancelled);
+                await DoWorkAsync(cancellationToken);
+
             } while (IsAutoLoop);
         }
 

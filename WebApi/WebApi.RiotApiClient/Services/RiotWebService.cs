@@ -17,8 +17,34 @@ namespace WebApi.RiotApiClient.Services
     // Riot API Information:
     // HTTP Status Codes: https://developer.riotgames.com/response-code.html
 
-    public class RiotWebService : IWebService
+    /// <summary>
+    /// This class is implemented as Singleton in order to ensure the Riot API Rate Limitation.
+    /// </summary>
+    public sealed class RiotWebService : IWebService
     {
+        // Singleton implemented according to https://msdn.microsoft.com/en-us/library/ff650316.aspx
+        public static RiotWebService Instance
+        {
+            get
+            {
+                if (_instance != null)
+                {
+                    return _instance;
+                }
+                lock (SyncRoot)
+                {
+                    if (_instance == null)
+                    {
+                        _instance = new RiotWebService(RiotApiKey.CreateFromFile());
+                    }
+                }
+
+                return _instance;
+            }
+        }
+
+        private static volatile RiotWebService _instance;
+        private static readonly object SyncRoot = new object();
         private static readonly ILogger Logger = LogManager.GetCurrentClassLogger();
 
         private readonly IApiKey _riotApiKey;
@@ -31,7 +57,7 @@ namespace WebApi.RiotApiClient.Services
         private const string XMethodRateLimitCountHeader = "X-Method-Rate-Limit-Count";
         private const string RetryAfterHeader = "Retry-After";
 
-        public RiotWebService(IApiKey riotApiKey)
+        private RiotWebService(IApiKey riotApiKey)
         {
             _riotApiKey = riotApiKey;
             _rateLimitEnforcers = new Dictionary<Region, IRateLimitEnforcer>();
@@ -44,7 +70,7 @@ namespace WebApi.RiotApiClient.Services
             string result;
 
             url = url.AddUrlParameter($"api_key={_riotApiKey.ApiKey}");
-            var baseUrl = $"https://{region.ToString().ToLower()}.api.pvp.net/{url}";     
+            var baseUrl = $"https://{region.ToString().ToLower()}.api.pvp.net/{url}";
             Logger.Debug($"Calling {baseUrl}");
 
             PrepareHttpClient();

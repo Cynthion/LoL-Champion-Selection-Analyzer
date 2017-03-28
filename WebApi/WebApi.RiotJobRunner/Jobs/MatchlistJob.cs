@@ -2,17 +2,19 @@
 using System.Threading;
 using System.Threading.Tasks;
 using NLog;
+using WebApi.RiotApiClient.Services.Interfaces;
 
-namespace WebApi.RiotJobRunner
+namespace WebApi.RiotJobRunner.Jobs
 {
-    internal class ChallengerMatchlistJob : JobBase
+    internal class MatchlistJob : JobBase
     {
         private static readonly ILogger Logger = LogManager.GetCurrentClassLogger();
+        private readonly IMatchService _matchService;
 
-        public ChallengerMatchlistJob(CancellationToken cancellationToken)
-            : base(cancellationToken)
+        public MatchlistJob(IMatchService matchService)
+            : base(true)
         {
-
+            _matchService = matchService;
         }
 
         protected override async Task DoWorkAsync(CancellationToken cancellationToken)
@@ -22,17 +24,17 @@ namespace WebApi.RiotJobRunner
 
         protected override void OnStarted()
         {
-            Logger.Info($"{nameof(ChallengerMatchlistJob)} started.");
+            Logger.Info($"{nameof(MatchlistJob)} started.");
         }
 
         protected override void OnLoopStarted()
         {
-            Logger.Info($"{nameof(ChallengerMatchlistJob)} loop started.");
+            Logger.Info($"{nameof(MatchlistJob)} loop started.");
         }
 
         protected override void OnCancelled()
         {
-            Logger.Info($"{nameof(ChallengerMatchlistJob)} cancelled.");
+            Logger.Info($"{nameof(MatchlistJob)} cancelled.");
         }
     }
 }

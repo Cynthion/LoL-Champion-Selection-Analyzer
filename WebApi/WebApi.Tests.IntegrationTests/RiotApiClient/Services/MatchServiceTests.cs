@@ -76,9 +76,7 @@ namespace WebApi.Tests.IntegrationTests.RiotApiClient.Services
         private static IMatchService GetMatchService()
         {
             // TODO use DI
-            var apiKey = RiotApiKey.CreateFromFile();
-
-            var webService = new RiotWebService(apiKey);
+            var webService = RiotWebService.Instance;
 
             return new MatchService(webService);
         }

@@ -1,32 +1,30 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Threading;
-using NLog;
+using Microsoft.Extensions.DependencyInjection;
+using StructureMap;
+using WebApi.RiotApiClient.Services;
+using WebApi.RiotApiClient.Services.Interfaces;
+using WebApi.RiotJobRunner.Jobs;
 
 namespace WebApi.RiotJobRunner
 {
     internal class Program
     {
-        private static readonly ILogger Logger = LogManager.GetCurrentClassLogger();
-
-        private static void Main(string[] args)
+        public static void Main(string[] args)
         {
-            Logger.Info("Riot Job Runner started...");
+            var services = new ServiceCollection()
+                .AddSingleton<IWebService>(c => RiotWebService.Instance)
+                .AddSingleton<IMatchService, MatchService>();
+            var container = new Container();
 
-            var jobsTokenSource = new CancellationTokenSource();
+            container.Configure(config => config.Populate(services));
 
-            var jobs = new List<IJob>
-            {
-                new ChallengerMatchlistJob(jobsTokenSource.Token)
-            };
+            var jobRunner = new JobRunner();
+            jobRunner.RegisterJob(container.GetInstance<MatchlistJob>());
 
-            jobs.ForEach(j => j.RunAsync());
+            jobRunner.Run();
 
             Console.ReadLine();
-            Logger.Info("Riot Job Runner stopped...");
-
-            jobsTokenSource.Cancel();
-            Console.ReadLine();
+            jobRunner.Stop();
         }
     }
 }

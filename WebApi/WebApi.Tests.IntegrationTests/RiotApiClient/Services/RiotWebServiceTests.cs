@@ -28,7 +28,7 @@ namespace WebApi.Tests.IntegrationTests.RiotApiClient.Services
 
         private static IWebService GetRiotWebService()
         {
-            return new RiotWebService(RiotApiKey.CreateFromFile());
+            return RiotWebService.Instance;
         }
     }
 }

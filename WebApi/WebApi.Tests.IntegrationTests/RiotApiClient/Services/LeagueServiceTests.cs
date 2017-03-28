@@ -38,9 +38,7 @@ namespace WebApi.Tests.IntegrationTests.RiotApiClient.Services
         private static ILeagueService GetLeagueService()
         {
             // TODO use DI
-            var apiKey = RiotApiKey.CreateFromFile();
-
-            var webService = new RiotWebService(apiKey);
+            var webService = RiotWebService.Instance;
 
             return new LeagueService(webService);
         }

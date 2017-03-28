@@ -51,7 +51,7 @@ namespace WebApi
             });
             
             // Services
-            services.AddSingleton<IWebService, RiotWebService>();
+            services.AddSingleton<IWebService>(c => RiotWebService.Instance);
             services.AddSingleton<ISummonerService, SummonerService>();
             services.AddSingleton<IStatsService, StatsService>();
             services.AddSingleton<IMatchService, MatchService>();

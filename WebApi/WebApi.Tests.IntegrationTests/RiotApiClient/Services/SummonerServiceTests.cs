@@ -26,9 +26,7 @@ namespace WebApi.Tests.IntegrationTests.RiotApiClient.Services
         private static ISummonerService GetSummonerService()
         {
             // TODO use DI
-            var apiKey = RiotApiKey.CreateFromFile();
-
-            var webService = new RiotWebService(apiKey);
+            var webService = RiotWebService.Instance;
 
             return new SummonerService(webService);
         }
