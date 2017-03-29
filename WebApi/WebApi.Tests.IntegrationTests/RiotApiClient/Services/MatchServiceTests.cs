@@ -18,17 +18,17 @@ namespace WebApi.Tests.IntegrationTests.RiotApiClient.Services
             const long championId = 40691874; // Drohkan
             var rankedQueues = new[]
             {
-                Constants.RankedSolo5V5,
-                Constants.RankedTeam5V5,
-                Constants.TeamBuilderRankedSolo,
-                Constants.RankedFlexSr
+                GameConstants.RankedSolo5V5,
+                GameConstants.RankedTeam5V5,
+                GameConstants.TeamBuilderRankedSolo,
+                GameConstants.RankedFlexSr
             };
 
             var seasons = new[]
             {
-                Constants.GetSeasonForYear(DateTime.Now),
-                Constants.GetSeasonForYear(DateTime.Now.AddYears(-1)),
-                Constants.GetSeasonForYear(DateTime.Now.AddYears(-2))
+                GameConstants.GetSeasonForYear(DateTime.Now),
+                GameConstants.GetSeasonForYear(DateTime.Now.AddYears(-1)),
+                GameConstants.GetSeasonForYear(DateTime.Now.AddYears(-2))
             };
 
             // act

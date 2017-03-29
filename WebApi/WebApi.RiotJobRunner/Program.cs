@@ -1,11 +1,9 @@
 ﻿using System;
 using Microsoft.Extensions.DependencyInjection;
 using StructureMap;
-using WebApi.RiotApiClient;
 using WebApi.RiotApiClient.Misc;
 using WebApi.RiotApiClient.Services;
 using WebApi.RiotApiClient.Services.Interfaces;
-using WebApi.RiotJobRunner.Jobs;
 
 namespace WebApi.RiotJobRunner
 {
@@ -22,9 +20,11 @@ namespace WebApi.RiotJobRunner
             container.Configure(config => config.Populate(services));
 
             var jobRunner = new JobRunner();
-            jobRunner.RegisterJob(new ChallengerTierLeagueJob(Region.EUW, Constants.RankedSolo5V5, container.GetInstance<ILeagueService>()));
+            jobRunner.Start(TimeSpan.FromSeconds(1));
 
-            jobRunner.Run();
+            var watcher = new Watcher(jobRunner, container.GetInstance<ILeagueService>());
+            watcher.WatchChallengerTierPlayersAsync(Region.EUW, TimeSpan.FromDays(0.5));
+            watcher.WatchChallengerTierPlayersAsync(Region.NA, TimeSpan.FromDays(0.5));
 
             Console.ReadLine();
             jobRunner.Stop();

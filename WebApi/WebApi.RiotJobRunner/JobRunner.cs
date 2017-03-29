@@ -1,42 +1,75 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using NLog;
+using WebApi.RiotApiClient.Misc.Exceptions;
 using WebApi.RiotJobRunner.Jobs;
 
 namespace WebApi.RiotJobRunner
 {
     internal class JobRunner : IJobRunner
     {
+        public bool IsRunning => _cts != null && !_cts.IsCancellationRequested;
+
         private static readonly ILogger Logger = LogManager.GetCurrentClassLogger();
 
-        private readonly ICollection<IJob> _jobs;
+        private readonly Queue<IJob> _jobQueue;
+        private CancellationTokenSource _cts;
 
         public JobRunner()
         {
-            _jobs = new List<IJob>();
+            _jobQueue = new Queue<IJob>();
         }
 
-        public void RegisterJob(IJob job)
+        public void EnqueueJob(IJob job)
         {
-            _jobs.Add(job);
-            Logger.Info($"{job.GetType().Name} registered.");
+            _jobQueue.Enqueue(job);
+
+            Logger.Info($"{job.GetType().Name} put to queue.");
         }
 
-        public void Run()
+        public void EnqueueJobs(IEnumerable<IJob> jobs)
         {
-            // TODO queue, but not if stopped
-            Logger.Info("Job Runner started...");
+            foreach (var job in jobs)
+            {
+                EnqueueJob(job);
+            }
+        }
 
-            var jobTasks = _jobs.Select(job => job.RunAsync(_cts.Token));
+        public async void Start(TimeSpan interval)
+        {
+            _cts = new CancellationTokenSource();
 
-            Task.WhenAll(jobTasks).Wait();
+            Logger.Info($"{GetType().Name} started...");
+
+            do
+            {
+                await Task.Delay(interval);
+
+                if (_jobQueue.Any())
+                {
+                    var job = _jobQueue.Dequeue();
+
+                    try
+                    {
+                        await job.RunAsync(_cts.Token);
+                    }
+                    catch (RioApiException e)
+                    {
+                        Logger.Error(e);
+                    }
+                }
+
+            } while (!_cts.Token.IsCancellationRequested);
         }
 
         public void Stop()
         {
-            Logger.Info("Job Runner stopped...");
+            _cts?.Cancel();
+
+            Logger.Info($"{GetType().Name} stopped...");
         }
     }
 }

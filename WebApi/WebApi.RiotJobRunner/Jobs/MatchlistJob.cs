@@ -12,7 +12,6 @@ namespace WebApi.RiotJobRunner.Jobs
         private readonly IMatchService _matchService;
 
         public MatchlistJob(IMatchService matchService)
-            : base(true)
         {
             _matchService = matchService;
         }
@@ -24,17 +23,12 @@ namespace WebApi.RiotJobRunner.Jobs
 
         protected override void OnStarted()
         {
-            Logger.Info($"{nameof(MatchlistJob)} started.");
-        }
-
-        protected override void OnLoopStarted()
-        {
-            Logger.Info($"{nameof(MatchlistJob)} loop started.");
+            Logger.Info($"{GetType().Name} started.");
         }
 
         protected override void OnCancelled()
         {
-            Logger.Info($"{nameof(MatchlistJob)} cancelled.");
+            Logger.Info($"{GetType().Name} cancelled.");
         }
     }
 }

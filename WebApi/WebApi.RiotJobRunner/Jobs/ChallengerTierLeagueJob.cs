@@ -36,12 +36,12 @@ namespace WebApi.RiotJobRunner.Jobs
 
         protected override void OnStarted()
         {
-            Logger.Info($"{nameof(MatchlistJob)} started.");
+            Logger.Info($"{GetType().Name} started.");
         }
 
         protected override void OnCancelled()
         {
-            Logger.Info($"{nameof(MatchlistJob)} cancelled.");
+            Logger.Info($"{GetType().Name} cancelled.");
         }
     }
 }

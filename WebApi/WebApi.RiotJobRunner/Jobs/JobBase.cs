@@ -10,6 +10,7 @@ namespace WebApi.RiotJobRunner.Jobs
             OnStarted();
 
             cancellationToken.Register(OnCancelled);
+
             await DoWorkAsync(cancellationToken);
         }
 

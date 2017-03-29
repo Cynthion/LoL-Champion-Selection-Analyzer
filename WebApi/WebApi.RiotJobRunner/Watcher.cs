@@ -1,7 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
+using System.Threading.Tasks;
 using WebApi.RiotApiClient;
 using WebApi.RiotApiClient.Misc;
 using WebApi.RiotApiClient.Services.Interfaces;
@@ -22,16 +21,19 @@ namespace WebApi.RiotJobRunner
             _leagueService = leagueService;
         }
 
-        public void WatchChallengerTierPlayers(Region region)
+        public async void WatchChallengerTierPlayersAsync(Region region, TimeSpan interval)
         {
-            var queueTypes = Constants.GetRankedQueueTypes();
+            var queueTypes = GameConstants.GetRankedQueueTypes();
 
-            var jobs = queueTypes.Select(q => new ChallengerTierLeagueJob(region, q, _leagueService));
+            var jobs = queueTypes.Select(q => new ChallengerTierLeagueJob(region, q, _leagueService)).ToArray();
 
             do
             {
-                
-            } while(_jobRunner.)
+                _jobRunner.EnqueueJobs(jobs);
+
+                await Task.Delay(interval);
+
+            } while (_jobRunner.IsRunning);
         }
     }
 }

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace WebApi.RiotApiClient
 {
-    public class Constants
+    public class GameConstants
     {
         /// <summary>
         /// Ranked Solo 5v5 games.
@@ -30,8 +30,8 @@ namespace WebApi.RiotApiClient
             return new []
             {
                 RankedSolo5V5,
-                RankedTeam5V5,
-                TeamBuilderRankedSolo,
+                //RankedTeam5V5,
+                //TeamBuilderRankedSolo,
                 RankedFlexSr
             };
         }

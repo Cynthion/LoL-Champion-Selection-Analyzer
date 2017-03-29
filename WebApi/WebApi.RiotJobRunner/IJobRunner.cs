@@ -1,12 +1,18 @@
-﻿using WebApi.RiotJobRunner.Jobs;
+﻿using System;
+using System.Collections.Generic;
+using WebApi.RiotJobRunner.Jobs;
 
 namespace WebApi.RiotJobRunner
 {
     internal interface IJobRunner
     {
-        void RegisterJob(IJob job);
+        bool IsRunning { get; }
 
-        void Run();
+        void EnqueueJob(IJob job);
+
+        void EnqueueJobs(IEnumerable<IJob> jobs);
+
+        void Start(TimeSpan interval);
 
         void Stop();
     }
