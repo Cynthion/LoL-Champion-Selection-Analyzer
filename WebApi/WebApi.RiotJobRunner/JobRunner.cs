@@ -4,7 +4,6 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using NLog;
-using WebApi.RiotApiClient.Misc.Exceptions;
 using WebApi.RiotJobRunner.Jobs;
 
 namespace WebApi.RiotJobRunner
@@ -27,7 +26,7 @@ namespace WebApi.RiotJobRunner
         {
             _jobQueue.Enqueue(job);
 
-            Logger.Info($"{job.GetType().Name} put to queue.");
+            Logger.Info($"{job} put to queue.");
         }
 
         public void EnqueueJobs(IEnumerable<IJob> jobs)
@@ -56,7 +55,7 @@ namespace WebApi.RiotJobRunner
                     {
                         await job.RunAsync(_cts.Token);
                     }
-                    catch (RioApiException e)
+                    catch (Exception e)
                     {
                         Logger.Error(e);
                     }

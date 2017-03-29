@@ -1,23 +1,40 @@
-﻿using System.Threading;
+﻿using System;
+using System.Threading;
 using System.Threading.Tasks;
+using NLog;
 
 namespace WebApi.RiotJobRunner.Jobs
 {
-    public abstract class JobBase : IJob
+    public abstract class JobBase<TResult> : IJob
     {
+        private readonly Action<TResult> _resultAction;
+
+        protected JobBase(Action<TResult> resultAction)
+        {
+            _resultAction = resultAction;
+        }
+
         public async Task RunAsync(CancellationToken cancellationToken)
         {
             OnStarted();
 
             cancellationToken.Register(OnCancelled);
 
-            await DoWorkAsync(cancellationToken);
+            var result = await DoWorkAsync(cancellationToken);
+
+            _resultAction(result);
         }
 
-        protected abstract void OnStarted();
+        protected abstract Task<TResult> DoWorkAsync(CancellationToken cancellationToken);
 
-        protected abstract Task DoWorkAsync(CancellationToken cancellationToken);
+        protected virtual void OnStarted()
+        {
+            LogManager.GetLogger(GetType().Name) .Info($"{this} started.");
+        }
 
-        protected abstract void OnCancelled();
+        protected virtual void OnCancelled()
+        {
+            LogManager.GetLogger(GetType().Name).Info($"{this} cancelled.");
+        }
     }
 }

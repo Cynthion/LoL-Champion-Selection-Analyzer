@@ -4,6 +4,7 @@ using StructureMap;
 using WebApi.RiotApiClient.Misc;
 using WebApi.RiotApiClient.Services;
 using WebApi.RiotApiClient.Services.Interfaces;
+using WebApi.RiotJobRunner.Jobs;
 
 namespace WebApi.RiotJobRunner
 {
@@ -22,9 +23,15 @@ namespace WebApi.RiotJobRunner
             var jobRunner = new JobRunner();
             jobRunner.Start(TimeSpan.FromSeconds(1));
 
-            var watcher = new Watcher(jobRunner, container.GetInstance<ILeagueService>());
-            watcher.WatchChallengerTierPlayersAsync(Region.EUW, TimeSpan.FromDays(0.5));
-            watcher.WatchChallengerTierPlayersAsync(Region.NA, TimeSpan.FromDays(0.5));
+            var watcher = new Watcher(jobRunner, 
+                container.GetInstance<ILeagueService>(),
+                container.GetInstance<IMatchService>());
+
+            watcher.WatchHighTierPlayersAsync(Region.EUW, TierLeague.Challenger, TimeSpan.FromDays(0.5));
+            watcher.WatchHighTierPlayersAsync(Region.EUW, TierLeague.Master, TimeSpan.FromDays(0.5));
+
+            watcher.WatchHighTierPlayersAsync(Region.NA, TierLeague.Challenger, TimeSpan.FromDays(0.5));
+            watcher.WatchHighTierPlayersAsync(Region.NA, TierLeague.Master, TimeSpan.FromDays(0.5));
 
             Console.ReadLine();
             jobRunner.Stop();
