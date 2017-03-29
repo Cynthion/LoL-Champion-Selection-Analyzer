@@ -108,6 +108,11 @@ namespace WebApi.RiotApiClient.Misc
                 delay = retryDelay;
             }
 
+            if (delay > TimeSpan.Zero)
+            {
+                Logger.Warn($"Delaying request for {delay}");
+            }
+
             return delay;
         }
 

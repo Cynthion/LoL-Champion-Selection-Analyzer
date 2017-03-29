@@ -33,6 +33,9 @@ namespace WebApi.RiotJobRunner
             watcher.WatchHighTierPlayersAsync(Region.NA, TierLeague.Challenger, TimeSpan.FromDays(0.5));
             watcher.WatchHighTierPlayersAsync(Region.NA, TierLeague.Master, TimeSpan.FromDays(0.5));
 
+            watcher.WatchMatchlistsAsync(Region.EUW, TimeSpan.FromSeconds(10));
+            watcher.WatchMatchlistsAsync(Region.NA, TimeSpan.FromSeconds(10));
+
             Console.ReadLine();
             jobRunner.Stop();
         }

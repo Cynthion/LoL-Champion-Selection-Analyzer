@@ -12,7 +12,7 @@ namespace WebApi.RiotJobRunner
 
         void EnqueueJobs(IEnumerable<IJob> jobs);
 
-        void Start(TimeSpan interval);
+        void Start(TimeSpan baseFrequency);
 
         void Stop();
     }

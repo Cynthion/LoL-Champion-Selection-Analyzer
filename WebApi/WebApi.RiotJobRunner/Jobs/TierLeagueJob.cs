@@ -16,7 +16,7 @@ namespace WebApi.RiotJobRunner.Jobs
         Master
     }
 
-    internal class TierLeagueJob : JobBase<IEnumerable<string>>
+    internal class TierLeagueJob : JobBase<IEnumerable<long>>
     {
         private static readonly ILogger Logger = LogManager.GetCurrentClassLogger();
 
@@ -30,7 +30,7 @@ namespace WebApi.RiotJobRunner.Jobs
             TierLeague tierLeague,
             string queueType, 
             ILeagueService leagueService,
-            Action<IEnumerable<string>> resultAction)
+            Action<IEnumerable<long>> resultAction)
             : base(resultAction)
         {
             _region = region;
@@ -39,7 +39,7 @@ namespace WebApi.RiotJobRunner.Jobs
             _leagueService = leagueService;
         }
 
-        protected override async Task<IEnumerable<string>> DoWorkAsync(CancellationToken cancellationToken)
+        protected override async Task<IEnumerable<long>> DoWorkAsync(CancellationToken cancellationToken)
         {
             LeagueDto leagueDto;
             if (_tierLeague == TierLeague.Challenger)
@@ -51,25 +51,38 @@ namespace WebApi.RiotJobRunner.Jobs
                 leagueDto = await _leagueService.GetMasterTierLeaguesAsync(_region, _queueType);
             }
 
-            var playerOrTeamIds = new List<string>();
+            var playerOrTeamIds = new List<long>();
             if (leagueDto?.Entries != null && leagueDto.Entries.Any())
             {
                 var ids = leagueDto.Entries
                     .Select(e => e.PlayerOrTeamId)
                     .Where(id => id != null)
-                    .Distinct();
+                    .Distinct()
+                    .ToArray();
 
-                playerOrTeamIds.AddRange(ids);
+                foreach (var id in ids)
+                {
+                    if (long.TryParse(id, out long idNumber))
+                    {
+                        playerOrTeamIds.Add(idNumber);
+                    }
+                }
             }
 
-            Logger.Debug($"Found {playerOrTeamIds.Count} Player or Team IDs.");
+            Logger.Debug($"{GetParameterString()}: Found {playerOrTeamIds.Count} Player or Team IDs.");
+            Logger.Debug($"{string.Join(",", playerOrTeamIds)}");
 
             return playerOrTeamIds;
         }
 
         public override string ToString()
         {
-            return $"{GetType().Name}<{_region}, {_tierLeague}, {_queueType}>";
+            return $"{GetType().Name}{GetParameterString()}>";
+        }
+
+        private string GetParameterString()
+        {
+            return $"<{_region}, {_tierLeague}, {_queueType}>";
         }
     }
 }

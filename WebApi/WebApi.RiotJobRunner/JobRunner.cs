@@ -37,16 +37,15 @@ namespace WebApi.RiotJobRunner
             }
         }
 
-        public async void Start(TimeSpan interval)
+        public async void Start(TimeSpan baseFrequency)
         {
+            // TODO parallelize execution
             _cts = new CancellationTokenSource();
 
             Logger.Info($"{GetType().Name} started...");
 
             do
             {
-                await Task.Delay(interval);
-
                 if (_jobQueue.Any())
                 {
                     var job = _jobQueue.Dequeue();
@@ -60,6 +59,8 @@ namespace WebApi.RiotJobRunner
                         Logger.Error(e);
                     }
                 }
+
+                await Task.Delay(baseFrequency);
 
             } while (!_cts.Token.IsCancellationRequested);
         }

@@ -25,7 +25,7 @@ namespace WebApi.RiotApiClient
         /// </summary>
         public const string RankedFlexSr = "RANKED_FLEX_SR";
 
-        public static IEnumerable<string> GetRankedQueueTypes()
+        public static IList<string> GetRankedQueueTypes()
         {
             return new []
             {
@@ -36,9 +36,15 @@ namespace WebApi.RiotApiClient
             };
         }
 
-        public static string GetSeasonForYear(DateTime dateTime)
+        public static IEnumerable<string> GetCurrentSeasons()
         {
-            return $"SEASON{dateTime.Year}";
+            // TODO autogenerate currently relevant seasons
+            return new[]
+            {
+                "SEASON2016"
+                //$"PRESEASON{dateTime.Year}"
+                //$"SEASON{dateTime.Year}"
+            };
         }
     }
 }
