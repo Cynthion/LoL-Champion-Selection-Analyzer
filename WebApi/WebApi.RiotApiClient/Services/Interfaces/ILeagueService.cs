@@ -6,8 +6,8 @@ namespace WebApi.RiotApiClient.Services.Interfaces
 {
     public interface ILeagueService
     {
-        Task<LeagueDto> GetMasterTierLeagues(Region region, string queueType);
+        Task<LeagueDto> GetMasterTierLeaguesAsync(Region region, string queueType);
 
-        Task<LeagueDto> GetChallengerTierLeagues(Region region, string queueType);
+        Task<LeagueDto> GetChallengerTierLeaguesAsync(Region region, string queueType);
     }
 }

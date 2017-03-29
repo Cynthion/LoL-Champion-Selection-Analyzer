@@ -16,7 +16,7 @@ namespace WebApi.Tests.IntegrationTests.RiotApiClient.Services
             const string queueType = Constants.RankedSolo5V5;
 
             // act
-            var leagueDto = GetLeagueService().GetMasterTierLeagues(Region.EUW, queueType).Result;
+            var leagueDto = GetLeagueService().GetMasterTierLeaguesAsync(Region.EUW, queueType).Result;
 
             // assert
             Assert.IsNotNull(leagueDto);
@@ -29,7 +29,7 @@ namespace WebApi.Tests.IntegrationTests.RiotApiClient.Services
             const string queueType = Constants.RankedSolo5V5;
 
             // act
-            var leagueDto = GetLeagueService().GetChallengerTierLeagues(Region.EUW, queueType).Result;
+            var leagueDto = GetLeagueService().GetChallengerTierLeaguesAsync(Region.EUW, queueType).Result;
 
             // assert
             Assert.IsNotNull(leagueDto);

@@ -12,12 +12,10 @@ namespace WebApi.RiotJobRunner
         private static readonly ILogger Logger = LogManager.GetCurrentClassLogger();
 
         private readonly ICollection<IJob> _jobs;
-        private readonly CancellationTokenSource _cts;
 
         public JobRunner()
         {
             _jobs = new List<IJob>();
-            _cts = new CancellationTokenSource();
         }
 
         public void RegisterJob(IJob job)
@@ -28,6 +26,7 @@ namespace WebApi.RiotJobRunner
 
         public void Run()
         {
+            // TODO queue, but not if stopped
             Logger.Info("Job Runner started...");
 
             var jobTasks = _jobs.Select(job => job.RunAsync(_cts.Token));
@@ -38,8 +37,6 @@ namespace WebApi.RiotJobRunner
         public void Stop()
         {
             Logger.Info("Job Runner stopped...");
-
-            _cts.Cancel();
         }
     }
 }

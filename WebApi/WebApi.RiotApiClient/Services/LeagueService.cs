@@ -15,7 +15,7 @@ namespace WebApi.RiotApiClient.Services
             _webService = webService;
         }
 
-        public async Task<LeagueDto> GetMasterTierLeagues(Region region, string queueType)
+        public async Task<LeagueDto> GetMasterTierLeaguesAsync(Region region, string queueType)
         {
             var url = $"api/lol/{region}/v2.5/league/master?type={queueType}";
 
@@ -24,7 +24,7 @@ namespace WebApi.RiotApiClient.Services
             return JsonConvert.DeserializeObject<LeagueDto>(response);
         }
 
-        public async Task<LeagueDto> GetChallengerTierLeagues(Region region, string queueType)
+        public async Task<LeagueDto> GetChallengerTierLeaguesAsync(Region region, string queueType)
         {
             var url = $"api/lol/{region}/v2.5/league/challenger?type={queueType}";
 

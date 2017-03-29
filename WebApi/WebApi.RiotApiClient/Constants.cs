@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace WebApi.RiotApiClient
 {
@@ -23,6 +24,17 @@ namespace WebApi.RiotApiClient
         /// Ranked Flex Summoner's Rift games.
         /// </summary>
         public const string RankedFlexSr = "RANKED_FLEX_SR";
+
+        public static IEnumerable<string> GetRankedQueueTypes()
+        {
+            return new []
+            {
+                RankedSolo5V5,
+                RankedTeam5V5,
+                TeamBuilderRankedSolo,
+                RankedFlexSr
+            };
+        }
 
         public static string GetSeasonForYear(DateTime dateTime)
         {
