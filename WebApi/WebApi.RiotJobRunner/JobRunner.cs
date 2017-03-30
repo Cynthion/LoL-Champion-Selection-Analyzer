@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
@@ -14,12 +15,12 @@ namespace WebApi.RiotJobRunner
 
         private static readonly ILogger Logger = LogManager.GetCurrentClassLogger();
 
-        private readonly Queue<IJob> _jobQueue;
+        private readonly ConcurrentQueue<IJob> _jobQueue;
         private CancellationTokenSource _cts;
 
         public JobRunner()
         {
-            _jobQueue = new Queue<IJob>();
+            _jobQueue = new ConcurrentQueue<IJob>();
         }
 
         public void EnqueueJob(IJob job)
@@ -46,17 +47,15 @@ namespace WebApi.RiotJobRunner
 
             do
             {
-                if (_jobQueue.Any())
+                if (!_jobQueue.IsEmpty && _jobQueue.TryDequeue(out IJob job))
                 {
-                    var job = _jobQueue.Dequeue();
-
                     try
                     {
                         await job.RunAsync(_cts.Token);
                     }
                     catch (Exception e)
                     {
-                        Logger.Error(e);
+                        Logger.Error($"Error during execution of {job}:\n{e}");
                     }
                 }
 

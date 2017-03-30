@@ -49,7 +49,7 @@ namespace WebApi.RiotJobRunner.Jobs
                 matchIds.AddRange(ids);
             }
 
-            Logger.Debug($"{GetParameterString()}: Found {matchIds.Count} Match IDs for.");
+            Logger.Debug($"{GetParameterString()}: Found {matchIds.Count} Match IDs.");
 
             return matchIds;
         }

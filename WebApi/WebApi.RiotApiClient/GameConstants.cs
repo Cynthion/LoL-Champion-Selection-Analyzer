@@ -36,7 +36,7 @@ namespace WebApi.RiotApiClient
             };
         }
 
-        public static IEnumerable<string> GetCurrentSeasons()
+        public static IList<string> GetCurrentSeasons()
         {
             // TODO autogenerate currently relevant seasons
             return new[]
