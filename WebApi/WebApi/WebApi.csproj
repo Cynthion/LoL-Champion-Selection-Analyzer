@@ -20,6 +20,7 @@
   <ItemGroup>
     <ProjectReference Include="..\WebApi.DataAccess\WebApi.DataAccess.csproj" />
     <ProjectReference Include="..\WebApi.RiotApiClient\WebApi.RiotApiClient.csproj" />
+    <ProjectReference Include="..\WebApi.RiotUtils\WebApi.RiotUtils.csproj" />
   </ItemGroup>
   <ItemGroup>
     <None Update="nlog.config">

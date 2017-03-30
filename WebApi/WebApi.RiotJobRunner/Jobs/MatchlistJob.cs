@@ -61,7 +61,7 @@ namespace WebApi.RiotJobRunner.Jobs
 
         private string GetParameterString()
         {
-            return $"<{_region}, {_summonerId}, {string.Join("/", _rankedQueues)}, {string.Join("/", _seasons)}>";
+            return $"<{_region}, Summoner ID: {_summonerId}, {string.Join("/", _rankedQueues)}, {string.Join("/", _seasons)}>";
         }
     }
 }

@@ -1,4 +1,6 @@
-﻿namespace WebApi.Misc
+﻿using WebApi.RiotUtils;
+
+namespace WebApi.Misc
 {
     /// <summary>
     /// Represents a matchup where <see cref="ChampionPlacement1"/> plays versus <see cref="ChampionPlacement2"/>.

@@ -16,5 +16,7 @@ namespace WebApi.RiotApiClient.Dtos.Match
         public string QueueType { get; set; }
 
         public IList<TeamDto> Teams { get; set; }
+
+        public IList<ParticipantDto> Participants { get; set; }
     }
 }

@@ -25,6 +25,17 @@ namespace WebApi.RiotApiClient
         /// </summary>
         public const string RankedFlexSr = "RANKED_FLEX_SR";
 
+        public const string TopLane = "TOP";
+        public const string JungleLane = "JUNGLE";
+        public const string MiddleLane = "MIDDLE";
+        public const string BottomLane = "BOTTOM";
+
+        public const string CarryRole = "DUO_CARRY";
+        public const string SupportRole = "DUO_SUPPORT";
+        public const string SoloRole = "SOLO";
+        public const string DuoRole = "DUO";
+        public const string NoneRole = "NONE";
+
         public static IList<string> GetRankedQueueTypes()
         {
             return new []

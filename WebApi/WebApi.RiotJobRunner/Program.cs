@@ -27,14 +27,17 @@ namespace WebApi.RiotJobRunner
                 container.GetInstance<ILeagueService>(),
                 container.GetInstance<IMatchService>());
 
-            watcher.WatchHighTierPlayersAsync(Region.EUW, TierLeague.Challenger, TimeSpan.FromDays(0.5));
-            watcher.WatchHighTierPlayersAsync(Region.EUW, TierLeague.Master, TimeSpan.FromDays(0.5));
+            watcher.WatchHighTierPlayersAsync(Region.EUW, TierLeague.Challenger, TimeSpan.FromDays(1));
+            //watcher.WatchHighTierPlayersAsync(Region.EUW, TierLeague.Master, TimeSpan.FromDays(1));
 
-            watcher.WatchHighTierPlayersAsync(Region.NA, TierLeague.Challenger, TimeSpan.FromDays(0.5));
-            watcher.WatchHighTierPlayersAsync(Region.NA, TierLeague.Master, TimeSpan.FromDays(0.5));
+            //watcher.WatchHighTierPlayersAsync(Region.NA, TierLeague.Challenger, TimeSpan.FromDays(0.5));
+            //watcher.WatchHighTierPlayersAsync(Region.NA, TierLeague.Master, TimeSpan.FromDays(0.5));
 
             watcher.WatchMatchlistsAsync(Region.EUW, TimeSpan.FromSeconds(10));
-            watcher.WatchMatchlistsAsync(Region.NA, TimeSpan.FromSeconds(10));
+            //watcher.WatchMatchlistsAsync(Region.NA, TimeSpan.FromSeconds(10));
+
+            watcher.WatchMatchupsAsync(Region.EUW, TimeSpan.FromSeconds(1));
+            //watcher.WatchMatchupsAsync(Region.NA, TimeSpan.FromSeconds(1));
 
             Console.ReadLine();
             jobRunner.Stop();

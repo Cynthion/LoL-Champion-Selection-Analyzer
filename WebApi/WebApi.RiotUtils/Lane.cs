@@ -1,4 +1,4 @@
-﻿namespace WebApi.Misc
+﻿namespace WebApi.RiotUtils
 {
     public enum Lane
     {
