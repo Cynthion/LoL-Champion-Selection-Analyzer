@@ -12,6 +12,8 @@ namespace WebApi.RiotJobRunner
     {
         public bool IsRunning => _cts != null && !_cts.IsCancellationRequested;
 
+        public CancellationToken CancellationToken => _cts.Token;
+
         private static readonly ILogger Logger = LogManager.GetCurrentClassLogger();
 
         private readonly ConcurrentQueue<IJob> _jobQueue;
@@ -59,9 +61,9 @@ namespace WebApi.RiotJobRunner
 
                 }
 
-                await Task.Delay(baseFrequency);
+                await Task.Delay(baseFrequency, _cts.Token);
 
-            } while (!_cts.Token.IsCancellationRequested);
+            } while (IsRunning);
         }
 
         public void Stop()

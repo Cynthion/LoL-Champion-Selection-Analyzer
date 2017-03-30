@@ -22,7 +22,8 @@ namespace WebApi.RiotJobRunner
         private const int MaxMatchesPerRegion = 10000;      // #summoners * 10
         private const int MaxMatchupsPerRegion = 900000;    // #matches * 90
 
-        private readonly IJobRunner _jobRunner;
+        private readonly IJobRunner _webJobsRunner;
+        private readonly IJobRunner _databaseJobsRunner;
         private readonly ILeagueService _leagueService;
         private readonly IMatchService _matchService;
 
@@ -31,11 +32,13 @@ namespace WebApi.RiotJobRunner
         private readonly ConcurrentDictionary<Region, ConcurrentQueue<Matchup>> _regionMatchups;
 
         public Watcher(
-            IJobRunner jobRunner,
+            IJobRunner webJobsRunner,
+            IJobRunner databaseJobsRunner,
             ILeagueService leagueService,
             IMatchService matchService)
         {
-            _jobRunner = jobRunner;
+            _webJobsRunner = webJobsRunner;
+            _databaseJobsRunner = databaseJobsRunner;
             _leagueService = leagueService;
             _matchService = matchService;
 
@@ -57,12 +60,12 @@ namespace WebApi.RiotJobRunner
             {
                 if (regionSummonerIds.Count < MaxSummonersPerRegion)
                 {
-                    _jobRunner.EnqueueJobs(jobs);
+                    _webJobsRunner.EnqueueJobs(jobs);
                 }
 
-                await Task.Delay(interval);
+                await Task.Delay(interval, _webJobsRunner.CancellationToken);
 
-            } while (_jobRunner.IsRunning);
+            } while (_webJobsRunner.IsRunning);
         }
 
         public async void WatchMatchlistsAsync(Region region, TimeSpan interval)
@@ -81,12 +84,12 @@ namespace WebApi.RiotJobRunner
                 {
                     // TODO only get matchlist for last week or so (-< last 10 matches)
                     var job = new MatchListJob(region, summonerId, rankedQueues, seasons, _matchService, matchIds => EnqueueMatchIds(region, matchIds));
-                    _jobRunner.EnqueueJob(job);
+                    _webJobsRunner.EnqueueJob(job);
                 }
 
-                await Task.Delay(interval);
+                await Task.Delay(interval, _webJobsRunner.CancellationToken);
 
-            } while (_jobRunner.IsRunning);
+            } while (_webJobsRunner.IsRunning);
         }
 
         public async void WatchMatchupsAsync(Region region, TimeSpan interval)
@@ -101,12 +104,23 @@ namespace WebApi.RiotJobRunner
                     && regionMatchups.Count < MaxMatchupsPerRegion)
                 {
                     var job = new MatchJob(region, matchId, _matchService, matchups => EnqueueMatchups(region, matchups));
-                    _jobRunner.EnqueueJob(job);
+                    _webJobsRunner.EnqueueJob(job);
                 }
 
-                await Task.Delay(interval);
+                await Task.Delay(interval, _webJobsRunner.CancellationToken);
 
-            } while (_jobRunner.IsRunning);
+            } while (_webJobsRunner.IsRunning);
+        }
+
+        public async void WriteMatchupsToDatabase(Region region, TimeSpan interval)
+        {
+            do
+            {
+
+
+                await Task.Delay(interval, _databaseJobsRunner.CancellationToken);
+
+            } while (_databaseJobsRunner.IsRunning);
         }
 
         private void EnqueueSummonerIds(Region region, IEnumerable<long> summonerIds)
