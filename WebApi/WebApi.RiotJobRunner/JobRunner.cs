@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using NLog;
@@ -57,6 +56,7 @@ namespace WebApi.RiotJobRunner
                     {
                         Logger.Error($"Error during execution of {job}:\n{e}");
                     }
+
                 }
 
                 await Task.Delay(baseFrequency);

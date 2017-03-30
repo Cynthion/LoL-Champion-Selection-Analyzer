@@ -21,7 +21,6 @@ namespace WebApi.RiotJobRunner
             container.Configure(config => config.Populate(services));
 
             var jobRunner = new JobRunner();
-            jobRunner.Start(TimeSpan.FromSeconds(1));
 
             var watcher = new Watcher(jobRunner, 
                 container.GetInstance<ILeagueService>(),
@@ -39,7 +38,9 @@ namespace WebApi.RiotJobRunner
             watcher.WatchMatchupsAsync(Region.EUW, TimeSpan.FromSeconds(1));
             //watcher.WatchMatchupsAsync(Region.NA, TimeSpan.FromSeconds(1));
 
+            jobRunner.Start(TimeSpan.FromSeconds(1));
             Console.ReadLine();
+
             jobRunner.Stop();
         }
     }

@@ -12,6 +12,8 @@ using WebApi.RiotUtils;
 
 namespace WebApi.RiotJobRunner
 {
+    // TODO remove code duplication
+
     internal class Watcher : IWatcher
     {
         private static readonly ILogger Logger = LogManager.GetCurrentClassLogger();
@@ -24,7 +26,6 @@ namespace WebApi.RiotJobRunner
         private readonly ILeagueService _leagueService;
         private readonly IMatchService _matchService;
 
-        // TODO add upper limit for queue before new items can be added
         private readonly ConcurrentDictionary<Region, ConcurrentQueue<long>> _regionSummonerIds;
         private readonly ConcurrentDictionary<Region, ConcurrentQueue<long>> _regionMatchIds;
         private readonly ConcurrentDictionary<Region, ConcurrentQueue<Matchup>> _regionMatchups;
@@ -52,7 +53,16 @@ namespace WebApi.RiotJobRunner
                 .Select(queue => new TierLeagueJob(region, tierLeague, queue, _leagueService, summonerIds => EnqueueSummonerIds(region, summonerIds)))
                 .ToArray();
 
-            await RunJobs(jobs, interval, () => regionSummonerIds.Count < MaxSummonersPerRegion);
+            do
+            {
+                if (regionSummonerIds.Count < MaxSummonersPerRegion)
+                {
+                    _jobRunner.EnqueueJobs(jobs);
+                }
+
+                await Task.Delay(interval);
+
+            } while (_jobRunner.IsRunning);
         }
 
         public async void WatchMatchlistsAsync(Region region, TimeSpan interval)
@@ -92,20 +102,6 @@ namespace WebApi.RiotJobRunner
                 {
                     var job = new MatchJob(region, matchId, _matchService, matchups => EnqueueMatchups(region, matchups));
                     _jobRunner.EnqueueJob(job);
-                }
-
-                await Task.Delay(interval);
-
-            } while (_jobRunner.IsRunning);
-        }
-
-        private async Task RunJobs(ICollection<IJob> jobs, TimeSpan interval, Func<bool> condition = null)
-        {
-            do
-            {
-                if (condition != null && condition())
-                {
-                    _jobRunner.EnqueueJobs(jobs);
                 }
 
                 await Task.Delay(interval);
