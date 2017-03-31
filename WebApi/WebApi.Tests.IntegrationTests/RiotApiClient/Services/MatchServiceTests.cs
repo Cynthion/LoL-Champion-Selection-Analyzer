@@ -1,5 +1,4 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using WebApi.RiotApiClient;
 using WebApi.RiotApiClient.Misc;
@@ -24,12 +23,7 @@ namespace WebApi.Tests.IntegrationTests.RiotApiClient.Services
                 GameConstants.RankedFlexSr
             };
 
-            var seasons = new[]
-            {
-                GameConstants.GetSeasonForYear(DateTime.Now),
-                GameConstants.GetSeasonForYear(DateTime.Now.AddYears(-1)),
-                GameConstants.GetSeasonForYear(DateTime.Now.AddYears(-2))
-            };
+            var seasons = GameConstants.GetCurrentSeasons();
 
             // act
             var matchListDto = GetMatchService().GetMatchListAsync(Region.EUW, championId, rankedQueues, seasons).Result;

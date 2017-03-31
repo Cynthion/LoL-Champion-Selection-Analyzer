@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Threading;
 using WebApi.RiotJobRunner.Jobs;
 
 namespace WebApi.RiotJobRunner
@@ -8,8 +7,6 @@ namespace WebApi.RiotJobRunner
     internal interface IJobRunner
     {
         bool IsRunning { get; }
-
-        CancellationToken CancellationToken { get; }
 
         void EnqueueJob(IJob job);
 

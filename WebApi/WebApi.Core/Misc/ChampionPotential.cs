@@ -1,4 +1,4 @@
-﻿namespace WebApi.Misc
+﻿namespace WebApi.Core.Misc
 {
     public struct ChampionPotential
     {

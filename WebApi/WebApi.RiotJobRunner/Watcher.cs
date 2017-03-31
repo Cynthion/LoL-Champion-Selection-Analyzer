@@ -8,13 +8,12 @@ using WebApi.RiotApiClient;
 using WebApi.RiotApiClient.Misc;
 using WebApi.RiotApiClient.Services.Interfaces;
 using WebApi.RiotJobRunner.Jobs;
-using WebApi.RiotUtils;
 
 namespace WebApi.RiotJobRunner
 {
     // TODO remove code duplication
 
-    internal class Watcher : IWatcher
+    internal class Watcher
     {
         private static readonly ILogger Logger = LogManager.GetCurrentClassLogger();
 
@@ -29,7 +28,7 @@ namespace WebApi.RiotJobRunner
 
         private readonly ConcurrentDictionary<Region, ConcurrentQueue<long>> _regionSummonerIds;
         private readonly ConcurrentDictionary<Region, ConcurrentQueue<long>> _regionMatchIds;
-        private readonly ConcurrentDictionary<Region, ConcurrentQueue<Matchup>> _regionMatchups;
+        //private readonly ConcurrentDictionary<Region, ConcurrentQueue<Matchup>> _regionMatchups;
 
         public Watcher(
             IJobRunner webJobsRunner,
@@ -44,7 +43,7 @@ namespace WebApi.RiotJobRunner
 
             _regionSummonerIds = new ConcurrentDictionary<Region, ConcurrentQueue<long>>();
             _regionMatchIds = new ConcurrentDictionary<Region, ConcurrentQueue<long>>();
-            _regionMatchups = new ConcurrentDictionary<Region, ConcurrentQueue<Matchup>>();
+            //_regionMatchups = new ConcurrentDictionary<Region, ConcurrentQueue<Matchup>>();
         }
 
         public async void WatchHighTierPlayersAsync(Region region, TierLeague tierLeague, TimeSpan interval)
@@ -63,7 +62,7 @@ namespace WebApi.RiotJobRunner
                     _webJobsRunner.EnqueueJobs(jobs);
                 }
 
-                await Task.Delay(interval, _webJobsRunner.CancellationToken);
+                await Task.Delay(interval);
 
             } while (_webJobsRunner.IsRunning);
         }
@@ -87,30 +86,30 @@ namespace WebApi.RiotJobRunner
                     _webJobsRunner.EnqueueJob(job);
                 }
 
-                await Task.Delay(interval, _webJobsRunner.CancellationToken);
+                await Task.Delay(interval);
 
             } while (_webJobsRunner.IsRunning);
         }
 
-        public async void WatchMatchupsAsync(Region region, TimeSpan interval)
-        {
-            var regionMatchIds = GetRegionMatchIds(region);
-            var regionMatchups = GetRegionMatchups(region);
+        //public async void WatchMatchupsAsync(Region region, TimeSpan interval)
+        //{
+        //    var regionMatchIds = GetRegionMatchIds(region);
+        //    var regionMatchups = GetRegionMatchups(region);
 
-            do
-            {
-                if (!regionMatchIds.IsEmpty
-                    && regionMatchIds.TryDequeue(out long matchId)
-                    && regionMatchups.Count < MaxMatchupsPerRegion)
-                {
-                    var job = new MatchJob(region, matchId, _matchService, matchups => EnqueueMatchups(region, matchups));
-                    _webJobsRunner.EnqueueJob(job);
-                }
+        //    do
+        //    {
+        //        if (!regionMatchIds.IsEmpty
+        //            && regionMatchIds.TryDequeue(out long matchId)
+        //            && regionMatchups.Count < MaxMatchupsPerRegion)
+        //        {
+        //            var job = new MatchJob(region, matchId, _matchService, matchups => EnqueueMatchups(region, matchups));
+        //            _webJobsRunner.EnqueueJob(job);
+        //        }
 
-                await Task.Delay(interval, _webJobsRunner.CancellationToken);
+        //        await Task.Delay(interval);
 
-            } while (_webJobsRunner.IsRunning);
-        }
+        //    } while (_webJobsRunner.IsRunning);
+        //}
 
         public async void WriteMatchupsToDatabase(Region region, TimeSpan interval)
         {
@@ -118,7 +117,7 @@ namespace WebApi.RiotJobRunner
             {
 
 
-                await Task.Delay(interval, _databaseJobsRunner.CancellationToken);
+                await Task.Delay(interval);
 
             } while (_databaseJobsRunner.IsRunning);
         }
@@ -149,18 +148,18 @@ namespace WebApi.RiotJobRunner
             Logger.Info($"{region} Match ID Queue contains {regionMatchIds.Count} items.");
         }
 
-        private void EnqueueMatchups(Region region, IEnumerable<Matchup> matchups)
-        {
-            var regionMatchups = GetRegionMatchups(region);
+        //private void EnqueueMatchups(Region region, IEnumerable<Matchup> matchups)
+        //{
+        //    var regionMatchups = GetRegionMatchups(region);
 
-            foreach (var matchup in matchups)
-            {
-                // TODO don't enqueue the same IDs over and over again (or don't process them)
-                regionMatchups.Enqueue(matchup);
-            }
+        //    foreach (var matchup in matchups)
+        //    {
+        //        // TODO don't enqueue the same IDs over and over again (or don't process them)
+        //        regionMatchups.Enqueue(matchup);
+        //    }
 
-            Logger.Info($"{region} Matchup Queue contains {regionMatchups.Count} items.");
-        }
+        //    Logger.Info($"{region} Matchup Queue contains {regionMatchups.Count} items.");
+        //}
 
         private ConcurrentQueue<long> GetRegionSummonerIds(Region region)
         {
@@ -172,9 +171,9 @@ namespace WebApi.RiotJobRunner
             return _regionMatchIds.GetOrAdd(region, new ConcurrentQueue<long>());
         }
 
-        private ConcurrentQueue<Matchup> GetRegionMatchups(Region region)
-        {
-            return _regionMatchups.GetOrAdd(region, new ConcurrentQueue<Matchup>());
-        }
+        //private ConcurrentQueue<Matchup> GetRegionMatchups(Region region)
+        //{
+        //    return _regionMatchups.GetOrAdd(region, new ConcurrentQueue<Matchup>());
+        //}
     }
 }

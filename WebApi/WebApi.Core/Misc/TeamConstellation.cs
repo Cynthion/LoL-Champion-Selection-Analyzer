@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace WebApi.Misc
+namespace WebApi.Core.Misc
 {
     // TODO use enumerable instead of 5 distinct properties -> support non-meta games
     public class TeamConstellation

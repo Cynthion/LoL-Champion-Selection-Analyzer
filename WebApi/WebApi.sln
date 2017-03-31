@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.26228.9
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApi", "WebApi\WebApi.csproj", "{FD0DAD5C-20B8-4EF6-AF39-192C6133A247}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApi.Core", "WebApi\WebApi.Core.csproj", "{FD0DAD5C-20B8-4EF6-AF39-192C6133A247}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApi.Tests.UnitTests", "WebApi.Tests.UnitTests\WebApi.Tests.UnitTests.csproj", "{C5F979F1-D629-4482-B606-AE3E705BD170}"
 EndProject
@@ -13,11 +13,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApi.Tests.Utilities", "W
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApi.RiotApiClient", "WebApi.RiotApiClient\WebApi.RiotApiClient.csproj", "{6F66C12C-FCC4-48A8-91B9-4089D141E84C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApi.DataAccess", "WebApi.DataAccess\WebApi.DataAccess.csproj", "{17CE6215-2495-42B5-B96F-B9F6B2ADD30E}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApi.RiotJobRunner", "WebApi.RiotJobRunner\WebApi.RiotJobRunner.csproj", "{3A88E351-4AC6-4BDA-A5F4-5397E14F982B}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApi.RiotUtils", "WebApi.RiotUtils\WebApi.RiotUtils.csproj", "{A2923E48-39F0-46CD-876E-B6CC20F2A7CD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,18 +41,10 @@ Global
 		{6F66C12C-FCC4-48A8-91B9-4089D141E84C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6F66C12C-FCC4-48A8-91B9-4089D141E84C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6F66C12C-FCC4-48A8-91B9-4089D141E84C}.Release|Any CPU.Build.0 = Release|Any CPU
-		{17CE6215-2495-42B5-B96F-B9F6B2ADD30E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{17CE6215-2495-42B5-B96F-B9F6B2ADD30E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{17CE6215-2495-42B5-B96F-B9F6B2ADD30E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{17CE6215-2495-42B5-B96F-B9F6B2ADD30E}.Release|Any CPU.Build.0 = Release|Any CPU
 		{3A88E351-4AC6-4BDA-A5F4-5397E14F982B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{3A88E351-4AC6-4BDA-A5F4-5397E14F982B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3A88E351-4AC6-4BDA-A5F4-5397E14F982B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3A88E351-4AC6-4BDA-A5F4-5397E14F982B}.Release|Any CPU.Build.0 = Release|Any CPU
-		{A2923E48-39F0-46CD-876E-B6CC20F2A7CD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A2923E48-39F0-46CD-876E-B6CC20F2A7CD}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A2923E48-39F0-46CD-876E-B6CC20F2A7CD}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A2923E48-39F0-46CD-876E-B6CC20F2A7CD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

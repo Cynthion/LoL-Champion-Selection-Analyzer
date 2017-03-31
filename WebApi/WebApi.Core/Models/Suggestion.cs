@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
-using WebApi.Misc;
+using WebApi.Core.Misc;
 
-namespace WebApi.Models
+namespace WebApi.Core.Models
 {
     public class Suggestion
     {

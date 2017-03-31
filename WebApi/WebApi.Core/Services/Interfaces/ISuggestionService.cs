@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
-using WebApi.Misc;
-using WebApi.Models;
+using WebApi.Core.Misc;
+using WebApi.Core.Models;
 
-namespace WebApi.Services.Interfaces
+namespace WebApi.Core.Services.Interfaces
 {
     public interface ISuggestionService
     {

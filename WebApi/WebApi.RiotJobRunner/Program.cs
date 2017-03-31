@@ -38,7 +38,7 @@ namespace WebApi.RiotJobRunner
             watcher.WatchMatchlistsAsync(Region.EUW, TimeSpan.FromSeconds(10));
             //watcher.WatchMatchlistsAsync(Region.NA, TimeSpan.FromSeconds(10));
 
-            watcher.WatchMatchupsAsync(Region.EUW, TimeSpan.FromSeconds(1));
+            //watcher.WatchMatchupsAsync(Region.EUW, TimeSpan.FromSeconds(1));
             //watcher.WatchMatchupsAsync(Region.NA, TimeSpan.FromSeconds(1));
 
             try

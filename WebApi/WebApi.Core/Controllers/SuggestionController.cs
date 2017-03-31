@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using WebApi.Models.Dtos;
-using WebApi.Services.Interfaces;
+using WebApi.Core.Models.Dtos;
+using WebApi.Core.Services.Interfaces;
 
-namespace WebApi.Controllers
+namespace WebApi.Core.Controllers
 {
     [Route("api/[championanalyzer]")]
     public class SuggestionController : Controller

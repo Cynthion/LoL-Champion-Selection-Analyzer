@@ -9,7 +9,7 @@ namespace WebApi.RiotJobRunner.Jobs
     {
         private readonly Action<TResult> _resultAction;
 
-        protected JobBase(Action<TResult> resultAction)
+        protected JobBase(Action<TResult> resultAction = null)
         {
             _resultAction = resultAction;
         }
@@ -22,7 +22,7 @@ namespace WebApi.RiotJobRunner.Jobs
 
             var result = await DoWorkAsync(cancellationToken);
 
-            _resultAction(result);
+            _resultAction?.Invoke(result);
         }
 
         protected abstract Task<TResult> DoWorkAsync(CancellationToken cancellationToken);

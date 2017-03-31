@@ -12,8 +12,6 @@ namespace WebApi.RiotJobRunner
     {
         public bool IsRunning => _cts != null && !_cts.IsCancellationRequested;
 
-        public CancellationToken CancellationToken => _cts.Token;
-
         private static readonly ILogger Logger = LogManager.GetCurrentClassLogger();
 
         private readonly ConcurrentQueue<IJob> _jobQueue;
@@ -41,7 +39,6 @@ namespace WebApi.RiotJobRunner
 
         public async void Start(TimeSpan baseFrequency)
         {
-            // TODO parallelize execution
             _cts = new CancellationTokenSource();
 
             Logger.Info($"{GetType().Name} started...");
@@ -52,6 +49,7 @@ namespace WebApi.RiotJobRunner
                 {
                     try
                     {
+                        // TODO parallelize execution
                         await job.RunAsync(_cts.Token);
                     }
                     catch (Exception e)
@@ -61,7 +59,7 @@ namespace WebApi.RiotJobRunner
 
                 }
 
-                await Task.Delay(baseFrequency, _cts.Token);
+                await Task.Delay(baseFrequency);
 
             } while (IsRunning);
         }

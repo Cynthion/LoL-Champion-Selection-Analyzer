@@ -1,4 +1,4 @@
-﻿namespace WebApi.RiotUtils
+﻿namespace WebApi.Core.Misc
 {
     public struct ChampionPlacement
     {

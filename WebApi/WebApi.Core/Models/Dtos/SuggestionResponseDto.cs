@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
-using WebApi.Misc;
+using WebApi.Core.Misc;
 
-namespace WebApi.Models.Dtos
+namespace WebApi.Core.Models.Dtos
 {
     public class SuggestionResponseDto
     {

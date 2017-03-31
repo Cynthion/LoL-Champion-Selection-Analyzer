@@ -5,15 +5,15 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using NLog;
+using WebApi.Core.Services;
+using WebApi.Core.Services.Interfaces;
 using WebApi.RiotApiClient.Misc;
 using WebApi.RiotApiClient.Misc.Interfaces;
 using WebApi.RiotApiClient.Services;
 using WebApi.RiotApiClient.Services.Interfaces;
-using WebApi.Services;
-using WebApi.Services.Interfaces;
 using ILogger = NLog.ILogger;
 
-namespace WebApi
+namespace WebApi.Core
 {
     public class Startup
     {
@@ -58,7 +58,7 @@ namespace WebApi
             services.AddSingleton<ILeagueService, LeagueService>();
 
             //services.AddSingleton<IRegionSelector, RegionSelector>();
-            services.AddSingleton<ISuggestionService, SuggestionService>();
+            //services.AddSingleton<ISuggestionService, SuggestionService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
