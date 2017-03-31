@@ -33,7 +33,7 @@ namespace WebApi.Core
             services.AddMvc(); // TODO remove, since MVC is not used
 
             // Database contexts
-            services.AddDbContext<LeagueContext>(opt => opt.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+            services.AddDbContext<LeagueContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
             // Repositories
             services.AddScoped<ILeagueRepository, LeagueRepository>();

@@ -17,31 +17,31 @@ namespace WebApi.DataAccess.Repositories
 
         public void Add(LeagueDto item)
         {
-            _context.LeagueDtos.Add(item);
+            _context.Leagues.Add(item);
             _context.SaveChanges();
         }
 
         public void Remove(string participantId)
         {
-            var entity = _context.LeagueDtos.First(t => t.ParticipantId == participantId);
-            _context.LeagueDtos.Remove(entity);
+            var entity = _context.Leagues.First(t => t.ParticipantId == participantId);
+            _context.Leagues.Remove(entity);
             _context.SaveChanges();
         }
 
         public void Update(LeagueDto item)
         {
-            _context.LeagueDtos.Update(item);
+            _context.Leagues.Update(item);
             _context.SaveChanges();
         }
 
         public IEnumerable<LeagueDto> GetAll()
         {
-            return _context.LeagueDtos.ToList();
+            return _context.Leagues.ToList();
         }
 
         public LeagueDto Find(string participantId)
         {
-            return _context.LeagueDtos.FirstOrDefault(t => t.ParticipantId == participantId);
+            return _context.Leagues.FirstOrDefault(t => t.ParticipantId == participantId);
         }
     }
 }

@@ -23,16 +23,16 @@ namespace WebApi.Model.Dtos.League
         /// <summary>
         /// The league's queue type.
         /// </summary>
-        public string Queue { get; set; }
+        public string Queue { get; set; } // TODO make enum
 
         /// <summary>
         /// The league's tier.
         /// </summary>
-        public string Tier { get; set; }
+        public string Tier { get; set; } // TODO make enum
 
         /// <summary>
         /// The requested league entries.
         /// </summary>
-        public IList<LeagueEntryDto> Entries { get; set; }
+        public ICollection<LeagueEntryDto> Entries { get; set; }
     }
 }
