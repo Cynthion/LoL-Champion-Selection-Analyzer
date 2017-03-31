@@ -1,4 +1,5 @@
-﻿using WebApi.Core.Misc;
+﻿using System.Collections.Generic;
+using WebApi.Core.Misc;
 
 namespace WebApi.Core.Models
 {

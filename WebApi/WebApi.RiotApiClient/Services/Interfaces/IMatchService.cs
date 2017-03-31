@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using WebApi.RiotApiClient.Dtos.Match;
+using WebApi.Model.Dtos.Match;
 using WebApi.RiotApiClient.Misc;
 
 namespace WebApi.RiotApiClient.Services.Interfaces

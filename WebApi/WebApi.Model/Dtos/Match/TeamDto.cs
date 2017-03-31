@@ -1,4 +1,4 @@
-﻿namespace WebApi.RiotApiClient.Dtos.Match
+﻿namespace WebApi.Model.Dtos.Match
 {
     /// <summary>
     /// Unnecessary properties not contained.

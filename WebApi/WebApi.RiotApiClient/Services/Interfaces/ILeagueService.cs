@@ -1,5 +1,5 @@
 ﻿using System.Threading.Tasks;
-using WebApi.RiotApiClient.Dtos.League;
+using WebApi.Model.Dtos.League;
 using WebApi.RiotApiClient.Misc;
 
 namespace WebApi.RiotApiClient.Services.Interfaces

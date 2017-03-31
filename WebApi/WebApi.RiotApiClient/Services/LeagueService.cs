@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 using Newtonsoft.Json;
-using WebApi.RiotApiClient.Dtos.League;
+using WebApi.Model.Dtos.League;
 using WebApi.RiotApiClient.Misc;
 using WebApi.RiotApiClient.Services.Interfaces;
 

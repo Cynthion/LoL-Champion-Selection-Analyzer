@@ -1,4 +1,4 @@
-﻿namespace WebApi.RiotApiClient.Dtos.Stats
+﻿namespace WebApi.Model.Dtos.Stats
 {
     // Dominion data removed
     public class AggregatedStatsDto

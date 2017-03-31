@@ -1,24 +1,18 @@
 ﻿using System;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using NLog;
-using WebApi.Core.Services;
-using WebApi.Core.Services.Interfaces;
-using WebApi.RiotApiClient.Misc;
-using WebApi.RiotApiClient.Misc.Interfaces;
-using WebApi.RiotApiClient.Services;
-using WebApi.RiotApiClient.Services.Interfaces;
-using ILogger = NLog.ILogger;
+using WebApi.DataAccess.DbContexts;
+using WebApi.DataAccess.Repositories;
+using WebApi.DataAccess.Repositories.Interfaces;
 
 namespace WebApi.Core
 {
     public class Startup
     {
-        private static readonly ILogger Logger = LogManager.GetCurrentClassLogger();
-
         // TODO use multiple environments https://docs.microsoft.com/en-us/aspnet/core/fundamentals/environments
         public Startup(IHostingEnvironment env)
         {
@@ -33,32 +27,16 @@ namespace WebApi.Core
         public IConfigurationRoot Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
-        public void ConfigureServices(IServiceCollection services, IServiceProvider serviceProvider)
+        public void ConfigureServices(IServiceCollection services)
         {
             // Add framework services.
             services.AddMvc(); // TODO remove, since MVC is not used
 
             // Database contexts
-            //services.AddDbContext<[DbContext]>(opt => opt.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+            services.AddDbContext<LeagueContext>(opt => opt.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
             // Repositories
-            //services.AddSingleton<ITodoRepository, TodoRepository>();
-
-            services.AddSingleton<IApiKey>(c => {
-                var apiKey = RiotApiKey.CreateFromFile();
-                Logger.Info($"Used API Key:\n{apiKey}");
-                return apiKey;
-            });
-            
-            // Services
-            services.AddSingleton<IWebService>(c => RiotWebService.Instance);
-            services.AddSingleton<ISummonerService, SummonerService>();
-            services.AddSingleton<IStatsService, StatsService>();
-            services.AddSingleton<IMatchService, MatchService>();
-            services.AddSingleton<ILeagueService, LeagueService>();
-
-            //services.AddSingleton<IRegionSelector, RegionSelector>();
-            //services.AddSingleton<ISuggestionService, SuggestionService>();
+            services.AddScoped<ILeagueRepository, LeagueRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

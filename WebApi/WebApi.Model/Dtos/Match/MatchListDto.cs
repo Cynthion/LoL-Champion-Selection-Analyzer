@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace WebApi.RiotApiClient.Dtos.Match
+namespace WebApi.Model.Dtos.Match
 {
     public class MatchListDto
     {

@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
-using WebApi.RiotApiClient.Dtos.Match;
+using WebApi.Model.Dtos.Match;
 using WebApi.RiotApiClient.Misc;
 using WebApi.RiotApiClient.Services.Interfaces;
 

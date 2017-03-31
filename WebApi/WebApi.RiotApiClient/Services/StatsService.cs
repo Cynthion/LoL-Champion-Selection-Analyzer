@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
-using WebApi.RiotApiClient.Dtos.Stats;
+using WebApi.Model.Dtos.Stats;
 using WebApi.RiotApiClient.Misc;
 using WebApi.RiotApiClient.Services.Interfaces;
 

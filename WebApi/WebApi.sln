@@ -17,6 +17,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApi.RiotJobRunner", "Web
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApi.DataAccess", "WebApi.DataAccess\WebApi.DataAccess.csproj", "{251A76F8-F9E4-4C91-A11B-0482542CBC80}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApi.Model", "WebApi.Model\WebApi.Model.csproj", "{BBD1B503-F64C-4CEF-A4B6-A11D383BD41A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -51,6 +53,10 @@ Global
 		{251A76F8-F9E4-4C91-A11B-0482542CBC80}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{251A76F8-F9E4-4C91-A11B-0482542CBC80}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{251A76F8-F9E4-4C91-A11B-0482542CBC80}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BBD1B503-F64C-4CEF-A4B6-A11D383BD41A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BBD1B503-F64C-4CEF-A4B6-A11D383BD41A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BBD1B503-F64C-4CEF-A4B6-A11D383BD41A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BBD1B503-F64C-4CEF-A4B6-A11D383BD41A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

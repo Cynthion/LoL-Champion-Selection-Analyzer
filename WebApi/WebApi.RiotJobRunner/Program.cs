@@ -1,7 +1,9 @@
 ﻿using System;
 using Microsoft.Extensions.DependencyInjection;
+using NLog;
 using StructureMap;
 using WebApi.RiotApiClient.Misc;
+using WebApi.RiotApiClient.Misc.Interfaces;
 using WebApi.RiotApiClient.Services;
 using WebApi.RiotApiClient.Services.Interfaces;
 using WebApi.RiotJobRunner.Jobs;
@@ -10,9 +12,16 @@ namespace WebApi.RiotJobRunner
 {
     internal class Program
     {
+        private static readonly ILogger Logger = LogManager.GetCurrentClassLogger();
+
         public static void Main(string[] args)
         {
             var services = new ServiceCollection()
+                .AddSingleton<IApiKey>(c => {
+                    var apiKey = RiotApiKey.CreateFromFile();
+                    Logger.Info($"Used API Key:\n{apiKey}");
+                    return apiKey;
+                })
                 .AddSingleton<IWebService>(c => RiotWebService.Instance)
                 .AddSingleton<ILeagueService, LeagueService>()
                 .AddSingleton<IMatchService, MatchService>();

@@ -5,7 +5,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using NLog;
 using WebApi.RiotApiClient;
-using WebApi.RiotApiClient.Dtos.Match;
 using WebApi.RiotApiClient.Misc;
 using WebApi.RiotApiClient.Services.Interfaces;
 

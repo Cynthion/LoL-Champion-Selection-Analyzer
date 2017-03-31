@@ -1,4 +1,4 @@
-﻿namespace WebApi.RiotApiClient.Dtos.Summoner
+﻿namespace WebApi.Model.Dtos.Summoner
 {
     public class SummonerDto
     {

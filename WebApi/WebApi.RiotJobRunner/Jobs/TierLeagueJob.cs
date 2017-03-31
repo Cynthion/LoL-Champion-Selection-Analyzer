@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using NLog;
-using WebApi.RiotApiClient.Dtos.League;
+using WebApi.Model.Dtos.League;
 using WebApi.RiotApiClient.Misc;
 using WebApi.RiotApiClient.Services.Interfaces;
 

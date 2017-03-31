@@ -22,7 +22,10 @@
   <ItemGroup>
     <Folder Include="Entities\" />
     <Folder Include="Migrations\" />
-    <Folder Include="Repositories\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\WebApi.Model\WebApi.Model.csproj" />
   </ItemGroup>
   
 </Project>
