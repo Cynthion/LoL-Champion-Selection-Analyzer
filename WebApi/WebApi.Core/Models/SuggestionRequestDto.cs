@@ -1,7 +1,6 @@
-﻿using System.Collections.Generic;
-using WebApi.Core.Misc;
+﻿using WebApi.Core.Misc;
 
-namespace WebApi.Core.Models.Dtos
+namespace WebApi.Core.Models
 {
     public class SuggestionRequestDto
     {

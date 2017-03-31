@@ -5,7 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\WebApi\WebApi.Core.csproj" />
+    <ProjectReference Include="..\WebApi.RiotApiClient\WebApi.RiotApiClient.csproj" />
   </ItemGroup>
 
 </Project>
