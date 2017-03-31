@@ -1,11 +1,10 @@
 ﻿using System;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using WebApi.DataAccess.DbContexts;
+using WebApi.DataAccess;
 using WebApi.DataAccess.Repositories;
 using WebApi.DataAccess.Repositories.Interfaces;
 
@@ -33,7 +32,7 @@ namespace WebApi.Core
             services.AddMvc(); // TODO remove, since MVC is not used
 
             // Database contexts
-            services.AddDbContext<LeagueContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+            services.AddEntityFramework(Configuration.GetConnectionString("DefaultConnection"));
 
             // Repositories
             services.AddScoped<ILeagueRepository, LeagueRepository>();
