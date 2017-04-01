@@ -15,22 +15,22 @@ namespace WebApi.RiotApiClient.Services
             _webService = webService;
         }
 
-        public async Task<LeagueDto> GetMasterTierLeaguesAsync(Region region, string queueType)
+        public async Task<League> GetMasterTierLeaguesAsync(Region region, string queueType)
         {
             var url = $"api/lol/{region}/v2.5/league/master?type={queueType}";
 
             var response = await _webService.GetRequestAsync(region, url);
 
-            return JsonConvert.DeserializeObject<LeagueDto>(response);
+            return JsonConvert.DeserializeObject<League>(response);
         }
 
-        public async Task<LeagueDto> GetChallengerTierLeaguesAsync(Region region, string queueType)
+        public async Task<League> GetChallengerTierLeaguesAsync(Region region, string queueType)
         {
             var url = $"api/lol/{region}/v2.5/league/challenger?type={queueType}";
 
             var response = await _webService.GetRequestAsync(region, url);
 
-            return JsonConvert.DeserializeObject<LeagueDto>(response);
+            return JsonConvert.DeserializeObject<League>(response);
         }
     }
 }

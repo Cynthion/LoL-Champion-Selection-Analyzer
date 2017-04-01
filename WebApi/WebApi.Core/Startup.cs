@@ -34,7 +34,7 @@ namespace WebApi.Core
             services.AddDbContexts(Configuration.GetConnectionString("DefaultConnection"));
 
             // Repositories
-            services.AddScoped<ILeagueRepository, LeagueRepository>();
+            services.AddScoped<ILeagueEntryRepository, LeagueEntryRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -44,8 +44,6 @@ namespace WebApi.Core
             loggerFactory.AddDebug();
 
             app.UseMvc(); // TODO remove, since MVC is not used
-
-            //DbInitializer.Initialize(context);
         }
     }
 }

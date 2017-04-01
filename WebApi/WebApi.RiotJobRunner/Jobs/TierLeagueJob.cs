@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading;
+﻿using System.Threading;
 using System.Threading.Tasks;
 using NLog;
 using WebApi.Model.Dtos.League;
@@ -16,7 +13,7 @@ namespace WebApi.RiotJobRunner.Jobs
         Master
     }
 
-    internal class TierLeagueJob : JobBase<IEnumerable<long>>
+    internal class TierLeagueJob : JobBase
     {
         private static readonly ILogger Logger = LogManager.GetCurrentClassLogger();
 
@@ -24,55 +21,37 @@ namespace WebApi.RiotJobRunner.Jobs
         private readonly TierLeague _tierLeague;
         private readonly string _queueType;
         private readonly ILeagueService _leagueService;
-        
+        private readonly IWebApiService _webApiService;
+
         public TierLeagueJob(
             Region region, 
             TierLeague tierLeague,
             string queueType, 
             ILeagueService leagueService,
-            Action<IEnumerable<long>> resultAction)
-            : base(resultAction)
+            IWebApiService webApiService)
         {
             _region = region;
             _tierLeague = tierLeague;
             _queueType = queueType;
             _leagueService = leagueService;
+            _webApiService = webApiService;
         }
 
-        protected override async Task<IEnumerable<long>> DoWorkAsync(CancellationToken cancellationToken)
+        protected override async Task DoWorkAsync(CancellationToken cancellationToken)
         {
-            LeagueDto leagueDto;
+            League league;
             if (_tierLeague == TierLeague.Challenger)
             {
-                leagueDto = await _leagueService.GetChallengerTierLeaguesAsync(_region, _queueType);
+                league = await _leagueService.GetChallengerTierLeaguesAsync(_region, _queueType);
             }
             else
             {
-                leagueDto = await _leagueService.GetMasterTierLeaguesAsync(_region, _queueType);
+                league = await _leagueService.GetMasterTierLeaguesAsync(_region, _queueType);
             }
 
-            var playerOrTeamIds = new List<long>();
-            if (leagueDto?.Entries != null && leagueDto.Entries.Any())
-            {
-                var ids = leagueDto.Entries
-                    .Select(e => e.PlayerOrTeamId)
-                    .Where(id => id != null)
-                    .Distinct()
-                    .ToArray();
+            Logger.Debug($"{GetParameterString()}: Found {league.Entries.Count} League Entries.");
 
-                foreach (var id in ids)
-                {
-                    if (long.TryParse(id, out long idNumber))
-                    {
-                        playerOrTeamIds.Add(idNumber);
-                    }
-                }
-            }
-
-            Logger.Debug($"{GetParameterString()}: Found {playerOrTeamIds.Count} Player or Team IDs.");
-            Logger.Debug($"{string.Join(",", playerOrTeamIds)}");
-
-            return playerOrTeamIds;
+            await _webApiService.SendLeagueDtoAsync(league);
         }
 
         public override string ToString()

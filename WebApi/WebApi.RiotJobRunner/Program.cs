@@ -23,28 +23,28 @@ namespace WebApi.RiotJobRunner
                     return apiKey;
                 })
                 .AddSingleton<IWebService>(c => RiotWebService.Instance)
+                .AddSingleton<IWebApiService, WebApiService>()
                 .AddSingleton<ILeagueService, LeagueService>()
                 .AddSingleton<IMatchService, MatchService>();
             var container = new Container();
 
             container.Configure(config => config.Populate(services));
 
-            var webJobsRunner = new JobRunner();
-            var databaseJobsRunner = new JobRunner();
+            var jobRunner = new JobRunner();
 
             var watcher = new Watcher(
-                webJobsRunner, 
-                databaseJobsRunner,
+                jobRunner, 
                 container.GetInstance<ILeagueService>(),
-                container.GetInstance<IMatchService>());
+                container.GetInstance<IMatchService>(),
+                container.GetInstance<IWebApiService>());
 
-            watcher.WatchHighTierPlayersAsync(Region.EUW, TierLeague.Challenger, TimeSpan.FromDays(1));
+            watcher.WatchHighTierPlayersAsync(Region.EUW, TierLeague.Challenger, TimeSpan.FromSeconds(45));
             //watcher.WatchHighTierPlayersAsync(Region.EUW, TierLeague.Master, TimeSpan.FromDays(1));
 
             //watcher.WatchHighTierPlayersAsync(Region.NA, TierLeague.Challenger, TimeSpan.FromDays(0.5));
             //watcher.WatchHighTierPlayersAsync(Region.NA, TierLeague.Master, TimeSpan.FromDays(0.5));
 
-            watcher.WatchMatchlistsAsync(Region.EUW, TimeSpan.FromSeconds(10));
+            //watcher.WatchMatchlistsAsync(Region.EUW, TimeSpan.FromSeconds(10));
             //watcher.WatchMatchlistsAsync(Region.NA, TimeSpan.FromSeconds(10));
 
             //watcher.WatchMatchupsAsync(Region.EUW, TimeSpan.FromSeconds(1));
@@ -52,14 +52,12 @@ namespace WebApi.RiotJobRunner
 
             try
             {
-                webJobsRunner.Start(TimeSpan.FromSeconds(1));
-                databaseJobsRunner.Start(TimeSpan.FromSeconds(1)); // TODO decrease
+                jobRunner.Start(TimeSpan.FromSeconds(1));
                 Console.ReadLine();
             }
             finally
             {
-                webJobsRunner.Stop();
-                databaseJobsRunner.Stop();       
+                jobRunner.Stop();
             }
         }
     }

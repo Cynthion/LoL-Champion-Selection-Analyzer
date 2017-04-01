@@ -4,7 +4,7 @@ using WebApi.Core.Services.Interfaces;
 
 namespace WebApi.Core.Controllers
 {
-    [Route("api/[championanalyzer]")]
+    [Route("api/[controller]")]
     public class SuggestionController : Controller
     {
         private readonly ISuggestionService _suggestionService;

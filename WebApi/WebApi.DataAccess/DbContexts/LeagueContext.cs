@@ -10,15 +10,15 @@ namespace WebApi.DataAccess.DbContexts
         {
         }
 
-        public DbSet<LeagueDto> Leagues { get; set; }
+        //public DbSet<League> Leagues { get; set; }
 
-        public DbSet<LeagueEntryDto> LeagueEntrys { get; set; }
+        public DbSet<LeagueEntry> LeagueEntries { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             // configure the table names to use singular table names
-            modelBuilder.Entity<LeagueDto>().ToTable("League");
-            modelBuilder.Entity<LeagueEntryDto>().ToTable("LeagueEntry");
+            //modelBuilder.Entity<League>().ToTable("League");
+            modelBuilder.Entity<LeagueEntry>().ToTable("LeagueEntry");
         }
     }
 }
