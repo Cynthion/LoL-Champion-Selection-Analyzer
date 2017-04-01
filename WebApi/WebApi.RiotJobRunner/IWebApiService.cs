@@ -6,7 +6,7 @@ namespace WebApi.RiotJobRunner
 {
     internal interface IWebApiService
     {
-        Task<IEnumerable<League>> GetLeaguesAsync();
+        Task<IEnumerable<LeagueEntry>> GetLeaguesAsync();
 
         Task SendLeagueAsync(League league);
     }

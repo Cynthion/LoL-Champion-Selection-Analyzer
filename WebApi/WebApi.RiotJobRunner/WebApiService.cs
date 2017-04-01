@@ -22,13 +22,13 @@ namespace WebApi.RiotJobRunner
             _httpClient = new HttpClient();
         }
 
-        public async Task<IEnumerable<League>> GetLeaguesAsync()
+        public async Task<IEnumerable<LeagueEntry>> GetLeaguesAsync()
         {
             var url = $"{Domain}/api/leagueentry";
 
             var response = await GetRequestAsync(url);
 
-            return JsonConvert.DeserializeObject<League[]>(response);
+            return JsonConvert.DeserializeObject<LeagueEntry[]>(response);
         }
 
         public async Task SendLeagueAsync(League league)

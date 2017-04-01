@@ -69,14 +69,21 @@ namespace WebApi.RiotJobRunner
 
         public async void WatchMatchlistsAsync(TimeSpan interval)
         {
+            var rankedQueues = GameConstants.GetRankedQueueTypes();
+            var seasons = GameConstants.GetCurrentSeasons();
+
             do
             {
                 var leagues = await _webApiService.GetLeaguesAsync();
-                var summonerIds = leagues.Select(l => l.ParticipantId);
 
-                foreach (var summonerId in summonerIds)
+                foreach (var league in leagues)
                 {
-                    //var job = new MatchListJob();
+                    var region = (Region)Enum.Parse(typeof(Region), league.Region);
+                    var summonerId = league.PlayerOrTeamId;
+
+                    var job = new MatchListJob(region, summonerId, rankedQueues, seasons, _matchService, _webApiService);
+
+                    // TODO enqueue
                 }
 
                 await Task.Delay(interval);
