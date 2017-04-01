@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using WebApi.Core.DbContexts;
-using WebApi.Core.Repositories.Interfaces;
+using WebApi.DataAccess.DbContexts;
+using WebApi.DataAccess.Repositories.Interfaces;
 using WebApi.Model.Dtos.League;
 
-namespace WebApi.Core.Repositories
+namespace WebApi.DataAccess.Repositories
 {
     public class LeagueRepository : ILeagueRepository
     {

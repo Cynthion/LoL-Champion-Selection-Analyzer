@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using WebApi.Model.Dtos.League;
 
-namespace WebApi.Core.DbContexts
+namespace WebApi.DataAccess.DbContexts
 {
     public class LeagueContext : DbContext
     {

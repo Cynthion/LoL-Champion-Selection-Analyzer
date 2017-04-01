@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
-using WebApi.Core.Repositories.Interfaces;
+using WebApi.DataAccess.Repositories.Interfaces;
 using WebApi.Model.Dtos.League;
 
 namespace WebApi.Core.Controllers

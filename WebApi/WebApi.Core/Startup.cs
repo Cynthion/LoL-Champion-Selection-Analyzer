@@ -1,12 +1,11 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using WebApi.Core.DbContexts;
-using WebApi.Core.Repositories;
-using WebApi.Core.Repositories.Interfaces;
+using WebApi.DataAccess;
+using WebApi.DataAccess.Repositories;
+using WebApi.DataAccess.Repositories.Interfaces;
 
 namespace WebApi.Core
 {
@@ -32,21 +31,21 @@ namespace WebApi.Core
             services.AddMvc(); // TODO remove, since MVC is not used
 
             // Database contexts
-            services.AddDbContext<LeagueContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+            services.AddDbContexts(Configuration.GetConnectionString("DefaultConnection"));
 
             // Repositories
             services.AddScoped<ILeagueRepository, LeagueRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory, LeagueContext context)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
 
             app.UseMvc(); // TODO remove, since MVC is not used
 
-            DbInitializer.Initialize(context);
+            //DbInitializer.Initialize(context);
         }
     }
 }

@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using WebApi.Model.Dtos.League;
 
-namespace WebApi.Core.Repositories.Interfaces
+namespace WebApi.DataAccess.Repositories.Interfaces
 {
     public interface ILeagueRepository
     {
