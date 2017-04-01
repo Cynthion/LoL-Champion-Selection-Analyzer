@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Newtonsoft.Json;
 using NLog;
 using WebApi.Model.Dtos.League;
+using WebApi.Model.Dtos.Match;
 
 namespace WebApi.RiotJobRunner
 {
@@ -22,7 +23,7 @@ namespace WebApi.RiotJobRunner
             _httpClient = new HttpClient();
         }
 
-        public async Task<IEnumerable<LeagueEntry>> GetLeaguesAsync()
+        public async Task<IEnumerable<LeagueEntry>> GetLeagueEntriesAsync()
         {
             var url = $"{Domain}/api/leagueentry";
 
@@ -31,7 +32,16 @@ namespace WebApi.RiotJobRunner
             return JsonConvert.DeserializeObject<LeagueEntry[]>(response);
         }
 
-        public async Task SendLeagueAsync(League league)
+        public async Task<IEnumerable<MatchReference>> GetMatchReferencesAsync()
+        {
+            var url = $"{Domain}/api/matchreference";
+
+            var response = await GetRequestAsync(url);
+
+            return JsonConvert.DeserializeObject<MatchReference[]>(response);
+        }
+
+        public async Task PostLeagueAsync(League league)
         {
             var url = $"{Domain}/api/leagueentry";
 
@@ -44,18 +54,16 @@ namespace WebApi.RiotJobRunner
             }
         }
 
-        private async Task PostRequestAsync(string url, string content)
+        public async Task PostMatchlistAsync(MatchList matchlist)
         {
-            using (var response = await _httpClient.PostAsync(url, new StringContent(content, Encoding.UTF8, "application/json")))
+            var url = $"{Domain}/api/matchreference";
+
+            // TODO batch
+            foreach (var matchReference in matchlist.Matches)
             {
-                try
-                {
-                    response.EnsureSuccessStatusCode();
-                }
-                catch (Exception ex)
-                {
-                    Logger.Error(ex);
-                }
+                var jsonObject = JsonConvert.SerializeObject(matchReference);
+
+                await PostRequestAsync(url, jsonObject);
             }
         }
 
@@ -80,6 +88,21 @@ namespace WebApi.RiotJobRunner
             }
 
             return result;
+        }
+
+        private async Task PostRequestAsync(string url, string content)
+        {
+            using (var response = await _httpClient.PostAsync(url, new StringContent(content, Encoding.UTF8, "application/json")))
+            {
+                try
+                {
+                    response.EnsureSuccessStatusCode();
+                }
+                catch (Exception ex)
+                {
+                    Logger.Error(ex);
+                }
+            }
         }
     }
 }

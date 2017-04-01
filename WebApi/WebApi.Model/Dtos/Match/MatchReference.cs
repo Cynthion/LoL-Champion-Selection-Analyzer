@@ -1,7 +1,12 @@
-﻿namespace WebApi.Model.Dtos.Match
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
+namespace WebApi.Model.Dtos.Match
 {
-    public class MatchReferenceDto
+    public class MatchReference
     {
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public long MatchId { get; set; }
 
         public long Champion { get; set; }

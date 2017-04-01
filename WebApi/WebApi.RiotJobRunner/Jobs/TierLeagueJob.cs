@@ -57,7 +57,7 @@ namespace WebApi.RiotJobRunner.Jobs
                 leagueEntry.Region = _region.ToString();
             }
 
-            await _webApiService.SendLeagueAsync(league);
+            await _webApiService.PostLeagueAsync(league);
         }
 
         public override string ToString()

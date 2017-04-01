@@ -37,19 +37,11 @@ namespace WebApi.RiotJobRunner.Jobs
 
         protected override async Task DoWorkAsync(CancellationToken cancellationToken)
         {
-            var matchListDto = await _matchService.GetMatchListAsync(_region, _summonerId, _rankedQueues.ToArray(), _seasons.ToArray());
+            var matchList = await _matchService.GetMatchListAsync(_region, _summonerId, _rankedQueues.ToArray(), _seasons.ToArray());
 
-            var matchIds = new List<long>();
-            if (matchListDto?.Matches != null && matchListDto.Matches.Any())
-            {
-                var ids = matchListDto.Matches
-                    .Select(e => e.MatchId)
-                    .Distinct();
+            Logger.Debug($"{GetParameterString()}: Found {matchList.Matches.Count} Match References.");
 
-                matchIds.AddRange(ids);
-            }
-
-            Logger.Debug($"{GetParameterString()}: Found {matchIds.Count} Match IDs.");
+            await _webApiService.PostMatchlistAsync(matchList);
         }
 
         public override string ToString()

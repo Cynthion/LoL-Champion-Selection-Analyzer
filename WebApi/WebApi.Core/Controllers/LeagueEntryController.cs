@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
-using NLog;
 using WebApi.DataAccess.Repositories.Interfaces;
 using WebApi.Model.Dtos.League;
 
@@ -9,68 +8,66 @@ namespace WebApi.Core.Controllers
     [Route("api/[controller]")]
     public class LeagueEntryController : Controller
     {
-        private static readonly ILogger Logger = LogManager.GetCurrentClassLogger();
+        private readonly ILeagueEntryRepository _repository;
 
-        private readonly ILeagueEntryRepository _leagueEntryRepository;
-
-        public LeagueEntryController(ILeagueEntryRepository leagueEntryRepository)
+        public LeagueEntryController(ILeagueEntryRepository repository)
         {
-            _leagueEntryRepository = leagueEntryRepository;
+            _repository = repository;
         }
 
         // GET /api/leagueentry
         [HttpGet]
         public IEnumerable<LeagueEntry> GetAll()
         {
-            return _leagueEntryRepository.GetAll();
+            return _repository.GetAll();
         }
 
         // GET /api/leagueentry/{id}
         [HttpGet("{id}", Name = "GetLeague")]
         public IActionResult GetById(long playerOrTeamId)
         {
-            var item = _leagueEntryRepository.Find(playerOrTeamId);
-            if (item == null)
+            var entity = _repository.Find(playerOrTeamId);
+            if (entity == null)
             {
                 return NotFound();
             }
-            return new ObjectResult(item);
+            return new ObjectResult(entity);
         }
 
         // POST api/leagueentry
         [HttpPost]
-        public IActionResult Create([FromBody]LeagueEntry item)
+        public IActionResult Create([FromBody]LeagueEntry entity)
         {
-            if (item == null)
+            if (entity == null)
             {
                 return BadRequest();
             }
 
-            _leagueEntryRepository.Add(item);
+            _repository.Add(entity);
 
-            return CreatedAtRoute("GetLeague", new { id = item.PlayerOrTeamId }, item);
+            return CreatedAtRoute("GetLeague", new { id = entity.PlayerOrTeamId }, entity);
         }
 
         // PUT api/leagueentry/{id}
         [HttpPut("{id}")]
-        public IActionResult Update(long playerOrTeamId, [FromBody]LeagueEntry item)
+        public IActionResult Update(long playerOrTeamId, [FromBody]LeagueEntry entity)
         {
-            if (item == null || item.PlayerOrTeamId != playerOrTeamId)
+            if (entity == null || entity.PlayerOrTeamId != playerOrTeamId)
             {
                 return BadRequest();
             }
 
-            var existingItem = _leagueEntryRepository.Find(playerOrTeamId);
-            if (existingItem == null)
+            var existingEntity = _repository.Find(playerOrTeamId);
+            if (existingEntity == null)
             {
                 return NotFound();
             }
 
-            existingItem.PlayerOrTeamName = item.PlayerOrTeamName;
-            existingItem.Division = item.Division;
-            existingItem.Region = item.Region;
+            existingEntity.PlayerOrTeamName = entity.PlayerOrTeamName;
+            existingEntity.Division = entity.Division;
+            existingEntity.Region = entity.Region;
 
-            _leagueEntryRepository.Update(existingItem);
+            _repository.Update(existingEntity);
             return new NoContentResult();
         }
 
@@ -78,13 +75,13 @@ namespace WebApi.Core.Controllers
         [HttpDelete("{id}")]
         public IActionResult Delete(long playerOrTeamId)
         {
-            var item = _leagueEntryRepository.Find(playerOrTeamId);
-            if (item == null)
+            var entity = _repository.Find(playerOrTeamId);
+            if (entity == null)
             {
                 return NotFound();
             }
 
-            _leagueEntryRepository.Remove(playerOrTeamId);
+            _repository.Remove(playerOrTeamId);
             return new NoContentResult();
         }
     }

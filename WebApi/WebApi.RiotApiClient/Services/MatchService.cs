@@ -17,7 +17,7 @@ namespace WebApi.RiotApiClient.Services
             _webService = webService;
         }
 
-        public async Task<MatchListDto> GetMatchListAsync(Region region, long summonerId, ICollection<string> rankedQueues, ICollection<string> seasons)
+        public async Task<MatchList> GetMatchListAsync(Region region, long summonerId, ICollection<string> rankedQueues, ICollection<string> seasons)
         {
             var url = $"/api/lol/{region}/v2.2/matchlist/by-summoner/{summonerId}";
 
@@ -33,7 +33,7 @@ namespace WebApi.RiotApiClient.Services
 
             var response = await _webService.GetRequestAsync(region, url);
 
-            return JsonConvert.DeserializeObject<MatchListDto>(response);
+            return JsonConvert.DeserializeObject<MatchList>(response);
         }
 
         public async Task<MatchDetailDto> GetMatchAsync(Region region, long matchId)

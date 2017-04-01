@@ -9,6 +9,8 @@ namespace WebApi.DataAccess
         public static void AddDbContexts(this IServiceCollection services, string connectionString)
         {
             services.AddDbContext<LeagueContext>(options => options.UseSqlServer(connectionString));
+
+            services.AddDbContext<MatchContext>(options => options.UseSqlServer(connectionString));
         }
     }
 }

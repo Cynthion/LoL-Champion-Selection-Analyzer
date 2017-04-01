@@ -7,7 +7,7 @@ namespace WebApi.RiotApiClient.Services.Interfaces
 {
     public interface IMatchService
     {
-        Task<MatchListDto> GetMatchListAsync(
+        Task<MatchList> GetMatchListAsync(
             Region region, 
             long summonerId,
             ICollection<string> rankedQueues,
