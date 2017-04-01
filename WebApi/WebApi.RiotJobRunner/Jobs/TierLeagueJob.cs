@@ -40,6 +40,8 @@ namespace WebApi.RiotJobRunner.Jobs
         protected override async Task DoWorkAsync(CancellationToken cancellationToken)
         {
             League league;
+            var regionString = _region.ToString();
+
             if (_tierLeague == TierLeague.Challenger)
             {
                 league = await _leagueService.GetChallengerTierLeaguesAsync(_region, _queueType);
@@ -54,7 +56,7 @@ namespace WebApi.RiotJobRunner.Jobs
             // apply region
             foreach (var leagueEntry in league.Entries)
             {
-                leagueEntry.Region = _region.ToString();
+                leagueEntry.Region = regionString;
             }
 
             await _webApiService.PostLeagueAsync(league);

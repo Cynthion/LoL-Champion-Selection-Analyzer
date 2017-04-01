@@ -24,5 +24,10 @@ namespace WebApi.Model.Dtos.Match
         public string Role { get; set; }
 
         public string PlatformId { get; set; }
+
+        public override string ToString()
+        {
+            return $"{nameof(MatchReference)}<{Region},{MatchId}>";
+        }
     }
 }

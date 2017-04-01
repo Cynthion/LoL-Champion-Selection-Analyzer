@@ -13,9 +13,10 @@ namespace WebApi.RiotJobRunner
 
     internal class Watcher
     {
-        private const int MaxSummonersPerRegion = 1000; 
-        private const int MaxMatchesPerRegion = 10000;      // #summoners * 10
-        private const int MaxMatchupsPerRegion = 900000;    // #matches * 90
+        private static readonly ILogger Logger = LogManager.GetCurrentClassLogger();
+
+        private const int MaxLeagueEntries = 5000; 
+        private const int MaxMatchReferences = 100000;  // 20 matches per summoner
 
         private readonly IJobRunner _jobRunner;
         private readonly ILeagueService _leagueService;
@@ -44,8 +45,11 @@ namespace WebApi.RiotJobRunner
 
             do
             {
+                // TODO introduce Count API
                 var leagueEntriesCount = (await _webApiService.GetLeagueEntriesAsync()).Count();
-                if (leagueEntriesCount < MaxSummonersPerRegion)
+                Logger.Info($"League Entries Count: {leagueEntriesCount}");
+
+                if (leagueEntriesCount < MaxLeagueEntries)
                 {
                     _jobRunner.EnqueueJobs(jobs);
                 }
@@ -63,13 +67,20 @@ namespace WebApi.RiotJobRunner
             do
             {
                 var leagueEntries = await _webApiService.GetLeagueEntriesAsync();
-                foreach (var leagueEntry in leagueEntries)
-                {
-                    var region = (Region)Enum.Parse(typeof(Region), leagueEntry.Region);
-                    var summonerId = leagueEntry.PlayerOrTeamId;
+                // TODO introduce Count API
+                var matchReferencesCount = (await _webApiService.GetMatchReferencesAsync()).Count();
+                Logger.Info($"Match References Count: {matchReferencesCount}");
 
-                    var job = new MatchListJob(region, summonerId, rankedQueues, seasons, _matchService, _webApiService);
-                    _jobRunner.EnqueueJob(job);
+                if (matchReferencesCount < MaxMatchReferences)
+                {
+                    foreach (var leagueEntry in leagueEntries)
+                    {
+                        var region = (Region)Enum.Parse(typeof(Region), leagueEntry.Region);
+                        var summonerId = leagueEntry.PlayerOrTeamId;
+
+                        var job = new MatchListJob(region, summonerId, rankedQueues, seasons, _matchService, _webApiService);
+                        _jobRunner.EnqueueJob(job);
+                    }
                 }
 
                 await Task.Delay(interval);

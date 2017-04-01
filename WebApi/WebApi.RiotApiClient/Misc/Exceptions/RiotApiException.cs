@@ -3,17 +3,17 @@ using System.Net;
 
 namespace WebApi.RiotApiClient.Misc.Exceptions
 {
-    public class RioApiException : Exception
+    public class RiotApiException : Exception
     {
         public readonly HttpStatusCode HttpStatusCode;
 
-        public RioApiException(string message)
+        public RiotApiException(string message)
             : base(message)
         {
             
         }
 
-        public RioApiException(string message, HttpStatusCode httpStatusCode) 
+        public RiotApiException(string message, HttpStatusCode httpStatusCode) 
             : this(message)
         {
             HttpStatusCode = httpStatusCode;

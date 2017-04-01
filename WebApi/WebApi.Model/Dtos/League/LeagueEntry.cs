@@ -26,5 +26,10 @@ namespace WebApi.Model.Dtos.League
         public string Division { get; set; }
 
         public string Region { get; set; } // TODO make enum
+
+        public override string ToString()
+        {
+            return $"{nameof(LeagueEntry)}<{Region},{PlayerOrTeamId}>";
+        }
     }
 }

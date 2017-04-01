@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using NLog;
 using WebApi.DataAccess.DbContexts;
 using WebApi.DataAccess.Repositories.Interfaces;
 using WebApi.Model.Dtos.Match;
@@ -8,6 +9,8 @@ namespace WebApi.DataAccess.Repositories
 {
     public class MatchReferenceRepository : IMatchReferenceRepository
     {
+        private static readonly ILogger Logger = LogManager.GetCurrentClassLogger();
+
         private readonly MatchContext _context;
 
         public MatchReferenceRepository(MatchContext context)
@@ -25,19 +28,25 @@ namespace WebApi.DataAccess.Repositories
 
             _context.MatchReferences.Add(entity);
             _context.SaveChanges();
+
+            Logger.Debug($"Added {entity}");
         }
 
         public void Update(MatchReference entity)
         {
             _context.MatchReferences.Update(entity);
             _context.SaveChanges();
+
+            Logger.Debug($"Updated {entity}");
         }
 
         public void Remove(long entityId)
         {
-            var item = _context.MatchReferences.First(t => t.MatchId == entityId);
-            _context.MatchReferences.Remove(item);
+            var entity = _context.MatchReferences.First(t => t.MatchId == entityId);
+            _context.MatchReferences.Remove(entity);
             _context.SaveChanges();
+
+            Logger.Debug($"Removed {entity}");
         }
 
         public IEnumerable<MatchReference> GetAll()
