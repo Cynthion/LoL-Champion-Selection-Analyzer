@@ -18,14 +18,14 @@ namespace WebApi.Core.Controllers
             _leagueEntryRepository = leagueEntryRepository;
         }
 
-        // GET /api/league
+        // GET /api/leagueentry
         [HttpGet]
         public IEnumerable<LeagueEntry> GetAll()
         {
             return _leagueEntryRepository.GetAll();
         }
 
-        // GET /api/league/{id}
+        // GET /api/leagueentry/{id}
         [HttpGet("{id}", Name = "GetLeague")]
         public IActionResult GetById(long playerOrTeamId)
         {
@@ -37,7 +37,7 @@ namespace WebApi.Core.Controllers
             return new ObjectResult(item);
         }
 
-        // POST api/league
+        // POST api/leagueentry
         [HttpPost]
         public IActionResult Create([FromBody]LeagueEntry item)
         {
@@ -51,7 +51,7 @@ namespace WebApi.Core.Controllers
             return CreatedAtRoute("GetLeague", new { id = item.PlayerOrTeamId }, item);
         }
 
-        // PUT api/league/{id}
+        // PUT api/leagueentry/{id}
         [HttpPut("{id}")]
         public IActionResult Update(long playerOrTeamId, [FromBody]LeagueEntry item)
         {
@@ -68,12 +68,13 @@ namespace WebApi.Core.Controllers
 
             existingItem.PlayerOrTeamName = item.PlayerOrTeamName;
             existingItem.Division = item.Division;
+            existingItem.Region = item.Region;
 
             _leagueEntryRepository.Update(existingItem);
             return new NoContentResult();
         }
 
-        // DELETE api/league/{id}
+        // DELETE api/leagueentry/{id}
         [HttpDelete("{id}")]
         public IActionResult Delete(long playerOrTeamId)
         {

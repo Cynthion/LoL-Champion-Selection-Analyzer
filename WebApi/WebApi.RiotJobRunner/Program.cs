@@ -38,7 +38,7 @@ namespace WebApi.RiotJobRunner
                 container.GetInstance<IMatchService>(),
                 container.GetInstance<IWebApiService>());
 
-            watcher.WatchHighTierPlayersAsync(Region.EUW, TierLeague.Challenger, TimeSpan.FromSeconds(45));
+            watcher.PollHighTierPlayersAsync(Region.EUW, TierLeague.Challenger, TimeSpan.FromSeconds(45));
             //watcher.WatchHighTierPlayersAsync(Region.EUW, TierLeague.Master, TimeSpan.FromDays(1));
 
             //watcher.WatchHighTierPlayersAsync(Region.NA, TierLeague.Challenger, TimeSpan.FromDays(0.5));

@@ -8,9 +8,10 @@ using WebApi.DataAccess.DbContexts;
 namespace WebApi.DataAccess.Migrations
 {
     [DbContext(typeof(LeagueContext))]
-    partial class LeagueContextModelSnapshot : ModelSnapshot
+    [Migration("20170401150139_AddRegionToLeague")]
+    partial class AddRegionToLeague
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.1.1")

@@ -51,7 +51,13 @@ namespace WebApi.RiotJobRunner.Jobs
 
             Logger.Debug($"{GetParameterString()}: Found {league.Entries.Count} League Entries.");
 
-            await _webApiService.SendLeagueDtoAsync(league);
+            // apply region
+            foreach (var leagueEntry in league.Entries)
+            {
+                leagueEntry.Region = _region.ToString();
+            }
+
+            await _webApiService.SendLeagueAsync(league);
         }
 
         public override string ToString()

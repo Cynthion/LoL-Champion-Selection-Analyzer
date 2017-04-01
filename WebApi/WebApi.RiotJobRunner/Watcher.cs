@@ -46,7 +46,7 @@ namespace WebApi.RiotJobRunner
             //_regionMatchups = new ConcurrentDictionary<Region, ConcurrentQueue<Matchup>>();
         }
 
-        public async void WatchHighTierPlayersAsync(Region region, TierLeague tierLeague, TimeSpan interval)
+        public async void PollHighTierPlayersAsync(Region region, TierLeague tierLeague, TimeSpan interval)
         {
             var rankedQueues = GameConstants.GetRankedQueueTypes();
             var regionSummonerIds = GetRegionSummonerIds(region);
@@ -67,29 +67,22 @@ namespace WebApi.RiotJobRunner
             } while (_jobRunner.IsRunning);
         }
 
-        //public async void WatchMatchlistsAsync(Region region, TimeSpan interval)
-        //{
-        //    var rankedQueues = GameConstants.GetRankedQueueTypes();
-        //    var seasons = GameConstants.GetCurrentSeasons();
+        public async void WatchMatchlistsAsync(TimeSpan interval)
+        {
+            do
+            {
+                var leagues = await _webApiService.GetLeaguesAsync();
+                var summonerIds = leagues.Select(l => l.ParticipantId);
 
-        //    var regionSummonerIds = GetRegionSummonerIds(region);
-        //    var regionMatchIds = GetRegionMatchIds(region);
+                foreach (var summonerId in summonerIds)
+                {
+                    //var job = new MatchListJob();
+                }
 
-        //    do
-        //    {
-        //        if (!regionSummonerIds.IsEmpty 
-        //            && regionSummonerIds.TryDequeue(out long summonerId)
-        //            && regionMatchIds.Count < MaxMatchesPerRegion)
-        //        {
-        //            // TODO only get matchlist for last week or so (-< last 10 matches)
-        //            var job = new MatchListJob(region, summonerId, rankedQueues, seasons, _matchService, matchIds => EnqueueMatchIds(region, matchIds));
-        //            _jobRunner.EnqueueJob(job);
-        //        }
+                await Task.Delay(interval);
 
-        //        await Task.Delay(interval);
-
-        //    } while (_jobRunner.IsRunning);
-        //}
+            } while (_jobRunner.IsRunning);
+        }
 
         //public async void WatchMatchupsAsync(Region region, TimeSpan interval)
         //{

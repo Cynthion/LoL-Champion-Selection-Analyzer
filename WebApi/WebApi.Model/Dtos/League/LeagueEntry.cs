@@ -24,5 +24,7 @@ namespace WebApi.Model.Dtos.League
         /// The league division of the participant.
         /// </summary>
         public string Division { get; set; }
+
+        public string Region { get; set; } // TODO make enum
     }
 }

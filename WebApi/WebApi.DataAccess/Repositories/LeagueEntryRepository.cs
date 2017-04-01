@@ -19,6 +19,7 @@ namespace WebApi.DataAccess.Repositories
         {
             if (_context.LeagueEntries.Any(i => i.PlayerOrTeamId == item.PlayerOrTeamId))
             {
+                Update(item); // TODO is this ok?
                 return;
             }
 
@@ -41,7 +42,7 @@ namespace WebApi.DataAccess.Repositories
 
         public IEnumerable<LeagueEntry> GetAll()
         {
-            return _context.LeagueEntries.ToList();
+            return _context.LeagueEntries.ToArray();
         }
 
         public LeagueEntry Find(long playerOrTeamId)

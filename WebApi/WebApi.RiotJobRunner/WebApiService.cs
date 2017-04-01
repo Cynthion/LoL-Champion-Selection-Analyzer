@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
@@ -21,7 +22,16 @@ namespace WebApi.RiotJobRunner
             _httpClient = new HttpClient();
         }
 
-        public async Task SendLeagueDtoAsync(League league)
+        public async Task<IEnumerable<League>> GetLeaguesAsync()
+        {
+            var url = $"{Domain}/api/leagueentry";
+
+            var response = await GetRequestAsync(url);
+
+            return JsonConvert.DeserializeObject<League[]>(response);
+        }
+
+        public async Task SendLeagueAsync(League league)
         {
             var url = $"{Domain}/api/leagueentry";
 
@@ -47,6 +57,29 @@ namespace WebApi.RiotJobRunner
                     Logger.Error(ex);
                 }
             }
+        }
+
+        private async Task<string> GetRequestAsync(string url)
+        {
+            string result;
+
+            using (var response = await _httpClient.GetAsync(url))
+            {
+                try
+                {
+                    response.EnsureSuccessStatusCode();
+                }
+                catch (Exception ex)
+                {
+                    Logger.Error(ex);
+                }
+                using (var content = response.Content)
+                {
+                    result = await content.ReadAsStringAsync();
+                }
+            }
+
+            return result;
         }
     }
 }
