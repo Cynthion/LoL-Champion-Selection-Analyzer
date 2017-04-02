@@ -71,7 +71,7 @@ namespace WebApi.RiotApiClient.Services
 
             url = url.AddUrlParameter($"api_key={_riotApiKey.ApiKey}");
             var baseUrl = $"https://{region.ToString().ToLower()}.api.pvp.net/{url}";
-            Logger.Debug($"Calling {baseUrl}");
+            Logger.Trace($"Calling {baseUrl}");
 
             PrepareHttpClient();
 

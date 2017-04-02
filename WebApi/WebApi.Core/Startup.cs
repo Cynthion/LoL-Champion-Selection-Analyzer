@@ -44,6 +44,7 @@ namespace WebApi.Core
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
 
+            // use attribute routing
             app.UseMvc(); // TODO remove, since MVC is not used
         }
     }

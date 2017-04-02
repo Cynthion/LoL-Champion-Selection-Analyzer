@@ -52,11 +52,10 @@ namespace WebApi.RiotJobRunner
                         // TODO parallelize execution
                         await job.RunAsync(_cts.Token);
                     }
-                    catch (Exception e)
+                    catch (Exception ex)
                     {
-                        Logger.Error($"Error during execution of {job}:\n{e}");
+                        Logger.Error($"Error during execution of {job}:\n{ex.Message}");
                     }
-
                 }
 
                 await Task.Delay(baseFrequency);

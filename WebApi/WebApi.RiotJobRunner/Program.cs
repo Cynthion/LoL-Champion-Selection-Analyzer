@@ -38,12 +38,11 @@ namespace WebApi.RiotJobRunner
                 container.GetInstance<IMatchService>(),
                 container.GetInstance<IWebApiService>());
 
-            // TODO use smart interval values
-            configurator.PollLeagueEntriesAsync(Region.EUW, TierLeague.Challenger, TimeSpan.FromSeconds(45));
+            configurator.PollLeagueEntriesAsync(Region.EUW, TierLeague.Challenger, TimeSpan.FromDays(1));
             //watcher.WatchHighTierPlayersAsync(Region.EUW, TierLeague.Master, TimeSpan.FromDays(1));
 
             // TODO enable per-region
-            //watcher.PollMatchlistsAsync(TimeSpan.FromSeconds(60));
+            configurator.PollMatchlistsAsync(TimeSpan.FromHours(1));
             //watcher.WatchHighTierPlayersAsync(Region.NA, TierLeague.Master, TimeSpan.FromDays(0.5));
 
             //watcher.PollMatchlistsAsync(Region.EUW, TimeSpan.FromSeconds(10));

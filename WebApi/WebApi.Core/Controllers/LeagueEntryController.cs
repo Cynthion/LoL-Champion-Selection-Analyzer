@@ -24,7 +24,7 @@ namespace WebApi.Core.Controllers
         }
 
         // GET /api/leagueentry/count
-        // TODO how to find this action?
+        [HttpGet("count")]
         public long GetCount()
         {
             return _repository.Count();

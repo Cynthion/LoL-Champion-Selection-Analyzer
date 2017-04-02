@@ -23,6 +23,7 @@ namespace WebApi.Core.Controllers
         }
 
         // GET /api/matchreference/count
+        [HttpGet("count")]
         public long GetCount()
         {
             return _repository.Count();
