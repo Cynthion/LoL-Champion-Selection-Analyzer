@@ -61,8 +61,8 @@ namespace WebApi.Tests.IntegrationTests.RiotApiClient.Services
             Assert.IsFalse(string.IsNullOrEmpty(matchDetailDto.Region));
             Assert.IsFalse(string.IsNullOrEmpty(matchDetailDto.QueueType));
             Assert.AreEqual(matchDetailDto.Teams.Count, 2);
-            Assert.IsTrue(matchDetailDto.Teams[0].TeamId > 0);
-            Assert.IsTrue(matchDetailDto.Teams[1].TeamId > 0);
+            Assert.IsTrue(matchDetailDto.Teams.ToArray()[0].TeamId > 0);
+            Assert.IsTrue(matchDetailDto.Teams.ToArray()[1].TeamId > 0);
             Assert.AreEqual(1, matchDetailDto.Teams.Count(t => t.Winner));
             Assert.AreEqual(1, matchDetailDto.Teams.Count(t => !t.Winner));
         }

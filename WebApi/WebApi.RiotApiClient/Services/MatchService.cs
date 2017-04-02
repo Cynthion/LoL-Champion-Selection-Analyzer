@@ -36,13 +36,13 @@ namespace WebApi.RiotApiClient.Services
             return JsonConvert.DeserializeObject<MatchList>(response);
         }
 
-        public async Task<MatchDetailDto> GetMatchAsync(Region region, long matchId)
+        public async Task<MatchDetail> GetMatchAsync(Region region, long matchId)
         {
             var url = $"/api/lol/{region}/v2.2/match/{matchId}";
 
             var response = await _webService.GetRequestAsync(region, url);
 
-            return JsonConvert.DeserializeObject<MatchDetailDto>(response);
+            return JsonConvert.DeserializeObject<MatchDetail>(response);
         }
     }
 }

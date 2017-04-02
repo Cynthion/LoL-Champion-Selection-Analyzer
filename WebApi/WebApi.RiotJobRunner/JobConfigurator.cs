@@ -99,5 +99,23 @@ namespace WebApi.RiotJobRunner
 
             } while (_jobRunner.IsRunning);
         }
+
+        public async void PollMatchesAsync(TimeSpan interval)
+        {
+            do
+            {
+                try
+                {
+                    var matchReferences = await _webApiService.GetMatchReferencesAsync();
+                }
+                catch (Exception ex)
+                {
+                    Logger.Error(ex);
+                }
+
+                await Task.Delay(interval);
+
+            } while (_jobRunner.IsRunning);
+        }
     }
 }

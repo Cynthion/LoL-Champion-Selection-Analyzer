@@ -13,6 +13,6 @@ namespace WebApi.RiotApiClient.Services.Interfaces
             ICollection<string> rankedQueues,
             ICollection<string> seasons);
 
-        Task<MatchDetailDto> GetMatchAsync(Region region, long matchId);
+        Task<MatchDetail> GetMatchAsync(Region region, long matchId);
     }
 }
