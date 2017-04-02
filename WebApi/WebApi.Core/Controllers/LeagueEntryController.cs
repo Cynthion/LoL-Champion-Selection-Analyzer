@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using NLog;
 using WebApi.DataAccess.Repositories.Interfaces;
-using WebApi.Model.Dtos.League;
+using WebApi.Model.RiotDtos.League;
 
 namespace WebApi.Core.Controllers
 {
@@ -18,7 +18,7 @@ namespace WebApi.Core.Controllers
 
         // GET /api/leagueentry
         [HttpGet]
-        public IEnumerable<LeagueEntry> GetAll()
+        public IEnumerable<LeagueEntryDto> GetAll()
         {
             return _repository.GetAll();
         }
@@ -44,7 +44,7 @@ namespace WebApi.Core.Controllers
 
         // POST api/leagueentry
         [HttpPost]
-        public IActionResult Create([FromBody]LeagueEntry entity)
+        public IActionResult Create([FromBody]LeagueEntryDto entity)
         {
             if (entity == null)
             {
@@ -58,7 +58,7 @@ namespace WebApi.Core.Controllers
 
         // PUT api/leagueentry/{id}
         [HttpPut("{id}")]
-        public IActionResult Update(long playerOrTeamId, [FromBody]LeagueEntry entity)
+        public IActionResult Update(long playerOrTeamId, [FromBody]LeagueEntryDto entity)
         {
             if (entity == null || entity.PlayerOrTeamId != playerOrTeamId)
             {

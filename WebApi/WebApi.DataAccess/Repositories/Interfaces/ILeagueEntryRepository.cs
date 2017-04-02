@@ -1,8 +1,8 @@
-﻿using WebApi.Model.Dtos.League;
+﻿using WebApi.Model.RiotDtos.League;
 
 namespace WebApi.DataAccess.Repositories.Interfaces
 {
-    public interface ILeagueEntryRepository : ICrudRepository<LeagueEntry>
+    public interface ILeagueEntryRepository : ICrudRepository<LeagueEntryDto>
     {
     }
 }

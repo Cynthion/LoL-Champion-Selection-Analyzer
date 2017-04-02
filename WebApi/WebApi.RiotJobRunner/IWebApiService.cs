@@ -1,7 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using WebApi.Model.Dtos.League;
-using WebApi.Model.Dtos.Match;
+using WebApi.Model.RiotDtos.League;
+using WebApi.Model.RiotDtos.Match;
+using WebApi.Model.RiotDtos.Matchlist;
 
 namespace WebApi.RiotJobRunner
 {
@@ -11,12 +12,12 @@ namespace WebApi.RiotJobRunner
 
         Task<long> GetMatchReferenceCountAsync();
 
-        Task<IEnumerable<LeagueEntry>> GetLeagueEntriesAsync();
+        Task<IEnumerable<LeagueEntryDto>> GetLeagueEntriesAsync();
 
-        Task<IEnumerable<MatchReference>> GetMatchReferencesAsync();
+        Task<IEnumerable<MatchReferenceDto>> GetMatchReferencesAsync();
 
-        Task PostLeagueAsync(League league);
+        Task PostLeagueAsync(LeagueDto leagueDto);
 
-        Task PostMatchlistAsync(MatchList league);
+        Task PostMatchlistAsync(MatchListDto league);
     }
 }

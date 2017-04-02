@@ -3,7 +3,7 @@ using System.Linq;
 using NLog;
 using WebApi.DataAccess.DbContexts;
 using WebApi.DataAccess.Repositories.Interfaces;
-using WebApi.Model.Dtos.League;
+using WebApi.Model.RiotDtos.League;
 
 namespace WebApi.DataAccess.Repositories
 {
@@ -18,7 +18,7 @@ namespace WebApi.DataAccess.Repositories
             _context = context;
         }
 
-        public void Add(LeagueEntry entity)
+        public void Add(LeagueEntryDto entity)
         {
             if (_context.LeagueEntries.Any(i => i.PlayerOrTeamId == entity.PlayerOrTeamId))
             {
@@ -32,7 +32,7 @@ namespace WebApi.DataAccess.Repositories
             Logger.Debug($"Added {entity}");
         }
 
-        public void Update(LeagueEntry entity)
+        public void Update(LeagueEntryDto entity)
         {
             _context.LeagueEntries.Update(entity);
             _context.SaveChanges();
@@ -49,12 +49,12 @@ namespace WebApi.DataAccess.Repositories
             Logger.Debug($"Removed {entity}");
         }
 
-        public IEnumerable<LeagueEntry> GetAll()
+        public IEnumerable<LeagueEntryDto> GetAll()
         {
             return _context.LeagueEntries.ToArray();
         }
 
-        public LeagueEntry Find(long entityId)
+        public LeagueEntryDto Find(long entityId)
         {
             return _context.LeagueEntries.FirstOrDefault(t => t.PlayerOrTeamId == entityId);
         }

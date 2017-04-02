@@ -1,18 +1,13 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-
-namespace WebApi.Model.Dtos.League
+﻿namespace WebApi.Model.RiotDtos.League
 {
     /// <summary>
     /// Unnecessary properties not contained.
     /// </summary>
-    public class LeagueEntry
+    public class LeagueEntryDto
     {
         /// <summary>
         /// The ID of the participant (i.e., summoner or team) represented by this entry.
         /// </summary>
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public long PlayerOrTeamId { get; set; }
 
         /// <summary>
@@ -26,10 +21,5 @@ namespace WebApi.Model.Dtos.League
         public string Division { get; set; }
 
         public string Region { get; set; } // TODO make enum
-
-        public override string ToString()
-        {
-            return $"{nameof(LeagueEntry)}<{Region},{PlayerOrTeamId}>";
-        }
     }
 }

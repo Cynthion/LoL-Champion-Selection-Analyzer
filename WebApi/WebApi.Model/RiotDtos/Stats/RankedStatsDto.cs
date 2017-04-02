@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace WebApi.Model.Dtos.Stats
+namespace WebApi.Model.RiotDtos.Stats
 {
     public class RankedStatsDto
     {

@@ -1,14 +1,14 @@
-﻿namespace WebApi.Model.Dtos.Match
+﻿namespace WebApi.Model.RiotDtos.Match
 {
     /// <summary>
     /// Unnecessary properties not contained.
     /// </summary>
-    public class Team
+    public class TeamDto
     {
         public int TeamId { get; set; }
 
         public bool Winner { get; set; }
-        
+
         public bool FirstBlood { get; set; }
 
         public bool FirstTower { get; set; }

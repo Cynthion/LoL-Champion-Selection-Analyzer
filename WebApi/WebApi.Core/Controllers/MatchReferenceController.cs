@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 using WebApi.DataAccess.Repositories.Interfaces;
-using WebApi.Model.Dtos.Match;
+using WebApi.Model.RiotDtos.Matchlist;
 
 namespace WebApi.Core.Controllers
 {
@@ -17,7 +17,7 @@ namespace WebApi.Core.Controllers
 
         // GET /api/matchreference
         [HttpGet]
-        public IEnumerable<MatchReference> GetAll()
+        public IEnumerable<MatchReferenceDto> GetAll()
         {
             return _repository.GetAll();
         }
@@ -43,7 +43,7 @@ namespace WebApi.Core.Controllers
 
         // POST api/matchreference
         [HttpPost]
-        public IActionResult Create([FromBody]MatchReference entity)
+        public IActionResult Create([FromBody]MatchReferenceDto entity)
         {
             if (entity == null)
             {
@@ -57,7 +57,7 @@ namespace WebApi.Core.Controllers
 
         // PUT api/matchreference/{id}
         [HttpPut("{id}")]
-        public IActionResult Update(long matchId, [FromBody]MatchReference entity)
+        public IActionResult Update(long matchId, [FromBody]MatchReferenceDto entity)
         {
             if (entity == null || entity.MatchId != matchId)
             {

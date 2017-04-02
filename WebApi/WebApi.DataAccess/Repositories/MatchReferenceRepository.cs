@@ -3,7 +3,8 @@ using System.Linq;
 using NLog;
 using WebApi.DataAccess.DbContexts;
 using WebApi.DataAccess.Repositories.Interfaces;
-using WebApi.Model.Dtos.Match;
+using WebApi.Model.RiotDtos.Match;
+using WebApi.Model.RiotDtos.Matchlist;
 
 namespace WebApi.DataAccess.Repositories
 {
@@ -18,7 +19,7 @@ namespace WebApi.DataAccess.Repositories
             _context = context;
         }
 
-        public void Add(MatchReference entity)
+        public void Add(MatchReferenceDto entity)
         {
             if (_context.MatchReferences.Any(i => i.MatchId == entity.MatchId))
             {
@@ -32,7 +33,7 @@ namespace WebApi.DataAccess.Repositories
             Logger.Debug($"Added {entity}");
         }
 
-        public void Update(MatchReference entity)
+        public void Update(MatchReferenceDto entity)
         {
             _context.MatchReferences.Update(entity);
             _context.SaveChanges();
@@ -49,12 +50,12 @@ namespace WebApi.DataAccess.Repositories
             Logger.Debug($"Removed {entity}");
         }
 
-        public IEnumerable<MatchReference> GetAll()
+        public IEnumerable<MatchReferenceDto> GetAll()
         {
             return _context.MatchReferences.ToArray();
         }
 
-        public MatchReference Find(long entityId)
+        public MatchReferenceDto Find(long entityId)
         {
             return _context.MatchReferences.FirstOrDefault(t => t.MatchId == entityId);
         }

@@ -1,7 +1,7 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
 using NLog;
-using WebApi.Model.Dtos.League;
+using WebApi.Model.RiotDtos.League;
 using WebApi.RiotApiClient.Misc;
 using WebApi.RiotApiClient.Services.Interfaces;
 
@@ -39,27 +39,27 @@ namespace WebApi.RiotJobRunner.Jobs
 
         protected override async Task DoWorkAsync(CancellationToken cancellationToken)
         {
-            League league;
+            LeagueDto leagueDto;
             var regionString = _region.ToString();
 
             if (_tierLeague == TierLeague.Challenger)
             {
-                league = await _leagueService.GetChallengerTierLeaguesAsync(_region, _queueType);
+                leagueDto = await _leagueService.GetChallengerTierLeaguesAsync(_region, _queueType);
             }
             else
             {
-                league = await _leagueService.GetMasterTierLeaguesAsync(_region, _queueType);
+                leagueDto = await _leagueService.GetMasterTierLeaguesAsync(_region, _queueType);
             }
 
-            Logger.Debug($"{GetParameterString()}: Found {league.Entries.Count} League Entries.");
+            Logger.Debug($"{GetParameterString()}: Found {leagueDto.Entries.Count} LeagueDto Entries.");
 
             // apply region
-            foreach (var leagueEntry in league.Entries)
+            foreach (var leagueEntry in leagueDto.Entries)
             {
                 leagueEntry.Region = regionString;
             }
 
-            await _webApiService.PostLeagueAsync(league);
+            await _webApiService.PostLeagueAsync(leagueDto);
         }
 
         public override string ToString()

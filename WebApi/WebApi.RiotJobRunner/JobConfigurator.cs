@@ -48,7 +48,7 @@ namespace WebApi.RiotJobRunner
                 try
                 {
                     var leagueEntriesCount = await _webApiService.GetLeagueEntryCountAsync();
-                    Logger.Info($"League Entries Count: {leagueEntriesCount}");
+                    Logger.Info($"LeagueDto Entries Count: {leagueEntriesCount}");
 
                     if (leagueEntriesCount < MaxLeagueEntries)
                     {

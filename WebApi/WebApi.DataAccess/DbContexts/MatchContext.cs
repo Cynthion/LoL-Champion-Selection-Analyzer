@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using WebApi.Model.Dtos.Match;
+using WebApi.Model.RiotDtos.Match;
+using WebApi.Model.RiotDtos.Matchlist;
 
 namespace WebApi.DataAccess.DbContexts
 {
@@ -10,15 +11,15 @@ namespace WebApi.DataAccess.DbContexts
         {
         }
 
-        public DbSet<MatchReference> MatchReferences { get; set; }
+        public DbSet<MatchReferenceDto> MatchReferences { get; set; }
 
-        public DbSet<MatchDetail> MatchDetails { get; set; }
+        public DbSet<MatchDetailDto> MatchDetails { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             // configure the table names to use singular table names
-            modelBuilder.Entity<MatchReference>().ToTable("MatchReference");
-            modelBuilder.Entity<MatchDetail>().ToTable("MatchDetail");
+            modelBuilder.Entity<MatchReferenceDto>().ToTable("MatchReferenceDto");
+            modelBuilder.Entity<MatchDetailDto>().ToTable("MatchDetailDto");
         }
     }
 }

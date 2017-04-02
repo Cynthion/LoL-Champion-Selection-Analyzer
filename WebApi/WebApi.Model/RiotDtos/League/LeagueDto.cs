@@ -1,11 +1,11 @@
 ﻿using System.Collections.Generic;
 
-namespace WebApi.Model.Dtos.League
+namespace WebApi.Model.RiotDtos.League
 {
     /// <summary>
     /// Unnecessary properties not contained.
     /// </summary>
-    public class League
+    public class LeagueDto
     {
         //[Key]
         //[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -35,6 +35,6 @@ namespace WebApi.Model.Dtos.League
         /// <summary>
         /// The requested league entries.
         /// </summary>
-        public ICollection<LeagueEntry> Entries { get; set; }
+        public ICollection<LeagueEntryDto> Entries { get; set; }
     }
 }

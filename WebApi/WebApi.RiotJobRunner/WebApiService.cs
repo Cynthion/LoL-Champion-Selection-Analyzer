@@ -3,8 +3,9 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
-using WebApi.Model.Dtos.League;
-using WebApi.Model.Dtos.Match;
+using WebApi.Model.RiotDtos.League;
+using WebApi.Model.RiotDtos.Match;
+using WebApi.Model.RiotDtos.Matchlist;
 
 namespace WebApi.RiotJobRunner
 {
@@ -37,30 +38,30 @@ namespace WebApi.RiotJobRunner
             return long.Parse(response);
         }
 
-        public async Task<IEnumerable<LeagueEntry>> GetLeagueEntriesAsync()
+        public async Task<IEnumerable<LeagueEntryDto>> GetLeagueEntriesAsync()
         {
             var url = $"{Domain}/api/leagueentry";
 
             var response = await GetRequestAsync(url);
 
-            return JsonConvert.DeserializeObject<LeagueEntry[]>(response);
+            return JsonConvert.DeserializeObject<LeagueEntryDto[]>(response);
         }
 
-        public async Task<IEnumerable<MatchReference>> GetMatchReferencesAsync()
+        public async Task<IEnumerable<MatchReferenceDto>> GetMatchReferencesAsync()
         {
             var url = $"{Domain}/api/matchreference";
 
             var response = await GetRequestAsync(url);
 
-            return JsonConvert.DeserializeObject<MatchReference[]>(response);
+            return JsonConvert.DeserializeObject<MatchReferenceDto[]>(response);
         }
 
-        public async Task PostLeagueAsync(League league)
+        public async Task PostLeagueAsync(LeagueDto leagueDto)
         {
             var url = $"{Domain}/api/leagueentry";
 
             // TODO batch
-            foreach (var leagueEntry in league.Entries)
+            foreach (var leagueEntry in leagueDto.Entries)
             {
                 var jsonObject = JsonConvert.SerializeObject(leagueEntry);
 
@@ -68,7 +69,7 @@ namespace WebApi.RiotJobRunner
             }
         }
 
-        public async Task PostMatchlistAsync(MatchList matchlist)
+        public async Task PostMatchlistAsync(MatchListDto matchlist)
         {
             var url = $"{Domain}/api/matchreference";
 

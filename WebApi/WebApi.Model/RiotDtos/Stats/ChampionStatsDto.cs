@@ -1,4 +1,4 @@
-﻿namespace WebApi.Model.Dtos.Stats
+﻿namespace WebApi.Model.RiotDtos.Stats
 {
     public class ChampionStatsDto
     {

@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using WebApi.Model.Dtos.Stats;
+using WebApi.Model.RiotDtos.Stats;
 using WebApi.RiotApiClient.Misc;
 
 namespace WebApi.RiotApiClient.Services.Interfaces

@@ -2,7 +2,8 @@
 using System.Linq;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
-using WebApi.Model.Dtos.Match;
+using WebApi.Model.RiotDtos.Match;
+using WebApi.Model.RiotDtos.Matchlist;
 using WebApi.RiotApiClient.Misc;
 using WebApi.RiotApiClient.Services.Interfaces;
 
@@ -17,7 +18,7 @@ namespace WebApi.RiotApiClient.Services
             _webService = webService;
         }
 
-        public async Task<MatchList> GetMatchListAsync(Region region, long summonerId, ICollection<string> rankedQueues, ICollection<string> seasons)
+        public async Task<MatchListDto> GetMatchListAsync(Region region, long summonerId, ICollection<string> rankedQueues, ICollection<string> seasons)
         {
             var url = $"/api/lol/{region}/v2.2/matchlist/by-summoner/{summonerId}";
 
@@ -33,16 +34,16 @@ namespace WebApi.RiotApiClient.Services
 
             var response = await _webService.GetRequestAsync(region, url);
 
-            return JsonConvert.DeserializeObject<MatchList>(response);
+            return JsonConvert.DeserializeObject<MatchListDto>(response);
         }
 
-        public async Task<MatchDetail> GetMatchAsync(Region region, long matchId)
+        public async Task<MatchDetailDto> GetMatchAsync(Region region, long matchId)
         {
             var url = $"/api/lol/{region}/v2.2/match/{matchId}";
 
             var response = await _webService.GetRequestAsync(region, url);
 
-            return JsonConvert.DeserializeObject<MatchDetail>(response);
+            return JsonConvert.DeserializeObject<MatchDetailDto>(response);
         }
     }
 }

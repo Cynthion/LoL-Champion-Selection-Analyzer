@@ -10,12 +10,12 @@ namespace WebApi.RiotApiClient
         public const string RankedSolo5V5 = "RANKED_SOLO_5x5";
 
         /// <summary>
-        /// Ranked Team 5v5 games.
+        /// Ranked TeamDto 5v5 games.
         /// </summary>
         public const string RankedTeam5V5 = "RANKED_TEAM_5x5";
 
         /// <summary>
-        /// Ranked Solo games from current season that use Team Builder matchmaking.
+        /// Ranked Solo games from current season that use TeamDto Builder matchmaking.
         /// </summary>
         public const string TeamBuilderRankedSolo = "TEAM_BUILDER_RANKED_SOLO";
 

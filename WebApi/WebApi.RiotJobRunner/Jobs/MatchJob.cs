@@ -41,7 +41,7 @@ namespace WebApi.RiotJobRunner.Jobs
     //        return matchups;
     //    }
 
-    //    private static IList<Matchup> CalculateMatchups(MatchDetail matchDetailDto)
+    //    private static IList<Matchup> CalculateMatchups(MatchDetailDto matchDetailDto)
     //    {
     //        var matchups = new List<Matchup>();
     //        if (matchDetailDto?.Participants != null && matchDetailDto.Participants.Any())
@@ -102,7 +102,7 @@ namespace WebApi.RiotJobRunner.Jobs
     //        }
     //    }
 
-    //    private static bool GetIsWinner(long teamId, MatchDetail matchDetailDto)
+    //    private static bool GetIsWinner(long teamId, MatchDetailDto matchDetailDto)
     //    {
     //        return matchDetailDto.Teams.Single(t => t.TeamId == teamId).Winner;
     //    }
