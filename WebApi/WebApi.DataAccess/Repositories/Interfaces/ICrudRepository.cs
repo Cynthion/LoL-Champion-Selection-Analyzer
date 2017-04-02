@@ -13,5 +13,7 @@ namespace WebApi.DataAccess.Repositories.Interfaces
         IEnumerable<TEntity> GetAll();
 
         TEntity Find(long entityId);
+
+        long Count();
     }
 }

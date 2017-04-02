@@ -22,6 +22,12 @@ namespace WebApi.Core.Controllers
             return _repository.GetAll();
         }
 
+        // GET /api/matchreference/count
+        public long GetCount()
+        {
+            return _repository.Count();
+        }
+
         // GET /api/matchreference/{id}
         [HttpGet("{id}", Name = "GetMatchReference")]
         public IActionResult GetById(long matchId)

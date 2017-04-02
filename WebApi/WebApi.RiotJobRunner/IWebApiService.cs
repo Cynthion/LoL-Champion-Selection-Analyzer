@@ -7,6 +7,10 @@ namespace WebApi.RiotJobRunner
 {
     internal interface IWebApiService
     {
+        Task<long> GetLeagueEntryCountAsync();
+
+        Task<long> GetMatchReferenceCountAsync();
+
         Task<IEnumerable<LeagueEntry>> GetLeagueEntriesAsync();
 
         Task<IEnumerable<MatchReference>> GetMatchReferencesAsync();

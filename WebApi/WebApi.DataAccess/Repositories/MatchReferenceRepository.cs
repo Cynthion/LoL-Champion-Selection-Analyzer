@@ -58,5 +58,10 @@ namespace WebApi.DataAccess.Repositories
         {
             return _context.MatchReferences.FirstOrDefault(t => t.MatchId == entityId);
         }
+
+        public long Count()
+        {
+            return _context.MatchReferences.Count();
+        }
     }
 }

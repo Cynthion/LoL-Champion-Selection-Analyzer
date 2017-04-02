@@ -58,5 +58,14 @@ namespace WebApi.DataAccess.Repositories
         {
             return _context.LeagueEntries.FirstOrDefault(t => t.PlayerOrTeamId == entityId);
         }
+
+        public long Count()
+        {
+            var count = _context.LeagueEntries.Count();
+
+            Logger.Debug($"Count: {count}");
+
+            return count;
+        }
     }
 }

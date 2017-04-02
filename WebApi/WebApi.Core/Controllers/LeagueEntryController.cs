@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
+using NLog;
 using WebApi.DataAccess.Repositories.Interfaces;
 using WebApi.Model.Dtos.League;
 
@@ -20,6 +21,13 @@ namespace WebApi.Core.Controllers
         public IEnumerable<LeagueEntry> GetAll()
         {
             return _repository.GetAll();
+        }
+
+        // GET /api/leagueentry/count
+        // TODO how to find this action?
+        public long GetCount()
+        {
+            return _repository.Count();
         }
 
         // GET /api/leagueentry/{id}

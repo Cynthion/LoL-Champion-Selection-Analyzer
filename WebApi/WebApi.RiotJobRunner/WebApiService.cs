@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
-using NLog;
 using WebApi.Model.Dtos.League;
 using WebApi.Model.Dtos.Match;
 
@@ -12,8 +10,6 @@ namespace WebApi.RiotJobRunner
 {
     internal class WebApiService : IWebApiService
     {
-        private static readonly ILogger Logger = LogManager.GetCurrentClassLogger();
-
         private const string Domain = "http://localhost:5000";
 
         private readonly HttpClient _httpClient;
@@ -21,6 +17,24 @@ namespace WebApi.RiotJobRunner
         public WebApiService()
         {
             _httpClient = new HttpClient();
+        }
+
+        public async Task<long> GetLeagueEntryCountAsync()
+        {
+            var url = $"{Domain}/api/leagueentry/count";
+
+            var response = await GetRequestAsync(url);
+
+            return long.Parse(response);
+        }
+
+        public async Task<long> GetMatchReferenceCountAsync()
+        {
+            var url = $"{Domain}/api/matchreference/count";
+
+            var response = await GetRequestAsync(url);
+
+            return long.Parse(response);
         }
 
         public async Task<IEnumerable<LeagueEntry>> GetLeagueEntriesAsync()
@@ -73,14 +87,8 @@ namespace WebApi.RiotJobRunner
 
             using (var response = await _httpClient.GetAsync(url))
             {
-                try
-                {
-                    response.EnsureSuccessStatusCode();
-                }
-                catch (Exception ex)
-                {
-                    Logger.Error(ex);
-                }
+                response.EnsureSuccessStatusCode();
+
                 using (var content = response.Content)
                 {
                     result = await content.ReadAsStringAsync();
@@ -94,14 +102,7 @@ namespace WebApi.RiotJobRunner
         {
             using (var response = await _httpClient.PostAsync(url, new StringContent(content, Encoding.UTF8, "application/json")))
             {
-                try
-                {
-                    response.EnsureSuccessStatusCode();
-                }
-                catch (Exception ex)
-                {
-                    Logger.Error(ex);
-                }
+                response.EnsureSuccessStatusCode();
             }
         }
     }
