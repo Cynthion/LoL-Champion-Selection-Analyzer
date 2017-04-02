@@ -21,48 +21,51 @@ namespace WebApi.DataAccess.Repositories
 
         public void Add(MatchReferenceDto entity)
         {
-            if (_context.MatchReferences.Any(i => i.MatchId == entity.MatchId))
-            {
-                Update(entity);
-                return;
-            }
+            //if (_context.MatchReferences.Any(i => i.MatchId == entity.MatchId))
+            //{
+            //    Update(entity);
+            //    return;
+            //}
 
-            _context.MatchReferences.Add(entity);
-            _context.SaveChanges();
+            //_context.MatchReferences.Add(entity);
+            //_context.SaveChanges();
 
-            Logger.Debug($"Added {entity}");
+            //Logger.Debug($"Added {entity}");
         }
 
         public void Update(MatchReferenceDto entity)
         {
-            _context.MatchReferences.Update(entity);
-            _context.SaveChanges();
+            //_context.MatchReferences.Update(entity);
+            //_context.SaveChanges();
 
-            Logger.Debug($"Updated {entity}");
+            //Logger.Debug($"Updated {entity}");
         }
 
         public void Remove(long entityId)
         {
-            var entity = _context.MatchReferences.First(t => t.MatchId == entityId);
-            _context.MatchReferences.Remove(entity);
-            _context.SaveChanges();
+            //var entity = _context.MatchReferences.First(t => t.MatchId == entityId);
+            //_context.MatchReferences.Remove(entity);
+            //_context.SaveChanges();
 
-            Logger.Debug($"Removed {entity}");
+            //Logger.Debug($"Removed {entity}");
         }
 
         public IEnumerable<MatchReferenceDto> GetAll()
         {
-            return _context.MatchReferences.ToArray();
+            return null;
+            //return _context.MatchReferences.ToArray();
         }
 
         public MatchReferenceDto Find(long entityId)
         {
-            return _context.MatchReferences.FirstOrDefault(t => t.MatchId == entityId);
+            return null;
+            //return _context.MatchReferences.FirstOrDefault(t => t.MatchId == entityId);
         }
 
         public long Count()
         {
-            return _context.MatchReferences.Count();
+            return 0;
+            //return _context.MatchReferences.Count();
         }
     }
 }
