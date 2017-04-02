@@ -6,6 +6,21 @@
     public class LeagueEntryDto
     {
         /// <summary>
+        /// The league points of the participant.
+        /// </summary>
+        public int LeaguePoints { get; set; }
+
+        /// <summary>
+        /// The number of wins for the participant.
+        /// </summary>
+        public int Wins { get; set; }
+
+        /// <summary>
+        /// The number of losses for the participant.
+        /// </summary>
+        public int Losses { get; set; }
+        
+        /// <summary>
         /// The ID of the participant (i.e., summoner or team) represented by this entry.
         /// </summary>
         public long PlayerOrTeamId { get; set; }
@@ -20,6 +35,14 @@
         /// </summary>
         public string Division { get; set; }
 
-        public string Region { get; set; } // TODO make enum
+        public string Playstyle { get; set; }
+
+        public bool IsFreshBlood { get; set; }
+
+        public bool IsHotStreak { get; set; }
+
+        public bool IsInactive { get; set; }
+
+        public bool IsVeteran { get; set; }
     }
 }
