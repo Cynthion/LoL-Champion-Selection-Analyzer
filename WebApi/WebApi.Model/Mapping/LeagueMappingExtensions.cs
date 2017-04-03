@@ -1,5 +1,5 @@
-﻿using WebApi.Model.Enums;
-using WebApi.Model.Model.League;
+﻿using WebApi.Model.Entities.League;
+using WebApi.Model.Enums;
 using WebApi.Model.RiotDtos.League;
 
 namespace WebApi.Model.Mapping

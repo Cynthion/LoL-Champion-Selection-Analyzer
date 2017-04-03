@@ -3,7 +3,7 @@ using WebApi.Model.Enums;
 
 namespace WebApi.RiotApiClient.Services.Interfaces
 {
-    public interface IWebService
+    public interface IRiotWebService
     {
         Task<string> GetRequestAsync(Region region, string url);
     }

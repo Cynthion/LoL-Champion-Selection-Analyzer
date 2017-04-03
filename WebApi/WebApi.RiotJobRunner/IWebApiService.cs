@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using WebApi.Model.Entities.League;
 using WebApi.Model.Enums;
-using WebApi.Model.Model.League;
 using WebApi.Model.RiotDtos.League;
 using WebApi.Model.RiotDtos.Matchlist;
 

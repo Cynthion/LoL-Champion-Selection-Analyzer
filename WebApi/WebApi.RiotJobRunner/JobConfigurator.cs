@@ -2,10 +2,9 @@
 using System.Linq;
 using System.Threading.Tasks;
 using NLog;
+using WebApi.Model.Entities.League;
 using WebApi.Model.Enums;
-using WebApi.Model.Model.League;
 using WebApi.RiotApiClient;
-using WebApi.RiotApiClient.Misc;
 using WebApi.RiotApiClient.Services.Interfaces;
 using WebApi.RiotJobRunner.Jobs;
 
@@ -49,10 +48,10 @@ namespace WebApi.RiotJobRunner
             {
                 try
                 {
-                    var summonerLeageueEntries = await _webApiService.GetSummonerLeagueEntryCountAsync();
-                    Logger.Info($"{nameof(SummonerLeagueEntry)} Count: {summonerLeageueEntries}");
+                    var summonerLeagueEntryCount = await _webApiService.GetSummonerLeagueEntryCountAsync();
+                    Logger.Info($"{nameof(SummonerLeagueEntry)} Count: {summonerLeagueEntryCount}");
 
-                    if (summonerLeageueEntries < MaxLeagueEntries)
+                    if (summonerLeagueEntryCount < MaxLeagueEntries)
                     {
                         _jobRunner.EnqueueJobs(jobs);
                     }

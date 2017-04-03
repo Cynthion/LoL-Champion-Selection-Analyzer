@@ -21,7 +21,7 @@ namespace WebApi.RiotApiClient.Services
     /// <summary>
     /// This class is implemented as Singleton in order to ensure the Riot API Rate Limitation.
     /// </summary>
-    public sealed class RiotWebService : IWebService
+    public sealed class RiotWebService : IRiotWebService
     {
         // Singleton implemented according to https://msdn.microsoft.com/en-us/library/ff650316.aspx
         public static RiotWebService Instance

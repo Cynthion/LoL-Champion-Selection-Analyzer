@@ -9,18 +9,18 @@ namespace WebApi.RiotApiClient.Services
 {
     public class SummonerService : ISummonerService
     {
-        private readonly IWebService _webService;
+        private readonly IRiotWebService _riotWebService;
 
-        public SummonerService(IWebService webService)
+        public SummonerService(IRiotWebService riotWebService)
         {
-            _webService = webService;
+            _riotWebService = riotWebService;
         }
 
         public async Task<IDictionary<string, SummonerDto>> GetSummonersByNameAsync(Region region, IEnumerable<string> summonerNames)
         {
             var url = $"api/lol/{region}/v1.4/summoner/by-name/{string.Join(",", summonerNames)}";
 
-            var response = await _webService.GetRequestAsync(region, url);
+            var response = await _riotWebService.GetRequestAsync(region, url);
 
             return JsonConvert.DeserializeObject<Dictionary<string, SummonerDto>>(response);
         }

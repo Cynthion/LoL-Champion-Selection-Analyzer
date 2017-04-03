@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using WebApi.Model.Enums;
 
-namespace WebApi.Model.Model.League
+namespace WebApi.Model.Entities.League
 {
     public class SummonerLeagueEntry
     {

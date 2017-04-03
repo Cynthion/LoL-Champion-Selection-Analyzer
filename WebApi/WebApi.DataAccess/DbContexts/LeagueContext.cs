@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using WebApi.Model.Model.League;
+using WebApi.Model.Entities.League;
 
 namespace WebApi.DataAccess.DbContexts
 {
@@ -16,7 +16,6 @@ namespace WebApi.DataAccess.DbContexts
         {
             // configure the table names to use singular table names
             modelBuilder.Entity<SummonerLeagueEntry>().ToTable(nameof(SummonerLeagueEntry));
-            //modelBuilder.Entity<LeagueEntryDto>().ToTable("LeagueEntryDto");
         }
     }
 }

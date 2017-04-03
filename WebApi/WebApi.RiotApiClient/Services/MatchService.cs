@@ -5,18 +5,17 @@ using Newtonsoft.Json;
 using WebApi.Model.Enums;
 using WebApi.Model.RiotDtos.Match;
 using WebApi.Model.RiotDtos.Matchlist;
-using WebApi.RiotApiClient.Misc;
 using WebApi.RiotApiClient.Services.Interfaces;
 
 namespace WebApi.RiotApiClient.Services
 {
     public class MatchService : IMatchService
     {
-        private readonly IWebService _webService;
+        private readonly IRiotWebService _riotWebService;
 
-        public MatchService(IWebService webService)
+        public MatchService(IRiotWebService riotWebService)
         {
-            _webService = webService;
+            _riotWebService = riotWebService;
         }
 
         public async Task<MatchListDto> GetMatchListAsync(Region region, long summonerId, ICollection<string> rankedQueues, ICollection<string> seasons)
@@ -33,7 +32,7 @@ namespace WebApi.RiotApiClient.Services
                 url = url.AddUrlParameter($"seasons={string.Join(",", seasons)}");
             }
 
-            var response = await _webService.GetRequestAsync(region, url);
+            var response = await _riotWebService.GetRequestAsync(region, url);
 
             return JsonConvert.DeserializeObject<MatchListDto>(response);
         }
@@ -42,7 +41,7 @@ namespace WebApi.RiotApiClient.Services
         {
             var url = $"/api/lol/{region}/v2.2/match/{matchId}";
 
-            var response = await _webService.GetRequestAsync(region, url);
+            var response = await _riotWebService.GetRequestAsync(region, url);
 
             return JsonConvert.DeserializeObject<MatchDetailDto>(response);
         }

@@ -23,7 +23,7 @@ namespace WebApi.RiotJobRunner
                     Logger.Info($"Used API Key:\n{apiKey}");
                     return apiKey;
                 })
-                .AddSingleton<IWebService>(c => RiotWebService.Instance)
+                .AddSingleton<IRiotWebService>(c => RiotWebService.Instance)
                 .AddSingleton<IWebApiService, WebApiService>()
                 .AddSingleton<ILeagueService, LeagueService>()
                 .AddSingleton<IMatchService, MatchService>();

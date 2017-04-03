@@ -3,18 +3,17 @@ using System.Threading.Tasks;
 using Newtonsoft.Json;
 using WebApi.Model.Enums;
 using WebApi.Model.RiotDtos.Stats;
-using WebApi.RiotApiClient.Misc;
 using WebApi.RiotApiClient.Services.Interfaces;
 
 namespace WebApi.RiotApiClient.Services
 {
     public class StatsService : IStatsService
     {
-        private readonly IWebService _webService;
+        private readonly IRiotWebService _riotWebService;
 
-        public StatsService(IWebService webService)
+        public StatsService(IRiotWebService riotWebService)
         {
-            _webService = webService;
+            _riotWebService = riotWebService;
         }
 
         // TODO by Season
@@ -27,7 +26,7 @@ namespace WebApi.RiotApiClient.Services
                 url = url.AddUrlParameter($"season={season}");
             }
 
-            var response = await _webService.GetRequestAsync(region, url);
+            var response = await _riotWebService.GetRequestAsync(region, url);
 
             return JsonConvert.DeserializeObject<RankedStatsDto[]>(response);
         }

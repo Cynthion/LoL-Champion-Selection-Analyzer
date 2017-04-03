@@ -3,9 +3,9 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
+using WebApi.Model.Entities.League;
 using WebApi.Model.Enums;
 using WebApi.Model.Mapping;
-using WebApi.Model.Model.League;
 using WebApi.Model.RiotDtos.League;
 using WebApi.Model.RiotDtos.Matchlist;
 
@@ -42,7 +42,7 @@ namespace WebApi.RiotJobRunner
 
         public async Task<IEnumerable<SummonerLeagueEntry>> GetSummonerLeagueEntriesAsync()
         {
-            var url = $"{Domain}/api/summanryleagueentry";
+            var url = $"{Domain}/api/summonerleageentry";
 
             var response = await GetRequestAsync(url);
 
@@ -60,7 +60,7 @@ namespace WebApi.RiotJobRunner
 
         public async Task PostLeagueAsync(Region region, LeagueDto leagueDto)
         {
-            var url = $"{Domain}/api/summanryleagueentry";
+            var url = $"{Domain}/api/summonerleageentry";
 
             // TODO batch
             foreach (var leagueEntryDto in leagueDto.Entries)
