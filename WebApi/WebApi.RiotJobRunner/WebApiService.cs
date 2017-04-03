@@ -3,7 +3,7 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
-using WebApi.Model.Entities.League;
+using WebApi.Model.Entities;
 using WebApi.Model.Enums;
 using WebApi.Model.Mapping;
 using WebApi.Model.RiotDtos.League;

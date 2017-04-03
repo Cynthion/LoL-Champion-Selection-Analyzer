@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using WebApi.Model.Entities.League;
+using WebApi.Model.Entities;
 
 namespace WebApi.DataAccess.DbContexts
 {

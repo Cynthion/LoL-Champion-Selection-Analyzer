@@ -1,4 +1,4 @@
-﻿using WebApi.Model.Entities.League;
+﻿using WebApi.Model.Entities;
 
 namespace WebApi.DataAccess.Repositories.Interfaces
 {

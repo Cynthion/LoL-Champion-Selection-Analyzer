@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 using WebApi.DataAccess.Repositories.Interfaces;
-using WebApi.Model.Entities.League;
+using WebApi.Model.Entities;
 
 namespace WebApi.Core.Controllers
 {

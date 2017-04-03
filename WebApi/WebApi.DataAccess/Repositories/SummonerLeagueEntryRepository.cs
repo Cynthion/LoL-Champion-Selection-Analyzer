@@ -3,7 +3,7 @@ using System.Linq;
 using NLog;
 using WebApi.DataAccess.DbContexts;
 using WebApi.DataAccess.Repositories.Interfaces;
-using WebApi.Model.Entities.League;
+using WebApi.Model.Entities;
 
 namespace WebApi.DataAccess.Repositories
 {

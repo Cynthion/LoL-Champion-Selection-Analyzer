@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Threading.Tasks;
 using NLog;
-using WebApi.Model.Entities.League;
+using WebApi.Model.Entities;
 using WebApi.Model.Enums;
 using WebApi.RiotApiClient;
 using WebApi.RiotApiClient.Services.Interfaces;

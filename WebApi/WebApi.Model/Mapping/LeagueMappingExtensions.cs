@@ -1,4 +1,4 @@
-﻿using WebApi.Model.Entities.League;
+﻿using WebApi.Model.Entities;
 using WebApi.Model.Enums;
 using WebApi.Model.RiotDtos.League;
 
