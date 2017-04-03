@@ -65,7 +65,7 @@ namespace WebApi.RiotJobRunner
             // TODO batch
             foreach (var leagueEntryDto in leagueDto.Entries)
             {
-                var entity = leagueEntryDto.ToModel(region);
+                var entity = leagueEntryDto.ToEntity(region);
                 var jsonObject = JsonConvert.SerializeObject(entity);
 
                 await PostRequestAsync(url, jsonObject);

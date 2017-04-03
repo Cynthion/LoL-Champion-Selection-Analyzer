@@ -20,7 +20,7 @@ namespace WebApi.DataAccess.Repositories
 
         public void Add(SummonerMatch entity)
         {
-            if (_context.SummonerMatches.Any(e => e.Key == entity.Key))
+            if (_context.SummonerMatches.Any(e => e.MatchId == entity.MatchId))
             {
                 Update(entity);
                 return;
@@ -42,7 +42,7 @@ namespace WebApi.DataAccess.Repositories
 
         public void Remove(long entityId)
         {
-            var entity = _context.SummonerMatches.First(e => e.Key == entityId);
+            var entity = _context.SummonerMatches.First(e => e.MatchId == entityId);
             _context.SummonerMatches.Remove(entity);
             _context.SaveChanges();
 
@@ -56,7 +56,7 @@ namespace WebApi.DataAccess.Repositories
 
         public SummonerMatch Find(long entityId)
         {
-            return _context.SummonerMatches.FirstOrDefault(e => e.Key == entityId);
+            return _context.SummonerMatches.FirstOrDefault(e => e.MatchId == entityId);
         }
 
         public long Count()

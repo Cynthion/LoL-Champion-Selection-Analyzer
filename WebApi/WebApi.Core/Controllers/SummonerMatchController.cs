@@ -27,12 +27,12 @@ namespace WebApi.Core.Controllers
 
             Repository.Add(entity);
 
-            return CreatedAtRoute("GetSummonerMatch", new { id = entity.Key }, entity);
+            return CreatedAtRoute("GetSummonerMatch", new { id = entity.MatchId }, entity);
         }
 
         protected override IActionResult DoUpdate(long entityId, SummonerMatch entity)
         {
-            if (entity == null || entity.Key != entityId)
+            if (entity == null || entity.MatchId != entityId)
             {
                 return BadRequest();
             }

@@ -6,7 +6,7 @@ namespace WebApi.Model.Mapping
 {
     public static class LeagueMappingExtensions
     {
-        public static SummonerLeagueEntry ToModel(this LeagueEntryDto dto, Region region)
+        public static SummonerLeagueEntry ToEntity(this LeagueEntryDto dto, Region region)
         {
             return new SummonerLeagueEntry
             {

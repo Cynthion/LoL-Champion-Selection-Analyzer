@@ -2,7 +2,6 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using WebApi.Model.Enums;
 using WebApi.RiotApiClient;
-using WebApi.RiotApiClient.Misc;
 using WebApi.RiotApiClient.Services;
 using WebApi.RiotApiClient.Services.Interfaces;
 
@@ -61,7 +60,7 @@ namespace WebApi.Tests.IntegrationTests.RiotApiClient.Services
             Assert.IsFalse(string.IsNullOrEmpty(matchDetailDto.Season));
             Assert.IsFalse(string.IsNullOrEmpty(matchDetailDto.Region));
             Assert.IsFalse(string.IsNullOrEmpty(matchDetailDto.QueueType));
-            Assert.AreEqual(matchDetailDto.Teams.Count, 2);
+            Assert.AreEqual(matchDetailDto.Teams.Count(), 2);
             Assert.IsTrue(matchDetailDto.Teams.ToArray()[0].TeamId > 0);
             Assert.IsTrue(matchDetailDto.Teams.ToArray()[1].TeamId > 0);
             Assert.AreEqual(1, matchDetailDto.Teams.Count(t => t.Winner));

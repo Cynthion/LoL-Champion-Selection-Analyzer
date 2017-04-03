@@ -20,13 +20,13 @@ namespace WebApi.DataAccess.Repositories
 
         public void Add(SummonerLeagueEntry entity)
         {
-            if (_context.SummonerLeageEntries.Any(e => e.PlayerId == entity.PlayerId))
+            if (_context.SummonerLeagueEntries.Any(e => e.PlayerId == entity.PlayerId))
             {
                 Update(entity);
                 return;
             }
 
-            _context.SummonerLeageEntries.Add(entity);
+            _context.SummonerLeagueEntries.Add(entity);
             _context.SaveChanges();
 
             Logger.Debug($"Added {entity}");
@@ -34,7 +34,7 @@ namespace WebApi.DataAccess.Repositories
 
         public void Update(SummonerLeagueEntry entity)
         {
-            _context.SummonerLeageEntries.Update(entity);
+            _context.SummonerLeagueEntries.Update(entity);
             _context.SaveChanges();
 
             Logger.Debug($"Updated {entity}");
@@ -42,8 +42,8 @@ namespace WebApi.DataAccess.Repositories
 
         public void Remove(long entityId)
         {
-            var entity = _context.SummonerLeageEntries.First(e => e.PlayerId == entityId);
-            _context.SummonerLeageEntries.Remove(entity);
+            var entity = _context.SummonerLeagueEntries.First(e => e.PlayerId == entityId);
+            _context.SummonerLeagueEntries.Remove(entity);
             _context.SaveChanges();
 
             Logger.Debug($"Removed {entity}");
@@ -51,17 +51,17 @@ namespace WebApi.DataAccess.Repositories
 
         public IEnumerable<SummonerLeagueEntry> GetAll()
         {
-            return _context.SummonerLeageEntries.ToArray();
+            return _context.SummonerLeagueEntries.ToArray();
         }
 
         public SummonerLeagueEntry Find(long entityId)
         {
-            return _context.SummonerLeageEntries.FirstOrDefault(e => e.PlayerId == entityId);
+            return _context.SummonerLeagueEntries.FirstOrDefault(e => e.PlayerId == entityId);
         }
 
         public long Count()
         {
-            var count = _context.SummonerLeageEntries.Count();
+            var count = _context.SummonerLeagueEntries.Count();
 
             Logger.Debug($"{nameof(SummonerLeagueEntry)} Count: {count}");
 

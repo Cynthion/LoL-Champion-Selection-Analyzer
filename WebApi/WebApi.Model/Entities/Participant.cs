@@ -7,7 +7,7 @@ namespace WebApi.Model.Entities
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public long ParticipantId { get; set; }
+        public long Key { get; set; }
 
         public int ChampionId { get; set; }
 

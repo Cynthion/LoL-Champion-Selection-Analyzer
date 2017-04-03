@@ -15,9 +15,9 @@ namespace WebApi.Model.RiotDtos.Match
 
         public ParticipantStatsDto Stats { get; set; }
 
-        public ICollection<RuneDto> Runes { get; set; }
+        public IEnumerable<RuneDto> Runes { get; set; }
 
-        public ICollection<MasteryDto> Masteries { get; set; }
+        public IEnumerable<MasteryDto> Masteries { get; set; }
 
         public ParticipantTimelineDto Timeline { get; set; }
 

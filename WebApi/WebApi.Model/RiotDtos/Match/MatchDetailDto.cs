@@ -25,10 +25,10 @@ namespace WebApi.Model.RiotDtos.Match
 
         public string PlatformId { get; set; }
 
-        public ICollection<TeamDto> Teams { get; set; }
+        public IEnumerable<TeamDto> Teams { get; set; }
 
-        public ICollection<ParticipantDto> Participants { get; set; }
+        public IEnumerable<ParticipantDto> Participants { get; set; }
 
-        public ICollection<ParticipantIdentityDto> ParticipantIdentities { get; set; }
+        public IEnumerable<ParticipantIdentityDto> ParticipantIdentities { get; set; }
     }
 }

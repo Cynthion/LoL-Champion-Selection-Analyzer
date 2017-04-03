@@ -6,14 +6,11 @@ namespace WebApi.Model.Entities
     public class SummonerMatch
     {
         [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public long Key { get; set; }
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
+        public long MatchId { get; set; }
 
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public long SummonerId { get; set; }
-
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
-        public long MatchId { get; set; }
 
         public long Timestamp { get; set; }
 

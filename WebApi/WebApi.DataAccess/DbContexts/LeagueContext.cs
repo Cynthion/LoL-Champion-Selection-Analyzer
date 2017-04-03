@@ -10,7 +10,7 @@ namespace WebApi.DataAccess.DbContexts
         {
         }
 
-        public DbSet<SummonerLeagueEntry> SummonerLeageEntries { get; set; }
+        public DbSet<SummonerLeagueEntry> SummonerLeagueEntries { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
