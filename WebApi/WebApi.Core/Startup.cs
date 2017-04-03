@@ -35,7 +35,7 @@ namespace WebApi.Core
 
             // Repositories
             services.AddScoped<ISummonerLeagueEntryRepository, SummonerLeagueEntryRepository>();
-            services.AddScoped<IMatchReferenceRepository, MatchReferenceRepository>();
+            services.AddScoped<ISummonerMatchRepository, SummonerMatchRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

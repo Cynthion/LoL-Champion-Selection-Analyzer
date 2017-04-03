@@ -4,17 +4,6 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace WebApi.Model.Entities
 {
-    public class SummonerMatchlist
-    {
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
-        public long SummonerId { get; set; }
-
-        public int TotalGames { get; set; }
-
-        public ICollection<SummonerMatch> Matches { get; set; }
-    }
-
     public class SummonerMatch
     {
         [Key]
@@ -22,7 +11,10 @@ namespace WebApi.Model.Entities
         public long Key { get; set; }
 
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
-        public long MatchDetailId { get; set; }
+        public long SummonerId { get; set; }
+
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
+        public long MatchId { get; set; }
 
         public long Timestamp { get; set; }
 
@@ -37,15 +29,13 @@ namespace WebApi.Model.Entities
         public string Lane { get; set; }
 
         public string Role { get; set; }
-
-        public MatchDetail MatchDetail { get; set; }
     }
 
-    public class MatchDetail
+    public class Match
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
-        public long MatchId { get; set; }
+        public long MatchDetailId { get; set; }
 
         public long MatchCreation { get; set; }
 
