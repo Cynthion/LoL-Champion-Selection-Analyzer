@@ -15,7 +15,7 @@ namespace WebApi.Core.Controllers
         [HttpGet("{id}", Name = "GetSummonerLeagueEntry")]
         public override IActionResult GetById(long entityId)
         {
-            return base.GetById(entityId);
+            return GetEntityById(entityId);
         }
 
         protected override IActionResult DoCreate(SummonerLeagueEntry entity)

@@ -4,21 +4,26 @@ using WebApi.Model.Entities;
 
 namespace WebApi.Core.Controllers
 {
-    public class SummonerMatchController : BaseController<SummonerMatch>
+    public class MatchController : BaseController<Match>
     {
-        public SummonerMatchController(ISummonerMatchRepository repository)
+        public MatchController(IMatchRepository repository) 
             : base(repository)
         {
         }
 
         // GET /api/[controller]/{id}
-        [HttpGet("{id}", Name = "GetSummonerMatch")]
+        [HttpGet("{id}", Name = "GetMatch")]
         public override IActionResult GetById(long entityId)
         {
-            return GetEntityById(entityId);
+            var entity = Repository.Find(entityId);
+            if (entity == null)
+            {
+                return NotFound();
+            }
+            return new ObjectResult(entity);
         }
 
-        protected override IActionResult DoCreate(SummonerMatch entity)
+        protected override IActionResult DoCreate(Match entity)
         {
             if (entity == null)
             {
@@ -27,12 +32,12 @@ namespace WebApi.Core.Controllers
 
             Repository.Add(entity);
 
-            return CreatedAtRoute("GetSummonerMatch", new { id = entity.Key }, entity);
+            return CreatedAtRoute("GetMatch", new { id = entity.MatchId }, entity);
         }
 
-        protected override IActionResult DoUpdate(long entityId, SummonerMatch entity)
+        protected override IActionResult DoUpdate(long entityId, Match entity)
         {
-            if (entity == null || entity.Key != entityId)
+            if (entity == null || entity.MatchId != entityId)
             {
                 return BadRequest();
             }
@@ -43,15 +48,12 @@ namespace WebApi.Core.Controllers
                 return NotFound();
             }
 
-            existingEntity.SummonerId = entity.SummonerId;
-            existingEntity.MatchId = entity.MatchId;
-            existingEntity.Timestamp = entity.Timestamp;
-            existingEntity.Champion = entity.Champion;
+            existingEntity.MatchCreation = entity.MatchCreation;
+            existingEntity.MatchDuration = entity.MatchDuration;
             existingEntity.Season = entity.Season;
             existingEntity.Region = entity.Region;
-            existingEntity.Queue = entity.Queue;
-            existingEntity.Lane = entity.Lane;
-            existingEntity.Role = entity.Role;
+            existingEntity.QueueType = entity.QueueType;
+            existingEntity.Teams = entity.Teams;
 
             Repository.Update(existingEntity);
             return new NoContentResult();

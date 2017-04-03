@@ -28,9 +28,9 @@ namespace WebApi.Core.Controllers
             return Repository.Count();
         }
 
-        // GET /api/[controller]/{id}
-        [HttpGet("{id}")]
-        public virtual IActionResult GetById(long entityId)
+        public abstract IActionResult GetById(long entityId);
+
+        protected IActionResult GetEntityById(long entityId)
         {
             var entity = Repository.Find(entityId);
             if (entity == null)
