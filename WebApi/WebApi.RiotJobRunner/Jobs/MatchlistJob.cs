@@ -3,6 +3,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using NLog;
+using WebApi.Model.Enums;
 using WebApi.RiotApiClient.Misc;
 using WebApi.RiotApiClient.Services.Interfaces;
 
@@ -41,7 +42,7 @@ namespace WebApi.RiotJobRunner.Jobs
 
             Logger.Debug($"{GetParameterString()}: Found {matchList.Matches.Count} Match References.");
 
-            await _webApiService.PostMatchlistAsync(matchList);
+            await _webApiService.PostMatchlistAsync(_region, matchList);
         }
 
         public override string ToString()

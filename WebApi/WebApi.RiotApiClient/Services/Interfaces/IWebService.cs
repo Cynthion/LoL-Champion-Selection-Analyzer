@@ -1,5 +1,5 @@
 ﻿using System.Threading.Tasks;
-using WebApi.RiotApiClient.Misc;
+using WebApi.Model.Enums;
 
 namespace WebApi.RiotApiClient.Services.Interfaces
 {

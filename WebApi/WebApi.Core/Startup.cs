@@ -34,7 +34,7 @@ namespace WebApi.Core
             services.AddDbContexts(Configuration.GetConnectionString("DefaultConnection"));
 
             // Repositories
-            services.AddScoped<ILeagueEntryRepository, LeagueEntryRepository>();
+            services.AddScoped<ISummonerLeagueEntryRepository, SummonerLeagueEntryRepository>();
             services.AddScoped<IMatchReferenceRepository, MatchReferenceRepository>();
         }
 

@@ -6,6 +6,7 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using NLog;
+using WebApi.Model.Enums;
 using WebApi.RiotApiClient.Misc;
 using WebApi.RiotApiClient.Misc.Exceptions;
 using WebApi.RiotApiClient.Misc.Interfaces;

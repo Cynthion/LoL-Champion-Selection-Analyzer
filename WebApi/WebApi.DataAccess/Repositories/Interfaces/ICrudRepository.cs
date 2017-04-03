@@ -4,9 +4,9 @@ namespace WebApi.DataAccess.Repositories.Interfaces
 {
     public interface ICrudRepository<TEntity>
     {
-        void Add(TEntity entity);
+        void Add(TEntity dto);
         
-        void Update(TEntity entity);
+        void Update(TEntity dto);
 
         void Remove(long entityId);
 

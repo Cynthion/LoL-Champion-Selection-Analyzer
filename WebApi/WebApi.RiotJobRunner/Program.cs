@@ -2,6 +2,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using NLog;
 using StructureMap;
+using WebApi.Model.Enums;
 using WebApi.RiotApiClient.Misc;
 using WebApi.RiotApiClient.Misc.Interfaces;
 using WebApi.RiotApiClient.Services;

@@ -3,8 +3,10 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
+using WebApi.Model.Enums;
+using WebApi.Model.Mapping;
+using WebApi.Model.Model.League;
 using WebApi.Model.RiotDtos.League;
-using WebApi.Model.RiotDtos.Match;
 using WebApi.Model.RiotDtos.Matchlist;
 
 namespace WebApi.RiotJobRunner
@@ -20,7 +22,7 @@ namespace WebApi.RiotJobRunner
             _httpClient = new HttpClient();
         }
 
-        public async Task<long> GetLeagueEntryCountAsync()
+        public async Task<long> GetSummonerLeagueEntryCountAsync()
         {
             var url = $"{Domain}/api/leagueentry/count";
 
@@ -38,13 +40,13 @@ namespace WebApi.RiotJobRunner
             return long.Parse(response);
         }
 
-        public async Task<IEnumerable<LeagueEntryDto>> GetLeagueEntriesAsync()
+        public async Task<IEnumerable<SummonerLeagueEntry>> GetSummonerLeagueEntriesAsync()
         {
-            var url = $"{Domain}/api/leagueentry";
+            var url = $"{Domain}/api/summanryleagueentry";
 
             var response = await GetRequestAsync(url);
 
-            return JsonConvert.DeserializeObject<LeagueEntryDto[]>(response);
+            return JsonConvert.DeserializeObject<SummonerLeagueEntry[]>(response);
         }
 
         public async Task<IEnumerable<MatchReferenceDto>> GetMatchReferencesAsync()
@@ -56,20 +58,21 @@ namespace WebApi.RiotJobRunner
             return JsonConvert.DeserializeObject<MatchReferenceDto[]>(response);
         }
 
-        public async Task PostLeagueAsync(LeagueDto leagueDto)
+        public async Task PostLeagueAsync(Region region, LeagueDto leagueDto)
         {
-            var url = $"{Domain}/api/leagueentry";
+            var url = $"{Domain}/api/summanryleagueentry";
 
             // TODO batch
-            foreach (var leagueEntry in leagueDto.Entries)
+            foreach (var leagueEntryDto in leagueDto.Entries)
             {
-                var jsonObject = JsonConvert.SerializeObject(leagueEntry);
+                var entity = leagueEntryDto.ToModel(region);
+                var jsonObject = JsonConvert.SerializeObject(entity);
 
                 await PostRequestAsync(url, jsonObject);
             }
         }
 
-        public async Task PostMatchlistAsync(MatchListDto matchlist)
+        public async Task PostMatchlistAsync(Region region, MatchListDto matchlist)
         {
             var url = $"{Domain}/api/matchreference";
 

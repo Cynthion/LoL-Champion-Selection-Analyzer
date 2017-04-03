@@ -1,6 +1,7 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
 using NLog;
+using WebApi.Model.Enums;
 using WebApi.Model.RiotDtos.League;
 using WebApi.RiotApiClient.Misc;
 using WebApi.RiotApiClient.Services.Interfaces;
@@ -40,7 +41,6 @@ namespace WebApi.RiotJobRunner.Jobs
         protected override async Task DoWorkAsync(CancellationToken cancellationToken)
         {
             LeagueDto leagueDto;
-            var regionString = _region.ToString();
 
             if (_tierLeague == TierLeague.Challenger)
             {
@@ -53,13 +53,7 @@ namespace WebApi.RiotJobRunner.Jobs
 
             Logger.Debug($"{GetParameterString()}: Found {leagueDto.Entries.Count} LeagueDto Entries.");
 
-            // apply region
-            foreach (var leagueEntry in leagueDto.Entries)
-            {
-                leagueEntry.Region = regionString;
-            }
-
-            await _webApiService.PostLeagueAsync(leagueDto);
+            await _webApiService.PostLeagueAsync(_region, leagueDto);
         }
 
         public override string ToString()

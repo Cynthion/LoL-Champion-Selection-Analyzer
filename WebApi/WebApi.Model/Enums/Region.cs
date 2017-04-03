@@ -1,6 +1,6 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 
-namespace WebApi.RiotApiClient.Misc
+namespace WebApi.Model.Enums
 {
     [SuppressMessage("ReSharper", "InconsistentNaming")]
     public enum Region

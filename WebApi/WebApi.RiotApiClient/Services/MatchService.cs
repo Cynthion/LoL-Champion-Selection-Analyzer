@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
+using WebApi.Model.Enums;
 using WebApi.Model.RiotDtos.Match;
 using WebApi.Model.RiotDtos.Matchlist;
 using WebApi.RiotApiClient.Misc;

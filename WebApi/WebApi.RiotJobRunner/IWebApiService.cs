@@ -1,23 +1,24 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using WebApi.Model.Enums;
+using WebApi.Model.Model.League;
 using WebApi.Model.RiotDtos.League;
-using WebApi.Model.RiotDtos.Match;
 using WebApi.Model.RiotDtos.Matchlist;
 
 namespace WebApi.RiotJobRunner
 {
     internal interface IWebApiService
     {
-        Task<long> GetLeagueEntryCountAsync();
+        Task<long> GetSummonerLeagueEntryCountAsync();
 
         Task<long> GetMatchReferenceCountAsync();
 
-        Task<IEnumerable<LeagueEntryDto>> GetLeagueEntriesAsync();
+        Task<IEnumerable<SummonerLeagueEntry>> GetSummonerLeagueEntriesAsync();
 
         Task<IEnumerable<MatchReferenceDto>> GetMatchReferencesAsync();
 
-        Task PostLeagueAsync(LeagueDto leagueDto);
+        Task PostLeagueAsync(Region region, LeagueDto leagueDto);
 
-        Task PostMatchlistAsync(MatchListDto league);
+        Task PostMatchlistAsync(Region region, MatchListDto league);
     }
 }

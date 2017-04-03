@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using WebApi.Model.Model.League;
 
 namespace WebApi.DataAccess.DbContexts
 {
@@ -9,10 +10,12 @@ namespace WebApi.DataAccess.DbContexts
         {
         }
 
+        public DbSet<SummonerLeagueEntry> SummonerLeageEntries { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             // configure the table names to use singular table names
-            //modelBuilder.Entity<LeagueDto>().ToTable("LeagueDto");
+            modelBuilder.Entity<SummonerLeagueEntry>().ToTable(nameof(SummonerLeagueEntry));
             //modelBuilder.Entity<LeagueEntryDto>().ToTable("LeagueEntryDto");
         }
     }

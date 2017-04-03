@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using WebApi.Model.Enums;
 using WebApi.Model.RiotDtos.Summoner;
-using WebApi.RiotApiClient.Misc;
 
 namespace WebApi.RiotApiClient.Services.Interfaces
 {

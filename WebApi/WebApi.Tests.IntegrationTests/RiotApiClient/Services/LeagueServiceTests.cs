@@ -1,4 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using WebApi.Model.Enums;
 using WebApi.RiotApiClient;
 using WebApi.RiotApiClient.Misc;
 using WebApi.RiotApiClient.Services;
