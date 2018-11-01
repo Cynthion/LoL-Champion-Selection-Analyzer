@@ -1,12 +1,21 @@
-﻿using System.Collections.Generic;
-using System.Threading;
+﻿using System.Threading;
 using ChampionSelectionAnalyzer.JobRunner.Framework;
+using NLog;
 
 namespace ChampionSelectionAnalyzer.JobRunner
 {
     internal class RiotPollingService
     {
-        private readonly IEnumerable<IJobRunner> _jobRunners = new List<IJobRunner>();
+        private static readonly ILogger Logger = LogManager.GetCurrentClassLogger();
+
+        private readonly IJobRunnerConfiguration _configuration;
+        private readonly IJobRunner _webRequestJobRunner = new Framework.JobRunner();
+        private readonly IJobRunner _databaseJobRunner = new Framework.JobRunner();
+
+        public RiotPollingService(IJobRunnerConfiguration configuration)
+        {
+            _configuration = configuration;
+        }
 
         public void ExecutePolling(CancellationToken cancellationToken)
         {
@@ -15,10 +24,8 @@ namespace ChampionSelectionAnalyzer.JobRunner
 
         private void OnStopped()
         {
-            foreach (var jobRunner in _jobRunners)
-            {
-                jobRunner.Stop();
-            }
+            _webRequestJobRunner.Stop();
+            _databaseJobRunner.Stop();
         }
     }
 }

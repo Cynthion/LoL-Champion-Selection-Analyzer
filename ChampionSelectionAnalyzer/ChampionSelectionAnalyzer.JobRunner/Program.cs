@@ -19,9 +19,10 @@ namespace ChampionSelectionAnalyzer.JobRunner
 
             try
             {
-                SetupIoC();
+                var container = SetupIoC();
 
-                new RiotPollingService().ExecutePolling(cts.Token);
+                new RiotPollingService(container.GetInstance<IJobRunnerConfiguration>())
+                    .ExecutePolling(cts.Token);
 
                 Console.ReadLine();
             }
@@ -37,10 +38,16 @@ namespace ChampionSelectionAnalyzer.JobRunner
             }
         }
 
-        private static void SetupIoC()
+        private static Container SetupIoC()
         {
-            var container = new Container(c =>
+            return new Container(c =>
             {
+                c.For<IJobRunnerConfiguration>().Use(_ =>
+                    new JobRunnerConfiguration
+                    {
+                        MaxSummonersPerRegion = 1000
+                    });
+
                 c.For<IApiKey>().Use(a =>
                 {
                     var apiKey = RiotApiKey.CreateFromFile();
