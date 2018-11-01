@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27703.2026
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChampionSelectionAnalyzer.RiotApiClient", "ChamptionSelectionAnalyzer.RiotApiClient\ChampionSelectionAnalyzer.RiotApiClient.csproj", "{4B527A67-B002-4F73-A956-52F9311B5A28}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChampionSelectionAnalyzer.RiotModel", "ChampionSelectionAnalyzer.RiotModel\ChampionSelectionAnalyzer.RiotModel.csproj", "{7E7BE3D3-C890-44B4-BAC9-438AD89EE0BC}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{4B527A67-B002-4F73-A956-52F9311B5A28}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4B527A67-B002-4F73-A956-52F9311B5A28}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4B527A67-B002-4F73-A956-52F9311B5A28}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4B527A67-B002-4F73-A956-52F9311B5A28}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7E7BE3D3-C890-44B4-BAC9-438AD89EE0BC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7E7BE3D3-C890-44B4-BAC9-438AD89EE0BC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7E7BE3D3-C890-44B4-BAC9-438AD89EE0BC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7E7BE3D3-C890-44B4-BAC9-438AD89EE0BC}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {C7F1DF21-AE70-4113-8DB0-2A80C435AF8E}
+	EndGlobalSection
+EndGlobal
