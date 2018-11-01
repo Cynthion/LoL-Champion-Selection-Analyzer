@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChampionSelectionAnalyzer.R
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChampionSelectionAnalyzer.RiotModel", "ChampionSelectionAnalyzer.RiotModel\ChampionSelectionAnalyzer.RiotModel.csproj", "{7E7BE3D3-C890-44B4-BAC9-438AD89EE0BC}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChampionSelectionAnalyzer.JobRunner", "ChampionSelectionAnalyzer.JobRunner\ChampionSelectionAnalyzer.JobRunner.csproj", "{FD9CE3F5-9F64-4AAD-A78B-4B6161F6471B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{7E7BE3D3-C890-44B4-BAC9-438AD89EE0BC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7E7BE3D3-C890-44B4-BAC9-438AD89EE0BC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7E7BE3D3-C890-44B4-BAC9-438AD89EE0BC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FD9CE3F5-9F64-4AAD-A78B-4B6161F6471B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FD9CE3F5-9F64-4AAD-A78B-4B6161F6471B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FD9CE3F5-9F64-4AAD-A78B-4B6161F6471B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FD9CE3F5-9F64-4AAD-A78B-4B6161F6471B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
