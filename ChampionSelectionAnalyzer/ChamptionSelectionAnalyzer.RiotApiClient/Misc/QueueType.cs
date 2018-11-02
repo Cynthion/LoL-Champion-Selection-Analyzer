@@ -1,4 +1,5 @@
-﻿namespace ChampionSelectionAnalyzer.RiotApiClient.Misc
+﻿// ReSharper disable InconsistentNaming
+namespace ChampionSelectionAnalyzer.RiotApiClient.Misc
 {
     public enum QueueType
     {

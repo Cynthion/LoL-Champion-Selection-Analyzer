@@ -11,7 +11,9 @@ namespace ChampionSelectionAnalyzer.JobRunner.Framework
 
         void EnqueueJobs(IEnumerable<IJob> jobs);
 
-        void Start(TimeSpan baseFrequency);
+        void Start();
+
+        void Start(TimeSpan baseFrequencyInSeconds);
 
         void Stop();
     }

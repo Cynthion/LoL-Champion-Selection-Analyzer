@@ -11,7 +11,7 @@ namespace ChampionSelectionAnalyzer.JobRunner.Framework
     {
         public bool IsRunning => _cts != null && !_cts.IsCancellationRequested;
 
-        private static readonly ILogger Logger = LogManager.GetCurrentClassLogger();
+        private static readonly ILogger Logger = LogManager.GetLogger(nameof(JobRunner));
 
         private readonly ConcurrentQueue<IJob> _jobQueue;
         private CancellationTokenSource _cts;
@@ -25,7 +25,7 @@ namespace ChampionSelectionAnalyzer.JobRunner.Framework
         {
             _jobQueue.Enqueue(job);
 
-            Logger.Info($"{job} put to queue.");
+            LogManager.GetLogger(GetType().Name).Log(LogLevel.Info, $"{job} put to queue.");
         }
 
         public void EnqueueJobs(IEnumerable<IJob> jobs)
@@ -36,11 +36,16 @@ namespace ChampionSelectionAnalyzer.JobRunner.Framework
             }
         }
 
-        public async void Start(TimeSpan baseFrequency)
+        public void Start()
+        {
+            Start(TimeSpan.FromSeconds(1));
+        }
+
+        public async void Start(TimeSpan baseFrequencyInSeconds)
         {
             _cts = new CancellationTokenSource();
 
-            Logger.Info($"{GetType().Name} started...");
+            Logger.Log(LogLevel.Info, $"{GetType().Name} started...");
 
             do
             {
@@ -48,17 +53,20 @@ namespace ChampionSelectionAnalyzer.JobRunner.Framework
                 {
                     try
                     {
-                        // TODO parallelize execution
                         await job.RunAsync(_cts.Token);
                     }
                     catch (Exception e)
                     {
-                        Logger.Error($"Error during execution of {job}:\n{e}");
+                        Logger.Log(LogLevel.Error, $"Error during execution of {job}:\n{e}");
                     }
                 }
 
-                await Task.Delay(baseFrequency);
-
+                try
+                {
+                    await Task.Delay(baseFrequencyInSeconds, _cts.Token);
+                }
+                catch (TaskCanceledException)
+                { }
             } while (IsRunning);
         }
 
@@ -66,7 +74,7 @@ namespace ChampionSelectionAnalyzer.JobRunner.Framework
         {
             _cts?.Cancel();
 
-            Logger.Info($"{GetType().Name} stopped...");
+            Logger.Log(LogLevel.Info, $"{GetType().Name} stopped...");
         }
     }
 }

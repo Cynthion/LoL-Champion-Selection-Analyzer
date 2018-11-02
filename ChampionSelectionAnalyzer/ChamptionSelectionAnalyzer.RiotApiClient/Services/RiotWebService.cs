@@ -66,9 +66,9 @@ namespace ChampionSelectionAnalyzer.RiotApiClient.Services
 
             url = url.AddUrlParameter($"api_key={_riotApiKey.ApiKey}");
             var requestUrl = $"https://{region.GetRegionEndpoint()}/{url}";
-            Logger.Debug($"Calling {requestUrl}");
+            Logger.Log(LogLevel.Debug, $"Calling {requestUrl}");
 
-            PrepareHttpClient();
+            PrepareHttpHeaders();
 
             await GetRateLimitEnforcer(region).EnforceRateLimitAsync();
 
@@ -88,7 +88,7 @@ namespace ChampionSelectionAnalyzer.RiotApiClient.Services
             return result;
         }
 
-        private void PrepareHttpClient()
+        private void PrepareHttpHeaders()
         {
             _httpClient.DefaultRequestHeaders.Accept.Clear();
             _httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));

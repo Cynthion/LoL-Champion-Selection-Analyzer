@@ -21,8 +21,10 @@ namespace ChampionSelectionAnalyzer.JobRunner
             {
                 var container = SetupIoC();
 
-                new RiotPollingService(container.GetInstance<IJobRunnerConfiguration>())
-                    .ExecutePolling(cts.Token);
+                var configuration = container.GetInstance<IJobRunnerConfiguration>();
+                var leagueService = container.GetInstance<ILeagueService>();
+
+                new RiotPollingService(configuration, leagueService).ExecutePolling(cts.Token);
 
                 Console.ReadLine();
             }
@@ -45,7 +47,10 @@ namespace ChampionSelectionAnalyzer.JobRunner
                 c.For<IJobRunnerConfiguration>().Use(_ =>
                     new JobRunnerConfiguration
                     {
-                        MaxSummonersPerRegion = 1000
+                        LeaguePollingIntervalInSeconds = 10,
+                        PolledRegions = new []{ Region.EUW },
+                        PolledTierLeagues = new []{ TierLeague.Challenger, TierLeague.Master },
+                        PolledQueueTypes = new []{ QueueType.RANKED_SOLO_5x5 },
                     });
 
                 c.For<IApiKey>().Use(a =>
