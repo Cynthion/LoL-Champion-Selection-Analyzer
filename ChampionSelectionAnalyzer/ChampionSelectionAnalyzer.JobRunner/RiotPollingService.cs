@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using ChampionSelectionAnalyzer.JobRunner.Framework;
 using ChampionSelectionAnalyzer.JobRunner.Jobs;
 using ChampionSelectionAnalyzer.RiotApiClient.Services.Interfaces;
+using ChampionSelectionAnalyzer.RiotModel.League;
 using NLog;
 
 namespace ChampionSelectionAnalyzer.JobRunner
@@ -41,7 +42,7 @@ namespace ChampionSelectionAnalyzer.JobRunner
                 .SelectMany(r => _configuration.PolledTierLeagues
                     .SelectMany(t => _configuration.PolledQueueTypes
                         .Select(q =>
-                            new LeagueJob(r, t, q, _leagueService)
+                            new LeagueJob(r, t, q, _leagueService, result => _webRequestJobRunner.EnqueueJob(new SaveLeagueJob(result)))
                         )))
                 .ToArray();
 

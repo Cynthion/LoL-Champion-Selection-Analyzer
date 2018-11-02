@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
 using System.Threading;
 using System.Threading.Tasks;
 using ChampionSelectionAnalyzer.JobRunner.Framework;
@@ -19,7 +20,9 @@ namespace ChampionSelectionAnalyzer.JobRunner.Jobs
             Region region,
             TierLeague tierLeague,
             QueueType queueType,
-            ILeagueService leagueService)
+            ILeagueService leagueService,
+            Action<LeagueListDto> resultAction)
+            : base(resultAction)
         {
             _region = region;
             _tierLeague = tierLeague;
