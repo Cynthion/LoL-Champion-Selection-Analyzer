@@ -6,6 +6,6 @@ namespace ChampionSelectionAnalyzer.RiotApiClient.Services.Interfaces
 {
     public interface ISummonerService
     {
-        Task<SummonerDto> GetSummonerByNameAsync(Region region, string summonerName);
+        Task<SummonerDto> GetSummonerByIdAsync(Region region, long summonerId);
     }
 }

@@ -36,5 +36,39 @@ namespace ChampionSelectionAnalyzer.JobRunner.Framework
         {
             LogManager.GetLogger(GetType().Name).Info($"{this} cancelled.");
         }
+
+        public override string ToString()
+        {
+            return $"{GetType().Name}";
+        }
+    }
+
+    internal abstract class JobBase : IJob
+    {
+        public async Task RunAsync(CancellationToken cancellationToken)
+        {
+            OnStarted();
+
+            cancellationToken.Register(OnCancelled);
+
+            await DoWorkAsync(cancellationToken);
+        }
+
+        protected abstract Task DoWorkAsync(CancellationToken cancellationToken);
+
+        protected virtual void OnStarted()
+        {
+            LogManager.GetLogger(GetType().Name).Info($"{this} started.");
+        }
+
+        protected virtual void OnCancelled()
+        {
+            LogManager.GetLogger(GetType().Name).Info($"{this} cancelled.");
+        }
+
+        public override string ToString()
+        {
+            return $"{GetType().Name}";
+        }
     }
 }

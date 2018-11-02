@@ -6,6 +6,7 @@ using Raven.Client.ServerWide.Operations;
 
 namespace ChampionSelectionAnalyzer.JobRunner
 {
+    // TODO also start RavenDb from code, or powershell
     internal class RavenDb
     {
         private const string DatabaseName = "ChampionSelectionAnalyzer";

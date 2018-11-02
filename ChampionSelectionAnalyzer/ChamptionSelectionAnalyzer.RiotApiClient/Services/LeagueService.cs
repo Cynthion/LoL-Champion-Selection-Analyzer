@@ -21,7 +21,10 @@ namespace ChampionSelectionAnalyzer.RiotApiClient.Services
 
             var response = await _webService.GetRequestAsync(region, url);
 
-            return JsonConvert.DeserializeObject<LeagueListDto>(response);
+            var leagueListDto = JsonConvert.DeserializeObject<LeagueListDto>(response);
+            leagueListDto.Region = region.ToString();
+
+            return leagueListDto;
         }
 
         public async Task<LeagueListDto> GetMasterLeaguesByQueueAsync(Region region, QueueType queueType)
@@ -30,7 +33,10 @@ namespace ChampionSelectionAnalyzer.RiotApiClient.Services
 
             var response = await _webService.GetRequestAsync(region, url);
 
-            return JsonConvert.DeserializeObject<LeagueListDto>(response);
+            var leagueListDto = JsonConvert.DeserializeObject<LeagueListDto>(response);
+            leagueListDto.Region = region.ToString();
+
+            return leagueListDto;
         }
     }
 }

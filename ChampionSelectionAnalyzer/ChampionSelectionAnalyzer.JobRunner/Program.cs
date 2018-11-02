@@ -25,8 +25,9 @@ namespace ChampionSelectionAnalyzer.JobRunner
 
                 var configuration = container.GetInstance<IJobRunnerConfiguration>();
                 var leagueService = container.GetInstance<ILeagueService>();
+                var summonerService = container.GetInstance<ISummonerService>();
 
-                new RiotPollingService(configuration, leagueService).ExecutePolling(cts.Token);
+                new RiotPollingService(configuration, leagueService, summonerService).ExecutePolling(cts.Token);
 
                 Console.ReadLine();
             }
@@ -49,10 +50,11 @@ namespace ChampionSelectionAnalyzer.JobRunner
                 c.For<IJobRunnerConfiguration>().Use(_ =>
                     new JobRunnerConfiguration
                     {
-                        LeaguePollingIntervalInSeconds = 60,
                         PolledRegions = new []{ Region.EUW },
                         PolledTierLeagues = new []{ TierLeague.Challenger, TierLeague.Master },
                         PolledQueueTypes = new []{ QueueType.RANKED_SOLO_5x5 },
+                        LeaguePollingIntervalInSeconds = 120,
+                        SummonerIdsPollingIntervalInSeconds = 120,
                     });
 
                 c.For<IApiKey>().Use(a =>
@@ -65,6 +67,8 @@ namespace ChampionSelectionAnalyzer.JobRunner
                 c.For<IWebService>().Use(RiotWebService.Instance);
 
                 c.For<ILeagueService>().Use<LeagueService>();
+                c.For<ISummonerService>().Use<SummonerService>();
+                c.For<IMatchService>().Use<MatchService>();
             });
         }
     }

@@ -5,7 +5,7 @@ using ChampionSelectionAnalyzer.RiotModel.League;
 
 namespace ChampionSelectionAnalyzer.JobRunner.Jobs
 {
-    internal class SaveLeagueJob : JobBase<string>
+    internal class SaveLeagueJob : JobBase
     {
         private readonly LeagueListDto _leagueListDto;
 
@@ -14,7 +14,7 @@ namespace ChampionSelectionAnalyzer.JobRunner.Jobs
             _leagueListDto = leagueListDto;
         }
 
-        protected override async Task<string> DoWorkAsync(CancellationToken cancellationToken)
+        protected override async Task DoWorkAsync(CancellationToken cancellationToken)
         {
             using (var session = RavenDb.Store.OpenAsyncSession())
             {
@@ -22,8 +22,6 @@ namespace ChampionSelectionAnalyzer.JobRunner.Jobs
 
                 await session.SaveChangesAsync(cancellationToken);
             }
-
-            return string.Empty;
         }
     }
 }

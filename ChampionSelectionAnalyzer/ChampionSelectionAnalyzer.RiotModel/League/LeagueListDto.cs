@@ -9,5 +9,8 @@ namespace ChampionSelectionAnalyzer.RiotModel.League
         public List<LeagueItemDto> Entries { get; set; }
         public string Queue { get; set; }
         public string Name { get; set; }
+
+        // non-Riot property
+        public string Region { get; set; }
     }
 }
