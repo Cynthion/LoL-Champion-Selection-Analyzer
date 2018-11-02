@@ -9,6 +9,7 @@
     <PackageReference Include="Lamar" Version="1.1.2" />
     <PackageReference Include="NLog" Version="4.5.10" />
     <PackageReference Include="NLog.Config" Version="4.5.10" />
+    <PackageReference Include="RavenDB.Client" Version="4.1.2" />
   </ItemGroup>
 
   <ItemGroup>

@@ -19,6 +19,8 @@ namespace ChampionSelectionAnalyzer.JobRunner
 
             try
             {
+                RavenDb.CreateDatabaseIfNotExists();
+
                 var container = SetupIoC();
 
                 var configuration = container.GetInstance<IJobRunnerConfiguration>();
@@ -47,7 +49,7 @@ namespace ChampionSelectionAnalyzer.JobRunner
                 c.For<IJobRunnerConfiguration>().Use(_ =>
                     new JobRunnerConfiguration
                     {
-                        LeaguePollingIntervalInSeconds = 10,
+                        LeaguePollingIntervalInSeconds = 60,
                         PolledRegions = new []{ Region.EUW },
                         PolledTierLeagues = new []{ TierLeague.Challenger, TierLeague.Master },
                         PolledQueueTypes = new []{ QueueType.RANKED_SOLO_5x5 },

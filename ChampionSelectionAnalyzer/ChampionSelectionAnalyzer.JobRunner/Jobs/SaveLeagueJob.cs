@@ -1,5 +1,4 @@
-﻿using System;
-using System.Threading;
+﻿using System.Threading;
 using System.Threading.Tasks;
 using ChampionSelectionAnalyzer.JobRunner.Framework;
 using ChampionSelectionAnalyzer.RiotModel.League;
@@ -15,9 +14,16 @@ namespace ChampionSelectionAnalyzer.JobRunner.Jobs
             _leagueListDto = leagueListDto;
         }
 
-        protected override Task<string> DoWorkAsync(CancellationToken cancellationToken)
+        protected override async Task<string> DoWorkAsync(CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            using (var session = RavenDb.Store.OpenAsyncSession())
+            {
+                await session.StoreAsync(_leagueListDto, _leagueListDto.LeagueId, cancellationToken);
+
+                await session.SaveChangesAsync(cancellationToken);
+            }
+
+            return string.Empty;
         }
     }
 }

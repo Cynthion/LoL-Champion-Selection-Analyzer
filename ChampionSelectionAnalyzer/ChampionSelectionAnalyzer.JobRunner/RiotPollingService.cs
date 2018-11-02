@@ -5,15 +5,11 @@ using System.Threading.Tasks;
 using ChampionSelectionAnalyzer.JobRunner.Framework;
 using ChampionSelectionAnalyzer.JobRunner.Jobs;
 using ChampionSelectionAnalyzer.RiotApiClient.Services.Interfaces;
-using ChampionSelectionAnalyzer.RiotModel.League;
-using NLog;
 
 namespace ChampionSelectionAnalyzer.JobRunner
 {
     internal class RiotPollingService
     {
-        private static readonly ILogger Logger = LogManager.GetLogger(nameof(RiotPollingService));
-
         private readonly IJobRunnerConfiguration _configuration;
         private readonly ILeagueService _leagueService;
         private readonly IJobRunner _webRequestJobRunner = new Framework.JobRunner();
