@@ -7,7 +7,7 @@ using ChampionSelectionAnalyzer.RiotApiClient.Misc;
 using ChampionSelectionAnalyzer.RiotApiClient.Services.Interfaces;
 using ChampionSelectionAnalyzer.RiotModel.League;
 
-namespace ChampionSelectionAnalyzer.JobRunner.Jobs
+namespace ChampionSelectionAnalyzer.JobRunner.Jobs.Polling.Web
 {
     internal class LeagueJob : JobBase<LeagueListDto>
     {

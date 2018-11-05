@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using ChampionSelectionAnalyzer.JobRunner.Framework;
 using ChampionSelectionAnalyzer.RiotModel.League;
 
-namespace ChampionSelectionAnalyzer.JobRunner.Jobs
+namespace ChampionSelectionAnalyzer.JobRunner.Jobs.Polling.Database
 {
     internal class SaveLeagueJob : JobBase
     {

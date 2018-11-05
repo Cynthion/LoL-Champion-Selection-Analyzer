@@ -12,34 +12,34 @@ namespace ChampionSelectionAnalyzer.RiotApiClient.Misc
 
     // Rate limits are enforced per region. 
     // For example, with the above rate limit, you could make 500 requests 
-    // very 10 minutes to both NA and EUW endpoints simultaneously.
+    // every 10 minutes to both NA and EUW endpoints simultaneously.
 
     // Rate Limits:
-    // Development API Key: 10 requests every 10 seconds, 500 requests every 10 minutes
+    // Development API Key: 20 requests every 1 second, 100 requests every 2 minutes
     // Production API Key: 3,000 requests every 10 seconds, 180,000 requests every 10 minutes
 
     public class RateLimitEnforcer : IRateLimitEnforcer
     {
         private static readonly ILogger Logger = LogManager.GetCurrentClassLogger();
 
-        private static readonly TimeSpan TenSeconds = TimeSpan.FromSeconds(10);
-        private static readonly TimeSpan TenMinutes = TimeSpan.FromMinutes(10);
+        private static readonly TimeSpan OneSecond = TimeSpan.FromSeconds(1);
+        private static readonly TimeSpan TwoMinutes = TimeSpan.FromMinutes(2);
 
         private readonly SemaphoreSlim _semaphore = new SemaphoreSlim(1, 1);
 
-        private readonly int _limitPer10Sec;
-        private readonly int _limitPer10Min;
+        private readonly int _limitPer1Sec;
+        private readonly int _limitPer2Min;
 
-        private int _numOfRequestsInLast10Sec;
-        private int _numOfRequestsInLast10Min;
+        private int _numOfRequestsInLast1Sec;
+        private int _numOfRequestsInLast2Min;
 
-        private DateTime _firstRequestInLast10Sec = DateTime.MinValue;
-        private DateTime _firstRequestInLast10Min = DateTime.MinValue;
+        private DateTime _firstRequestInLast1Sec = DateTime.MinValue;
+        private DateTime _firstRequestInLast2Min = DateTime.MinValue;
         private DateTime _retryAfter = DateTime.MinValue;
 
         public RateLimitEnforcer(IApiKey apiKey)
         {
-            SetRateLimitsForApiKey(apiKey, out _limitPer10Sec, out _limitPer10Min);
+            SetRateLimitsForApiKey(apiKey, out _limitPer1Sec, out _limitPer2Min);
         }
 
         public async Task EnforceRateLimitAsync()
@@ -63,17 +63,17 @@ namespace ChampionSelectionAnalyzer.RiotApiClient.Misc
             Logger.Warn($"Retry-After Delay activated: {retryDelay:g}");
         }
 
-        private static void SetRateLimitsForApiKey(IApiKey apiKey, out int limitPer10Sec, out int limitPer10Min)
+        private static void SetRateLimitsForApiKey(IApiKey apiKey, out int limitPer1Sec, out int limitPer2Min)
         {
             if (apiKey.IsProduction)
             {
-                limitPer10Sec = 10;
-                limitPer10Min = 500;
+                limitPer1Sec = 300;
+                limitPer2Min = 36000;
             }
             else
             {
-                limitPer10Sec = 3000;
-                limitPer10Min = 180000;
+                limitPer1Sec = 20;
+                limitPer2Min = 100;
             }
         }
 
@@ -83,18 +83,18 @@ namespace ChampionSelectionAnalyzer.RiotApiClient.Misc
             var delay = TimeSpan.Zero;
 
             // Check if any rate limit is reached
-            if (_numOfRequestsInLast10Min >= _limitPer10Min)
+            if (_numOfRequestsInLast2Min >= _limitPer2Min)
             {
-                var newDelay = _firstRequestInLast10Min + TenMinutes - now;
+                var newDelay = _firstRequestInLast2Min + TwoMinutes - now;
                 if (newDelay > delay)
                 {
                     delay = newDelay;
                 }
             }
 
-            if (_numOfRequestsInLast10Sec >= _limitPer10Sec)
+            if (_numOfRequestsInLast1Sec >= _limitPer1Sec)
             {
-                var newDelay = _firstRequestInLast10Sec + TenSeconds - now;
+                var newDelay = _firstRequestInLast1Sec + OneSecond - now;
                 if (newDelay > delay)
                 {
                     delay = newDelay;
@@ -120,20 +120,20 @@ namespace ChampionSelectionAnalyzer.RiotApiClient.Misc
         {
             var now = DateTime.Now;
 
-            if (_firstRequestInLast10Min < now - TenMinutes)
+            if (_firstRequestInLast2Min < now - TwoMinutes)
             {
-                _firstRequestInLast10Min = now;
-                _numOfRequestsInLast10Min = 0;
+                _firstRequestInLast2Min = now;
+                _numOfRequestsInLast2Min = 0;
             }
 
-            if (_firstRequestInLast10Sec < now - TenSeconds)
+            if (_firstRequestInLast1Sec < now - OneSecond)
             {
-                _firstRequestInLast10Sec = now;
-                _numOfRequestsInLast10Sec = 0;
+                _firstRequestInLast1Sec = now;
+                _numOfRequestsInLast1Sec = 0;
             }
 
-            _numOfRequestsInLast10Min++;
-            _numOfRequestsInLast10Sec++;
+            _numOfRequestsInLast2Min++;
+            _numOfRequestsInLast1Sec++;
         }
     }
 }

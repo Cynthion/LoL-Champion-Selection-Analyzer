@@ -43,6 +43,8 @@ namespace ChampionSelectionAnalyzer.RiotApiClient.Services
         private static readonly ILogger Logger = LogManager.GetCurrentClassLogger();
 
         private readonly IApiKey _riotApiKey;
+
+        // rate limits are enforced per region
         private readonly IDictionary<Region, IRateLimitEnforcer> _rateLimitEnforcers;
 
         private readonly HttpClient _httpClient;
