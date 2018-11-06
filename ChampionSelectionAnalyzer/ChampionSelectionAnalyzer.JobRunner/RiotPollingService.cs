@@ -7,11 +7,14 @@ using ChampionSelectionAnalyzer.JobRunner.Jobs;
 using ChampionSelectionAnalyzer.JobRunner.Jobs.Polling.Database;
 using ChampionSelectionAnalyzer.JobRunner.Jobs.Polling.Web;
 using ChampionSelectionAnalyzer.RiotApiClient.Services.Interfaces;
+using NLog;
 
 namespace ChampionSelectionAnalyzer.JobRunner
 {
     internal class RiotPollingService
     {
+        private static readonly ILogger Logger = LogManager.GetLogger(nameof(RiotPollingService));
+
         private readonly IJobRunnerConfiguration _configuration;
         private readonly IJobRunner _databaseJobRunner = new Framework.JobRunner();
         private readonly ILeagueService _leagueService;
@@ -30,6 +33,7 @@ namespace ChampionSelectionAnalyzer.JobRunner
 
         public void ExecutePolling(CancellationToken cancellationToken)
         {
+            Logger.Log(LogLevel.Info, "Execute polling...");
             cancellationToken.Register(OnStopped);
 
             PollLeaguesAsync(cancellationToken);

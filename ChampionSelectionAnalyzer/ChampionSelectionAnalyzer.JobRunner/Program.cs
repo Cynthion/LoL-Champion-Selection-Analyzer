@@ -11,7 +11,7 @@ namespace ChampionSelectionAnalyzer.JobRunner
 {
     internal class Program
     {
-        private static readonly ILogger Logger = LogManager.GetCurrentClassLogger();
+        private static readonly ILogger Logger = LogManager.GetLogger(nameof(Program));
 
         public static void Main(string[] args)
         {
@@ -19,13 +19,16 @@ namespace ChampionSelectionAnalyzer.JobRunner
 
             try
             {
+                Logger.Log(LogLevel.Info, "Setting up...");
+
                 RavenDb.CreateDatabaseIfNotExists();
 
                 var container = SetupIoC();
-
                 var configuration = container.GetInstance<IJobRunnerConfiguration>();
                 var leagueService = container.GetInstance<ILeagueService>();
                 var summonerService = container.GetInstance<ISummonerService>();
+
+                Logger.Log(LogLevel.Info, "Setup completed.");
 
                 new RiotPollingService(configuration, leagueService, summonerService).ExecutePolling(cts.Token);
 
@@ -57,12 +60,7 @@ namespace ChampionSelectionAnalyzer.JobRunner
                         SummonerIdsPollingIntervalInSeconds = 120,
                     });
 
-                c.For<IApiKey>().Use(a =>
-                {
-                    var apiKey = RiotApiKey.CreateFromFile();
-                    Logger.Info($"Using API Key:\n{apiKey}");
-                    return apiKey;
-                });
+                c.For<IApiKey>().Use(RiotApiKey.CreateFromFile());
 
                 c.For<IWebService>().Use<RiotWebService>();
                 c.For<ILeagueService>().Use<LeagueService>();

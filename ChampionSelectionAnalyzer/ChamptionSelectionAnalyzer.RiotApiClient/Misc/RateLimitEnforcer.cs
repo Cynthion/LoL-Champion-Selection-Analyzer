@@ -55,7 +55,7 @@ namespace ChampionSelectionAnalyzer.RiotApiClient.Misc
             }
         }
 
-        private static readonly ILogger Logger = LogManager.GetCurrentClassLogger();
+        private static readonly ILogger Logger = LogManager.GetLogger(nameof(RateLimitEnforcer));
         private static volatile IDictionary<Tuple<IApiKey, Region>, IRateLimitEnforcer> _rateLimitEnforcersPerApiKeyAndRegion;
         private static readonly object SyncRoot = new object();
         
@@ -76,7 +76,7 @@ namespace ChampionSelectionAnalyzer.RiotApiClient.Misc
 
         private RateLimitEnforcer(IApiKey apiKey, Region region)
         {
-            Logger.Log(LogLevel.Info, $"Created {nameof(RateLimitEnforcer)} for API key { apiKey } and region { region }");
+            Logger.Log(LogLevel.Info, $"Created {nameof(RateLimitEnforcer)} for API key { apiKey } and region { region }.");
             SetRateLimitsForApiKey(apiKey, out _limitPer1Sec, out _limitPer2Min);
         }
 
