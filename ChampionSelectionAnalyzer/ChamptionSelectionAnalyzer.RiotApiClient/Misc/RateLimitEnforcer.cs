@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using ChampionSelectionAnalyzer.RiotApiClient.Misc.Interfaces;
@@ -18,10 +19,46 @@ namespace ChampionSelectionAnalyzer.RiotApiClient.Misc
     // Development API Key: 20 requests every 1 second, 100 requests every 2 minutes
     // Production API Key: 3,000 requests every 10 seconds, 180,000 requests every 10 minutes
 
+    /// <summary>
+    /// This class is implemented as Singleton in order to ensure the Riot API Rate Limitation per region.
+    /// </summary>
     public class RateLimitEnforcer : IRateLimitEnforcer
     {
-        private static readonly ILogger Logger = LogManager.GetCurrentClassLogger();
+        public static IRateLimitEnforcer GetRateLimitEnforcer(IApiKey apiKey, Region region)
+        {
+            var key = new Tuple<IApiKey, Region>(apiKey, region);
+            if (!RateLimitEnforcersPerApiKeyAndRegion.ContainsKey(key))
+            {
+                RateLimitEnforcersPerApiKeyAndRegion.Add(key, new RateLimitEnforcer(key.Item1, key.Item2));
+            }
+            return RateLimitEnforcersPerApiKeyAndRegion[key];
+        }
 
+        // Singleton implemented according to https://msdn.microsoft.com/en-us/library/ff650316.aspx
+        private static IDictionary<Tuple<IApiKey, Region>, IRateLimitEnforcer> RateLimitEnforcersPerApiKeyAndRegion
+        {
+            get
+            {
+                if (_rateLimitEnforcersPerApiKeyAndRegion != null)
+                {
+                    return _rateLimitEnforcersPerApiKeyAndRegion;
+                }
+                lock (SyncRoot)
+                {
+                    if (_rateLimitEnforcersPerApiKeyAndRegion == null)
+                    {
+                        _rateLimitEnforcersPerApiKeyAndRegion = new Dictionary<Tuple<IApiKey, Region>, IRateLimitEnforcer>();
+                    }
+                }
+
+                return _rateLimitEnforcersPerApiKeyAndRegion;
+            }
+        }
+
+        private static readonly ILogger Logger = LogManager.GetCurrentClassLogger();
+        private static volatile IDictionary<Tuple<IApiKey, Region>, IRateLimitEnforcer> _rateLimitEnforcersPerApiKeyAndRegion;
+        private static readonly object SyncRoot = new object();
+        
         private static readonly TimeSpan OneSecond = TimeSpan.FromSeconds(1);
         private static readonly TimeSpan TwoMinutes = TimeSpan.FromMinutes(2);
 
@@ -37,8 +74,9 @@ namespace ChampionSelectionAnalyzer.RiotApiClient.Misc
         private DateTime _firstRequestInLast2Min = DateTime.MinValue;
         private DateTime _retryAfter = DateTime.MinValue;
 
-        public RateLimitEnforcer(IApiKey apiKey)
+        private RateLimitEnforcer(IApiKey apiKey, Region region)
         {
+            Logger.Log(LogLevel.Info, $"Created {nameof(RateLimitEnforcer)} for API key { apiKey } and region { region }");
             SetRateLimitsForApiKey(apiKey, out _limitPer1Sec, out _limitPer2Min);
         }
 

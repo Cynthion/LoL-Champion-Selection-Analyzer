@@ -64,8 +64,7 @@ namespace ChampionSelectionAnalyzer.JobRunner
                     return apiKey;
                 });
 
-                c.For<IWebService>().Use(RiotWebService.Instance);
-
+                c.For<IWebService>().Use<RiotWebService>();
                 c.For<ILeagueService>().Use<LeagueService>();
                 c.For<ISummonerService>().Use<SummonerService>();
                 c.For<IMatchService>().Use<MatchService>();

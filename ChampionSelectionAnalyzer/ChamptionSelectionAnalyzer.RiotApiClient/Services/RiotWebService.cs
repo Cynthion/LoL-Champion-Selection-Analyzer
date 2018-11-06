@@ -12,40 +12,11 @@ using NLog;
 
 namespace ChampionSelectionAnalyzer.RiotApiClient.Services
 {
-    /// <summary>
-    /// This class is implemented as Singleton in order to ensure the Riot API Rate Limitation.
-    /// </summary>
     public sealed class RiotWebService : IWebService
     {
-        // Singleton implemented according to https://msdn.microsoft.com/en-us/library/ff650316.aspx
-        public static RiotWebService Instance
-        {
-            get
-            {
-                if (_instance != null)
-                {
-                    return _instance;
-                }
-                lock (SyncRoot)
-                {
-                    if (_instance == null)
-                    {
-                        _instance = new RiotWebService(RiotApiKey.CreateFromFile());
-                    }
-                }
-
-                return _instance;
-            }
-        }
-
-        private static volatile RiotWebService _instance;
-        private static readonly object SyncRoot = new object();
         private static readonly ILogger Logger = LogManager.GetCurrentClassLogger();
 
         private readonly IApiKey _riotApiKey;
-
-        // rate limits are enforced per region
-        private readonly IDictionary<Region, IRateLimitEnforcer> _rateLimitEnforcers;
 
         private readonly HttpClient _httpClient;
 
@@ -54,11 +25,9 @@ namespace ChampionSelectionAnalyzer.RiotApiClient.Services
         private const string XMethodRateLimitCountHeader = "X-Method-Rate-Limit-Count";
         private const string RetryAfterHeader = "Retry-After";
 
-        private RiotWebService(IApiKey riotApiKey)
+        public RiotWebService(IApiKey riotApiKey)
         {
             _riotApiKey = riotApiKey;
-            _rateLimitEnforcers = new Dictionary<Region, IRateLimitEnforcer>();
-
             _httpClient = new HttpClient();
         }
 
@@ -72,13 +41,14 @@ namespace ChampionSelectionAnalyzer.RiotApiClient.Services
 
             PrepareHttpHeaders();
 
-            await GetRateLimitEnforcer(region).EnforceRateLimitAsync();
+            var rateLimitEnforcer = RateLimitEnforcer.GetRateLimitEnforcer(_riotApiKey, region);
+            await rateLimitEnforcer.EnforceRateLimitAsync();
 
             using (var response = await _httpClient.GetAsync(requestUrl))
             {
                 if (!response.IsSuccessStatusCode)
                 {
-                    HandleRequestFailure(response, region);
+                    HandleRequestFailure(response, rateLimitEnforcer);
                 }
                 using (var content = response.Content)
                 {
@@ -97,22 +67,13 @@ namespace ChampionSelectionAnalyzer.RiotApiClient.Services
             _httpClient.DefaultRequestHeaders.Add("User-Agent", "Champion Selection Analyzer");
         }
 
-        private IRateLimitEnforcer GetRateLimitEnforcer(Region region)
-        {
-            if (!_rateLimitEnforcers.ContainsKey(region))
-            {
-                _rateLimitEnforcers.Add(region, new RateLimitEnforcer(_riotApiKey));
-            }
-            return _rateLimitEnforcers[region];
-        }
-
-        private void HandleRequestFailure(HttpResponseMessage response, Region region)
+        private void HandleRequestFailure(HttpResponseMessage response, IRateLimitEnforcer rateLimitEnforcer)
         {
             var statusCode = response.StatusCode;
 
             if ((int)statusCode == 429)
             {
-                HandleRateLimit(response, region);
+                HandleRateLimit(response, rateLimitEnforcer);
             }
             else
             {
@@ -136,7 +97,8 @@ namespace ChampionSelectionAnalyzer.RiotApiClient.Services
             }
         }
 
-        private void HandleRateLimit(HttpResponseMessage response, Region region)
+        // TODO from response headers: read application, method, service limits and counts, and adapt
+        private void HandleRateLimit(HttpResponseMessage response, IRateLimitEnforcer rateLimitEnforcer)
         {
             Logger.Warn("Rate limit detected:");
 
@@ -150,7 +112,7 @@ namespace ChampionSelectionAnalyzer.RiotApiClient.Services
                 if (int.TryParse(headerValues.First(), out int retryAfterContent))
                 {
                     var retryAfterDelay = TimeSpan.FromSeconds(retryAfterContent);
-                    GetRateLimitEnforcer(region).SetRetryAfter(retryAfterDelay);
+                    rateLimitEnforcer.SetRetryAfter(retryAfterDelay);
                 }
                 else
                 {

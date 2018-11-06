@@ -26,5 +26,10 @@ namespace ChampionSelectionAnalyzer.RiotApiClient.Misc
                 return riotApiKey;
             }
         }
+
+        public override string ToString()
+        {
+            return $"{ ApiKey }, IsProduction: { IsProduction }";
+        }
     }
 }
