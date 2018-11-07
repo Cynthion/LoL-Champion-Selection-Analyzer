@@ -80,27 +80,28 @@ namespace ChampionSelectionAnalyzer.RiotApiClient.Services
                 switch (statusCode)
                 {
                     case HttpStatusCode.BadRequest:
-                        throw new RioApiException("400, Bad Request", statusCode);
+                        throw new RiotApiException("400, Bad Request", statusCode);
                     case HttpStatusCode.Unauthorized:
-                        throw new RioApiException("401, Unauthorized", statusCode);
+                        throw new RiotApiException("401, Unauthorized", statusCode);
                     case HttpStatusCode.Forbidden:
-                        throw new RioApiException("403, Forbidden", statusCode);
+                        throw new RiotApiException("403, Forbidden", statusCode);
                     case HttpStatusCode.NotFound:
-                        throw new RioApiException("404, Not Found", statusCode);
+                        throw new RiotApiException("404, Not Found", statusCode);
                     case HttpStatusCode.InternalServerError:
-                        throw new RioApiException("500, Internal Server Error", statusCode);
+                        throw new RiotApiException("500, Internal Server Error", statusCode);
                     case HttpStatusCode.ServiceUnavailable:
-                        throw new RioApiException("503, Service Unavailable", statusCode);
+                        throw new RiotApiException("503, Service Unavailable", statusCode);
                     default:
-                        throw new RioApiException("Unsuccessful HttpStatusCode", statusCode);
+                        throw new RiotApiException("Unsuccessful HttpStatusCode", statusCode);
                 }
             }
         }
 
         // TODO from response headers: read application, method, service limits and counts, and adapt
-        private void HandleRateLimit(HttpResponseMessage response, IRateLimitEnforcer rateLimitEnforcer)
+        // TODO maybe move (some) logic to RateLimitEnforcer
+        private static void HandleRateLimit(HttpResponseMessage response, IRateLimitEnforcer rateLimitEnforcer)
         {
-            Logger.Warn("Rate limit detected:");
+            Logger.Log(LogLevel.Warn, "Rate limitation detected.");
 
             ReadHeader(XRateLimitTypeHeader, response.Headers, out IEnumerable<string> headerValues);
             ReadHeader(XAppRateLimitCountHeader, response.Headers, out headerValues);
@@ -116,7 +117,7 @@ namespace ChampionSelectionAnalyzer.RiotApiClient.Services
                 }
                 else
                 {
-                    throw new RioApiException("Unsuccessful extraction of retry after delay.");
+                    throw new RiotApiException("Unsuccessful extraction of retry after delay.");
                 }
             }
         }
