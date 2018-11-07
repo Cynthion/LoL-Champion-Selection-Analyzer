@@ -3,7 +3,6 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using ChampionSelectionAnalyzer.JobRunner.Framework;
-using ChampionSelectionAnalyzer.JobRunner.Jobs;
 using ChampionSelectionAnalyzer.JobRunner.Jobs.Polling.Database;
 using ChampionSelectionAnalyzer.JobRunner.Jobs.Polling.Web;
 using ChampionSelectionAnalyzer.RiotApiClient.Services.Interfaces;

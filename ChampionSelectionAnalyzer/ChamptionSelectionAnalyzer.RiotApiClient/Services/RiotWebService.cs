@@ -21,6 +21,8 @@ namespace ChampionSelectionAnalyzer.RiotApiClient.Services
         private readonly HttpClient _httpClient;
 
         private const string XRateLimitTypeHeader = "X-Rate-Limit-Type";
+        private const string XAppRateLimitHeader = "X-App-Rate-Limit";
+        private const string XMethodRateLimitHeader = "X-Method-Rate-Limit";
         private const string XAppRateLimitCountHeader = "X-App-Rate-Limit-Count";
         private const string XMethodRateLimitCountHeader = "X-Method-Rate-Limit-Count";
         private const string RetryAfterHeader = "Retry-After";
@@ -67,7 +69,7 @@ namespace ChampionSelectionAnalyzer.RiotApiClient.Services
             _httpClient.DefaultRequestHeaders.Add("User-Agent", "Champion Selection Analyzer");
         }
 
-        private void HandleRequestFailure(HttpResponseMessage response, IRateLimitEnforcer rateLimitEnforcer)
+        private static void HandleRequestFailure(HttpResponseMessage response, IRateLimitEnforcer rateLimitEnforcer)
         {
             var statusCode = response.StatusCode;
 
@@ -97,35 +99,38 @@ namespace ChampionSelectionAnalyzer.RiotApiClient.Services
             }
         }
 
-        // TODO from response headers: read application, method, service limits and counts, and adapt
-        // TODO maybe move (some) logic to RateLimitEnforcer
         private static void HandleRateLimit(HttpResponseMessage response, IRateLimitEnforcer rateLimitEnforcer)
         {
             Logger.Log(LogLevel.Warn, "Rate limitation detected.");
 
-            ReadHeader(XRateLimitTypeHeader, response.Headers, out IEnumerable<string> headerValues);
+            ReadHeader(XRateLimitTypeHeader, response.Headers, out var headerValues);
+            ReadHeader(XAppRateLimitHeader, response.Headers, out headerValues);
+            ReadHeader(XMethodRateLimitHeader, response.Headers, out headerValues);
             ReadHeader(XAppRateLimitCountHeader, response.Headers, out headerValues);
             ReadHeader(XMethodRateLimitCountHeader, response.Headers, out headerValues);
-            ReadHeader(RetryAfterHeader, response.Headers, out headerValues);
 
-            if (headerValues.Any())
+            ReadHeader(RetryAfterHeader, response.Headers, out var retryAfterHeaderValues);
+
+            if (!retryAfterHeaderValues.Any())
             {
-                if (int.TryParse(headerValues.First(), out int retryAfterContent))
-                {
-                    var retryAfterDelay = TimeSpan.FromSeconds(retryAfterContent);
-                    rateLimitEnforcer.SetRetryAfter(retryAfterDelay);
-                }
-                else
-                {
-                    throw new RiotApiException("Unsuccessful extraction of retry after delay.");
-                }
+                return;
+            }
+
+            if (int.TryParse(retryAfterHeaderValues.First(), out var retryAfterValue))
+            {
+                var retryAfterDelayInSec = TimeSpan.FromSeconds(retryAfterValue);
+                rateLimitEnforcer.SetRetryAfter(retryAfterDelayInSec);
+            }
+            else
+            {
+                throw new RiotApiException($"Unsuccessful extraction of {RetryAfterHeader} header.");
             }
         }
 
         private static void ReadHeader(string headerName, HttpHeaders headers, out IEnumerable<string> headerValues)
         {
             headers.TryGetValues(headerName, out headerValues);
-            Logger.Warn($"{headerName}: {string.Join("\n", headerValues)}");
+            Logger.Warn($"{headerName}: { string.Join(',', headerValues) }");
         }
     }
 }
