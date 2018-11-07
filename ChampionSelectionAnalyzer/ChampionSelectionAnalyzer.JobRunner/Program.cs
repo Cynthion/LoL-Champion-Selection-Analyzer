@@ -30,7 +30,7 @@ namespace ChampionSelectionAnalyzer.JobRunner
 
                 Logger.Log(LogLevel.Info, "Setup completed.");
 
-                new RiotPollingService(configuration, leagueService, summonerService).ExecutePolling(cts.Token);
+                //new RiotPollingService(configuration, leagueService, summonerService).ExecutePolling(cts.Token);
 
                 Console.ReadLine();
             }
