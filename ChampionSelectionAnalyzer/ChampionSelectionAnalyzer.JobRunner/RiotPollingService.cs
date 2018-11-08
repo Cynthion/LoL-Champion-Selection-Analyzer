@@ -36,10 +36,11 @@ namespace ChampionSelectionAnalyzer.JobRunner
             cancellationToken.Register(OnStopped);
 
             PollLeaguesAsync(cancellationToken);
-            //PollSummonersAsync(cancellationToken);
+            PollSummonersAsync(cancellationToken);
             //PollMatchesAsync(cancellationToken);
 
             _webRequestJobRunner.Start();
+            _databaseJobRunner.Start();
         }
 
         private async void PollLeaguesAsync(CancellationToken cancellationToken)
