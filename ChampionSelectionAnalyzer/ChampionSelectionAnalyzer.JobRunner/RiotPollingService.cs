@@ -15,10 +15,9 @@ namespace ChampionSelectionAnalyzer.JobRunner
         private static readonly ILogger Logger = LogManager.GetLogger(nameof(RiotPollingService));
 
         private readonly IJobRunnerConfiguration _configuration;
-        private readonly IJobRunner _databaseJobRunner = new Framework.JobRunner();
+        private readonly IJobRunner _jobRunner = new Framework.JobRunner();
         private readonly ILeagueService _leagueService;
         private readonly ISummonerService _summonerService;
-        private readonly IJobRunner _webRequestJobRunner = new Framework.JobRunner();
 
         public RiotPollingService(
             IJobRunnerConfiguration configuration,
@@ -39,8 +38,7 @@ namespace ChampionSelectionAnalyzer.JobRunner
             PollSummonersAsync(cancellationToken);
             //PollMatchesAsync(cancellationToken);
 
-            _webRequestJobRunner.Start();
-            _databaseJobRunner.Start();
+            _jobRunner.Start();
         }
 
         private async void PollLeaguesAsync(CancellationToken cancellationToken)
@@ -50,18 +48,17 @@ namespace ChampionSelectionAnalyzer.JobRunner
                     .SelectMany(t => _configuration.PolledQueueTypes
                         .Select(q =>
                             new LeagueJob(r, t, q, _leagueService,
-                                result => _databaseJobRunner.EnqueueJob(new SaveLeagueJob(result)))
+                                result => _jobRunner.EnqueueJob(new SaveLeagueJob(result)))
                         )))
                 .ToArray();
 
             do
             {
-                _webRequestJobRunner.EnqueueJobs(leagueJobs);
+                _jobRunner.EnqueueJobs(leagueJobs);
 
                 try
                 {
-                    await Task.Delay(TimeSpan.FromSeconds(_configuration.LeaguePollingIntervalInSeconds),
-                        cancellationToken);
+                    await Task.Delay(TimeSpan.FromSeconds(_configuration.LeaguePollingIntervalInSeconds), cancellationToken);
                 }
                 catch (TaskCanceledException)
                 {
@@ -76,14 +73,14 @@ namespace ChampionSelectionAnalyzer.JobRunner
                 var loadSummonerIdsJobs = _configuration.PolledRegions
                     .Select(region => new LoadSummonerIdsJob(region, summonerIds =>
                     {
-                        var summonerJobs = summonerIds.Select(summonerId => new SummonerJob(region, long.Parse(summonerId), _summonerService, summonerDto =>
-                            {
-                                var saveSummonerJob = new SaveSummonerJob(summonerDto);
-                                _databaseJobRunner.EnqueueJob(saveSummonerJob);
-                            }));
-                        _webRequestJobRunner.EnqueueJobs(summonerJobs);
+                        //var summonerJobs = summonerIds.Select(summonerId => new SummonerJob(region, long.Parse(summonerId), _summonerService, summonerDto =>
+                        //    {
+                        //        var saveSummonerJob = new SaveSummonerJob(summonerDto);
+                        //        _jobRunner.EnqueueJob(saveSummonerJob);
+                        //    }));
+                        //_jobRunner.EnqueueJobs(summonerJobs);
                     }));
-                _databaseJobRunner.EnqueueJobs(loadSummonerIdsJobs);
+                _jobRunner.EnqueueJobs(loadSummonerIdsJobs);
 
                 try
                 {
@@ -106,8 +103,7 @@ namespace ChampionSelectionAnalyzer.JobRunner
 
         private void OnStopped()
         {
-            _webRequestJobRunner.Stop();
-            _databaseJobRunner.Stop();
+            _jobRunner.Stop();
         }
     }
 }

@@ -6,12 +6,13 @@ using System.Threading.Tasks;
 using ChampionSelectionAnalyzer.JobRunner.Framework;
 using ChampionSelectionAnalyzer.RiotApiClient.Misc;
 using ChampionSelectionAnalyzer.RiotModel.League;
-using Raven.Client.Documents;
+using NLog;
 
 namespace ChampionSelectionAnalyzer.JobRunner.Jobs.Polling.Database
 {
     internal class LoadSummonerIdsJob : JobBase<IEnumerable<string>>
     {
+        private static readonly ILogger Logger = LogManager.GetLogger(nameof(LoadSummonerIdsJob));
         private readonly Region _region;
 
         public LoadSummonerIdsJob(Region region, Action<IEnumerable<string>> resultAction)
@@ -24,14 +25,20 @@ namespace ChampionSelectionAnalyzer.JobRunner.Jobs.Polling.Database
         {
             using (var asyncSession = RavenDb.Store.OpenAsyncSession())
             {
-                var summonerIds = await asyncSession
-                    .Query<LeagueListDto>()
-                    .Where(l => l.Region == _region.ToString())
-                    .SelectMany(d => d.Entries.Select(e => e.PlayerOrTeamId))
-                    .ToListAsync(cancellationToken);
+                var idPrefix = $"{nameof(LeagueListDto)}/{_region}";
+                var leagueListDtos = await asyncSession.Advanced.LoadStartingWithAsync<LeagueListDto>(idPrefix, token: cancellationToken);
+
+                var summonerIds = leagueListDtos
+                                    .SelectMany(l => l.Entries.Select(e => e.PlayerOrTeamId))
+                                    .Distinct();
 
                 return summonerIds;
             }
+        }
+
+        protected override void OnWorkCompleted(IEnumerable<string> result)
+        {
+            Logger.Log(LogLevel.Info, $"Loaded {result.Count()} summoner IDs.");
         }
     }
 }

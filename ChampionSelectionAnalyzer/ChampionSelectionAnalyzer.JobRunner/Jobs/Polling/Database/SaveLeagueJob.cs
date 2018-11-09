@@ -16,11 +16,11 @@ namespace ChampionSelectionAnalyzer.JobRunner.Jobs.Polling.Database
 
         protected override async Task DoWorkAsync(CancellationToken cancellationToken)
         {
-            using (var session = RavenDb.Store.OpenAsyncSession())
+            using (var asyncSession = RavenDb.Store.OpenAsyncSession())
             {
-                await session.StoreAsync(_leagueListDto, _leagueListDto.LeagueId, cancellationToken);
+                await asyncSession.StoreAsync(_leagueListDto, _leagueListDto.Id(), cancellationToken);
 
-                await session.SaveChangesAsync(cancellationToken);
+                await asyncSession.SaveChangesAsync(cancellationToken);
             }
         }
     }

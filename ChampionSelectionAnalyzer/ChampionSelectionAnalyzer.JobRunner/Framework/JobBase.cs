@@ -22,6 +22,8 @@ namespace ChampionSelectionAnalyzer.JobRunner.Framework
 
             var result = await DoWorkAsync(cancellationToken);
 
+            OnWorkCompleted(result);
+
             _resultAction?.Invoke(result);
         }
 
@@ -30,6 +32,11 @@ namespace ChampionSelectionAnalyzer.JobRunner.Framework
         protected virtual void OnStarted()
         {
             LogManager.GetLogger(GetType().Name).Info($"{this} started.");
+        }
+
+        protected virtual void OnWorkCompleted(TResult result)
+        {
+
         }
 
         protected virtual void OnCancelled()
