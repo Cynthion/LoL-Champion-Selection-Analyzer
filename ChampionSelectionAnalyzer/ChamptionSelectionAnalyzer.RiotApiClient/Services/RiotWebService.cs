@@ -14,7 +14,7 @@ namespace ChampionSelectionAnalyzer.RiotApiClient.Services
 {
     public sealed class RiotWebService : IWebService
     {
-        private static readonly ILogger Logger = LogManager.GetCurrentClassLogger();
+        private static readonly ILogger Logger = LogManager.GetLogger(nameof(RiotWebService));
 
         private readonly IApiKey _riotApiKey;
 
@@ -94,7 +94,7 @@ namespace ChampionSelectionAnalyzer.RiotApiClient.Services
                     case HttpStatusCode.ServiceUnavailable:
                         throw new RiotApiException("503, Service Unavailable", statusCode);
                     default:
-                        throw new RiotApiException("Unsuccessful HttpStatusCode", statusCode);
+                        throw new RiotApiException($"Unsuccessful HttpStatusCode { statusCode }", statusCode);
                 }
             }
         }

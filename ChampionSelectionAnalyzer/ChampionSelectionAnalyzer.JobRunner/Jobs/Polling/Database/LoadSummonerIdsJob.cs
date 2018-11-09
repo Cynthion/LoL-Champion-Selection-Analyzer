@@ -32,7 +32,7 @@ namespace ChampionSelectionAnalyzer.JobRunner.Jobs.Polling.Database
                                     .SelectMany(l => l.Entries.Select(e => e.PlayerOrTeamId))
                                     .Distinct();
 
-                return summonerIds.Take(100);
+                return summonerIds.Take(100); // TODO revoke limitation
             }
         }
 

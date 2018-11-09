@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace ChampionSelectionAnalyzer.JobRunner.Framework
 {
@@ -12,9 +11,7 @@ namespace ChampionSelectionAnalyzer.JobRunner.Framework
         void EnqueueJobs(IEnumerable<IJob> jobs);
 
         void Start();
-
-        void Start(TimeSpan baseFrequencyInSeconds);
-
+        
         void Stop();
     }
 }

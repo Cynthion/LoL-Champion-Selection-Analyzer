@@ -25,7 +25,7 @@ namespace ChampionSelectionAnalyzer.JobRunner.Framework
         {
             _jobQueue.Enqueue(job);
 
-            LogManager.GetLogger(GetType().Name).Log(LogLevel.Info, $"{job} put to queue.");
+            LogManager.GetLogger(GetType().Name).Log(LogLevel.Info, $"Enqueued { job }.");
         }
 
         public void EnqueueJobs(IEnumerable<IJob> jobs)
@@ -36,16 +36,11 @@ namespace ChampionSelectionAnalyzer.JobRunner.Framework
             }
         }
 
-        public void Start()
-        {
-            Start(TimeSpan.FromSeconds(1));
-        }
-
-        public async void Start(TimeSpan baseFrequencyInSeconds)
+        public async void Start()
         {
             _cts = new CancellationTokenSource();
 
-            Logger.Log(LogLevel.Info, $"{GetType().Name} started...");
+            Logger.Log(LogLevel.Info, $"{ GetType().Name } started...");
 
             do
             {
@@ -57,16 +52,9 @@ namespace ChampionSelectionAnalyzer.JobRunner.Framework
                     }
                     catch (Exception e)
                     {
-                        Logger.Log(LogLevel.Error, $"Error during execution of {job}:\n{e}");
+                        Logger.Log(LogLevel.Error, $"Error during execution of { job }:\n{ e }");
                     }
                 }
-
-                try
-                {
-                    await Task.Delay(baseFrequencyInSeconds, _cts.Token);
-                }
-                catch (TaskCanceledException)
-                { }
             } while (IsRunning);
         }
 
@@ -74,7 +62,7 @@ namespace ChampionSelectionAnalyzer.JobRunner.Framework
         {
             _cts?.Cancel();
 
-            Logger.Log(LogLevel.Info, $"{GetType().Name} stopped...");
+            Logger.Log(LogLevel.Info, $"{ GetType().Name } stopped...");
         }
     }
 }
