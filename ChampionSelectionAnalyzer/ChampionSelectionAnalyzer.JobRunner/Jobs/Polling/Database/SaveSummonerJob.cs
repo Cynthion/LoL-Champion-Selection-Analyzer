@@ -2,11 +2,14 @@
 using System.Threading.Tasks;
 using ChampionSelectionAnalyzer.JobRunner.Framework;
 using ChampionSelectionAnalyzer.RiotModel.Summoner;
+using NLog;
 
 namespace ChampionSelectionAnalyzer.JobRunner.Jobs.Polling.Database
 {
-    internal class SaveSummonerJob : JobBase
+    internal class SaveSummonerJob : JobBase<SummonerDto>
     {
+        private static readonly ILogger Logger = LogManager.GetLogger(nameof(SaveSummonerJob));
+
         private readonly SummonerDto _summonerDto;
 
         internal SaveSummonerJob(SummonerDto summonerDto)
@@ -14,14 +17,21 @@ namespace ChampionSelectionAnalyzer.JobRunner.Jobs.Polling.Database
             _summonerDto = summonerDto;
         }
 
-        protected override async Task DoWorkAsync(CancellationToken cancellationToken)
+        protected override async Task<SummonerDto> DoWorkAsync(CancellationToken cancellationToken)
         {
-            using (var session = RavenDb.Store.OpenAsyncSession())
+            using (var asyncSession = RavenDb.Store.OpenAsyncSession())
             {
-                await session.StoreAsync(_summonerDto, _summonerDto.Id.ToString(), cancellationToken);
+                await asyncSession.StoreAsync(_summonerDto, _summonerDto.Id(), cancellationToken);
 
-                await session.SaveChangesAsync(cancellationToken);
+                await asyncSession.SaveChangesAsync(cancellationToken);
+
+                return _summonerDto;
             }
+        }
+
+        protected override void OnWorkCompleted(SummonerDto summonerDto)
+        {
+            Logger.Log(LogLevel.Info, $"Saved { summonerDto.Name() } to database.");
         }
     }
 }

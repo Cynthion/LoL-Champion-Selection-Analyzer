@@ -73,12 +73,12 @@ namespace ChampionSelectionAnalyzer.JobRunner
                 var loadSummonerIdsJobs = _configuration.PolledRegions
                     .Select(region => new LoadSummonerIdsJob(region, summonerIds =>
                     {
-                        //var summonerJobs = summonerIds.Select(summonerId => new SummonerJob(region, long.Parse(summonerId), _summonerService, summonerDto =>
-                        //    {
-                        //        var saveSummonerJob = new SaveSummonerJob(summonerDto);
-                        //        _jobRunner.EnqueueJob(saveSummonerJob);
-                        //    }));
-                        //_jobRunner.EnqueueJobs(summonerJobs);
+                        var summonerJobs = summonerIds.Select(summonerId => new SummonerJob(region, long.Parse(summonerId), _summonerService, summonerDto =>
+                            {
+                                var saveSummonerJob = new SaveSummonerJob(summonerDto);
+                                _jobRunner.EnqueueJob(saveSummonerJob);
+                            }));
+                        _jobRunner.EnqueueJobs(summonerJobs);
                     }));
                 _jobRunner.EnqueueJobs(loadSummonerIdsJobs);
 

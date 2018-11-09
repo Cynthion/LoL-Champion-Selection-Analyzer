@@ -17,7 +17,7 @@ namespace ChampionSelectionAnalyzer.RiotApiClient.Services
 
         public async Task<SummonerDto> GetSummonerByIdAsync(Region region, long summonerId)
         {
-            var url = $"lol/summoners/v3/summoners/{summonerId}";
+            var url = $"lol/summoner/v3/summoners/{summonerId}";
 
             var response = await _webService.GetRequestAsync(region, url);
 

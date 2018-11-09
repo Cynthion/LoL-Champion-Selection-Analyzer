@@ -1,4 +1,6 @@
-﻿namespace ChampionSelectionAnalyzer.RiotModel.Summoner
+﻿using Newtonsoft.Json;
+
+namespace ChampionSelectionAnalyzer.RiotModel.Summoner
 {
     public class SummonerDto
     {
@@ -27,18 +29,12 @@
         /// <summary>
         /// Summoner ID.
         /// </summary>
-        public long Id { get; set; }
+        [JsonProperty(PropertyName="id")]
+        public long SummonerId { get; set; }
 
         /// <summary>
         /// Account ID.
         /// </summary>
         public long AccountId { get; set; }
-
-        public override string ToString()
-        {
-            return $"{nameof(Id)}: {Id}, " +
-                   $"{nameof(Name)}: {Name}, " +
-                   $"{nameof(SummonerLevel)}: {SummonerLevel}";
-        }
     }
 }
